@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from typing import final
 
 firewallIp = "usercm@172.31.249.162"
 
@@ -25,6 +26,8 @@ def matchNameWithAddress(machine):
             finaladdress += " -p 160"
         case "idp":
             finaladdress += " -p 165"
+        case "vault":
+            finaladdress += " -p 170"
         case "cicd":
             finaladdress += " -p 200"
         case _:
