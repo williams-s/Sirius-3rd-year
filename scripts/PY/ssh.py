@@ -7,8 +7,8 @@ firewallIp = "usercm@172.31.249.162"
 def matchNameWithAddress(machine):
     finaladdress = firewallIp
     match machine:
-        case "talend":
-            finaladdress += " -p 130"
+        #case "talend":
+        #    finaladdress += " -p 130"
         case "mongo":
             finaladdress += " -p 131"
         case "spark":
