@@ -38,7 +38,7 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    bash /home/usercm/data-pipeline/sourcetobronze/sourcetobronze_run.sh
+        docker exec data-pipeline sh /data/sourcetobronze/sourcetobronze_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
@@ -50,7 +50,7 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    bash /home/usercm/data-pipeline/bronzetosilver/bronzetosilver_run.sh
+    docker exec data-pipeline sh /data/bronzetosilver/bronzetosilver_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
@@ -62,7 +62,7 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    bash /home/usercm/data-pipeline/silvertogold/silvertogold_run.sh
+    docker exec data-pipeline sh /data/silvertogold/silvertogold_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
