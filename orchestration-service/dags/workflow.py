@@ -38,11 +38,37 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    bash /home/usercm/data-pipeline/Players/Players_run.sh
+    bash /home/usercm/data-pipeline/sourcetobronze/sourcetobronze_run.sh
     {% endraw %}
     """,
+        conn_timeout=30,
+        cmd_timeout=600,
     )
 
-    check_mongo_task >> source_to_bronze_job
+    bronze_to_silver_job = SSHOperator(
+        task_id='bronze_to_silver_job',
+        ssh_conn_id='spark_vm',
+        command="""
+    {% raw %}
+    bash /home/usercm/data-pipeline/bronzetosilver/bronzetosilver_run.sh
+    {% endraw %}
+    """,
+        conn_timeout=30,
+        cmd_timeout=600,
+    )
+
+    silver_to_gold_job = SSHOperator(
+        task_id='silver_to_gold_job',
+        ssh_conn_id='spark_vm',
+        command="""
+    {% raw %}
+    bash /home/usercm/data-pipeline/silvertogold/silvertogold_run.sh
+    {% endraw %}
+    """,
+        conn_timeout=30,
+        cmd_timeout=600,
+    )
+
+    check_mongo_task >> source_to_bronze_job >> bronze_to_silver_job >> silver_to_gold_job
 
 
