@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd">
-  <talendfile:ContextType xmi:id="_1uZsENBYEfCAWtx4brs-Zg" confirmationNeeded="false" name="Default">
-    <contextParameter xmi:id="_w8fywNCZEfCgDOCaZzuFFA" comment="" name="fifaplayers" prompt="fifaplayers?" promptNeeded="false" repositoryContextId="built-in" type="id_File" value="C:/Users/perso/Downloads/fifa_players.csv"/>
-  </talendfile:ContextType>
-  <talendfile:ContextType xmi:id="_yLlcENCZEfCgDOCaZzuFFA" confirmationNeeded="false" name="fifa_players">
-    <contextParameter xmi:id="_yLlcEdCZEfCgDOCaZzuFFA" comment="" name="fifaplayers" prompt="fifaplayers?" promptNeeded="false" repositoryContextId="built-in" type="id_File" value="~/data-pipeline/fifa_players.csv"/>
-  </talendfile:ContextType>
-</xmi:XMI>

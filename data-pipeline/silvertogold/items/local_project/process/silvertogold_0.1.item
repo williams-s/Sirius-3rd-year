@@ -2,12 +2,63 @@
 <talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMapper="http://www.talend.org/mapper" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default" jobType="Standard">
   <context confirmationNeeded="false" name="Default">
     <contextParameter comment="" name="postgres_Schema" prompt="postgres_Schema?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="public" internalId="_82SUwNBYEfCAWtx4brs-Zg"/>
-    <contextParameter comment="" name="postgres_Password" prompt="postgres_Password?" promptNeeded="false" repositoryContextId="built-in" type="id_Password" value="enc:system.encryption.key.v1:IKTJVnDLWOQqPHMUZbIwRLGszWjlP5DVLhXA2qd9f085ykNa" internalId="_82SUwdBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Password" prompt="postgres_Password?" promptNeeded="false" repositoryContextId="built-in" type="id_Password" value="enc:system.encryption.key.v1:HBsPsyJcOsrrmtugUoWHZU70/VoY1HsU+WeNtjoAS06L+nUU" internalId="_82SUwdBYEfCAWtx4brs-Zg"/>
     <contextParameter comment="" name="postgres_AdditionalParams" prompt="postgres_AdditionalParams?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="" internalId="_82SUwtBYEfCAWtx4brs-Zg"/>
     <contextParameter comment="" name="postgres_Login" prompt="postgres_Login?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="postgres" internalId="_82SUw9BYEfCAWtx4brs-Zg"/>
     <contextParameter comment="" name="postgres_Server" prompt="postgres_Server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="localhost" internalId="_82SUxNBYEfCAWtx4brs-Zg"/>
     <contextParameter comment="" name="postgres_Port" prompt="postgres_Port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="5432" internalId="_82SUxdBYEfCAWtx4brs-Zg"/>
     <contextParameter comment="" name="postgres_Database" prompt="postgres_Database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata" internalId="_82SUxtBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_table_name" prompt="postgres_table_name?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="name" internalId="_JWqvQNEhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_nationality" prompt="postgres_table_nationality?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="nationality" internalId="_JWqvQdEhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_Mo9r0NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_Mo9r0dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_Mo9r0tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_Mo9r09E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.31" internalId="_Mo9r1NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_Mo9r1dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_Mo9r1tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_Mo9r19E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_Mo9r2NE0EfCI_a0scet84w"/>
+  </context>
+  <context confirmationNeeded="false" name="dev">
+    <contextParameter comment="" name="postgres_Schema" prompt="postgres_Schema?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="public" internalId="_82SUwNBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Password" prompt="postgres_Password?" promptNeeded="false" repositoryContextId="built-in" type="id_Password" value="enc:system.encryption.key.v1:eSweYXPnkL4Bb11LHRUrwmnx4unggC0sWZ7PDl9E6DXnhL8/" internalId="_82SUwdBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_AdditionalParams" prompt="postgres_AdditionalParams?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="" internalId="_82SUwtBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Login" prompt="postgres_Login?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="postgres" internalId="_82SUw9BYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Server" prompt="postgres_Server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="localhost" internalId="_82SUxNBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Port" prompt="postgres_Port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="5432" internalId="_82SUxdBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Database" prompt="postgres_Database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata" internalId="_82SUxtBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_table_name" prompt="postgres_table_name?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="name" internalId="_JWskcNEhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_nationality" prompt="postgres_table_nationality?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="nationality" internalId="_JWskcdEhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_Mo9r2dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_Mo9r2tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_Mo9r29E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_Mo9r3NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.31" internalId="_Mo9r3dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_Mo9r3tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_Mo9r39E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_Mo9r4NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_Mo9r4dE0EfCI_a0scet84w"/>
+  </context>
+  <context confirmationNeeded="false" name="local">
+    <contextParameter comment="" name="postgres_Schema" prompt="postgres_Schema?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="public" internalId="_82SUwNBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Password" prompt="postgres_Password?" promptNeeded="false" repositoryContextId="built-in" type="id_Password" value="enc:system.encryption.key.v1:OFL/b5+NZ7ckas/nEAeiOJzk8VY5bSvb1PcQZk6IjSXW/6AU" internalId="_82SUwdBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_AdditionalParams" prompt="postgres_AdditionalParams?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="" internalId="_82SUwtBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Login" prompt="postgres_Login?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="postgres" internalId="_82SUw9BYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Server" prompt="postgres_Server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="localhost" internalId="_82SUxNBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Port" prompt="postgres_Port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="5432" internalId="_82SUxdBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_Database" prompt="postgres_Database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata" internalId="_82SUxtBYEfCAWtx4brs-Zg"/>
+    <contextParameter comment="" name="postgres_table_name" prompt="postgres_table_name?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="name" internalId="_JWsketEhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_nationality" prompt="postgres_table_nationality?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="nationality" internalId="_JWske9EhEfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_Mo9r4tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_Mo9r49E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_Mo9r5NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_Mo9r5dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="localhost" internalId="_Mo9r5tE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_Mo9r59E0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_Mo9r6NE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="postgres" internalId="_Mo9r6dE0EfCI_a0scet84w"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\archive\fifa_players.csv" internalId="_Mo9r6tE0EfCI_a0scet84w"/>
   </context>
   <parameters>
     <elementParameter field="CLOSED_LIST" name="LOG4J_RUN_LEVEL" value="Info" show="false"/>
@@ -51,7 +102,7 @@
     <elementParameter field="TEXT" name="PROPERTIES_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:LFLjkMBXlfeMtIwLPiK7iEnDPcg064lWBsM3yHmX" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:BFV0824i1GzYOCLD/Nf3VchI3ryFNs82fzx0TLck" show="false"/>
     <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
@@ -86,7 +137,7 @@
     <elementParameter field="TEXT" name="PROPERTIES" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:1IttJDSSaEcMVC8cz6CNwu4OeWS5C5b3tm7GnNK3" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:Jea2bfFlo+0KTe7ba4JgxO4QR78xWvYDwG5xCXi4" show="false"/>
     <elementParameter field="FILE" name="DBFILE" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_STATS" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_LOGS" value="&quot;&quot;" show="false"/>
@@ -115,16 +166,16 @@
     <routinesParameter id="_PncSYMuSEfCXhtCU1ZOoAA" name="TalendStringUtil"/>
     <routinesParameter id="_PnWy0MuSEfCXhtCU1ZOoAA" name="TalendString"/>
   </parameters>
-  <node componentName="tMongoDBInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="160" posY="160">
+  <node componentName="tMongoDBInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="96" posY="160">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMongoDBInput_1" show="false"/>
     <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
     <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
     <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="MONGODB_3_5_X"/>
     <elementParameter field="CHECK" name="USE_REPLICA_SET" value="false"/>
     <elementParameter field="TABLE" name="REPLICA_SET" show="false"/>
-    <elementParameter field="TEXT" name="HOST" value="&quot;192.168.0.31&quot;"/>
-    <elementParameter field="TEXT" name="PORT" value="27017"/>
-    <elementParameter field="TEXT" name="DATABASE" value="&quot;playersdata&quot;"/>
+    <elementParameter field="TEXT" name="HOST" value="context.mongo_server"/>
+    <elementParameter field="TEXT" name="PORT" value="context.mongo_port"/>
+    <elementParameter field="TEXT" name="DATABASE" value="context.mongo_database"/>
     <elementParameter field="CHECK" name="USE_SSL" value="false"/>
     <elementParameter field="CHECK" name="SET_READ_PREFERENCE" value="false"/>
     <elementParameter field="CLOSED_LIST" name="READ_PREFERENCE" value="PRIMARY" show="false"/>
@@ -134,11 +185,11 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:fnT7WbB/sr1v9r7L1O38OSKVd3hUAISOj5lXWIxQ" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:T2LbA/PrCbzjIcIx4r5IWn7Ad2zIJZIwq6Hc2b74" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
-    <elementParameter field="TEXT" name="COLLECTION" value="&quot;silver&quot;"/>
+    <elementParameter field="TEXT" name="COLLECTION" value="context.mongo_collection_silver"/>
     <elementParameter field="CLOSED_LIST" name="QUERY_TYPE" value="FIND_QUERY"/>
     <elementParameter field="LABEL" name="NOTE_ISOLATION" value="Note : Surround String values in your query with single quotes&#xA;Note : If you are running on a Sharded Cluster, please make sure to include the shard key in the query."/>
     <elementParameter field="MEMO" name="QUERY" value="&quot;{}&quot;"/>
@@ -146,11 +197,19 @@
     <elementParameter field="CHECK" name="SPECIFY_FIELDS" value="false"/>
     <elementParameter field="TABLE" name="FIELDS_TO_RETURN" show="false"/>
     <elementParameter field="TABLE" name="MAPPING">
-      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="shirt_name"/>
       <elementValue elementRef="PARENT_NODE_PATH" value=""/>
       <elementValue elementRef="SCHEMA_COLUMN" value="full_name"/>
       <elementValue elementRef="PARENT_NODE_PATH" value=""/>
       <elementValue elementRef="SCHEMA_COLUMN" value="nationality"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="weight_kgs"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="positions"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="height_cm"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="body_type"/>
       <elementValue elementRef="PARENT_NODE_PATH" value=""/>
     </elementParameter>
     <elementParameter field="TABLE" name="SORT"/>
@@ -160,12 +219,16 @@
     <elementParameter field="CHECK" name="CONVERT_BSON_TO_STRING" value="true"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="tMongoDBInput_1">
-      <column comment="" key="false" length="-1" name="name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="416" posY="160">
+  <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="352" posY="160">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMap_1" show="false"/>
     <elementParameter field="EXTERNAL" name="MAP" value=""/>
     <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO"/>
@@ -180,39 +243,88 @@
     <elementParameter field="CHECK" name="CHANGE_HASH_AND_EQUALS_FOR_BIGDECIMAL" value="true"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="gold">
-      <column comment="" key="false" length="-1" name="name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <metadata name="gold2">
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
-      <uiProperties/>
+      <uiProperties shellMaximized="true"/>
       <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
-      <outputTables sizeState="INTERMEDIATE" name="gold" expressionFilter="row1.name.startsWith(&quot;A&quot;)&#xD;&#xA;" activateExpressionFilter="true">
-        <mapperTableEntries name="name" expression="row1.name " type="id_String" nullable="true"/>
+      <outputTables sizeState="INTERMEDIATE" name="gold" expressionFilter="row1.name.startsWith(&quot;A&quot;)&#xD;&#xA;">
+        <mapperTableEntries name="body_type" expression="row1.body_type " type="id_String" nullable="true"/>
+        <mapperTableEntries name="id_body_type" expression="Numeric.sequence(&quot;s1&quot;, 1, 1)" type="id_Integer" nullable="true"/>
+      </outputTables>
+      <outputTables sizeState="INTERMEDIATE" name="gold2">
+        <mapperTableEntries name="shirt_name" expression="row1.shirt_name " type="id_String" nullable="true"/>
         <mapperTableEntries name="full_name" expression="row1.full_name " type="id_String" nullable="true"/>
         <mapperTableEntries name="nationality" expression="row1.nationality " type="id_String" nullable="true"/>
+        <mapperTableEntries name="weight_kgs" expression="row1.weight_kgs " type="id_Float" nullable="true"/>
+        <mapperTableEntries name="positions" expression="row1.positions " type="id_String" nullable="true"/>
+        <mapperTableEntries name="height_cm" expression="row1.height_cm " type="id_Float" nullable="true"/>
+        <mapperTableEntries name="id_body_type" type="id_String" nullable="true"/>
       </outputTables>
       <inputTables sizeState="INTERMEDIATE" name="row1" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
-        <mapperTableEntries name="name" type="id_String" nullable="true"/>
+        <mapperTableEntries name="shirt_name" type="id_String" nullable="true"/>
         <mapperTableEntries name="full_name" type="id_String" nullable="true"/>
         <mapperTableEntries name="nationality" type="id_String" nullable="true"/>
+        <mapperTableEntries name="weight_kgs" type="id_Float" nullable="true"/>
+        <mapperTableEntries name="positions" type="id_String" nullable="true"/>
+        <mapperTableEntries name="height_cm" type="id_Float" nullable="true"/>
+        <mapperTableEntries name="body_type" type="id_String" nullable="true"/>
       </inputTables>
     </nodeData>
   </node>
-  <node componentName="tPostgresqlOutput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="704" posY="160">
+  <node componentName="tUniqRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="512" posY="160">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tUniqRow_1" show="false"/>
+    <elementParameter field="TABLE" name="UNIQUE_KEY">
+      <elementValue elementRef="SCHEMA_COLUMN" value="body_type"/>
+      <elementValue elementRef="KEY_ATTRIBUTE" value="true"/>
+      <elementValue elementRef="CASE_SENSITIVE" value="false"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="KEY_ATTRIBUTE" value="false"/>
+      <elementValue elementRef="CASE_SENSITIVE" value="false"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="ONLY_ONCE_EACH_DUPLICATED_KEY" value="false"/>
+    <elementParameter field="CHECK" name="IS_VIRTUAL_COMPONENT" value="false"/>
+    <elementParameter field="OPENED_LIST" name="BUFFER_SIZE" value="M" show="false"/>
+    <elementParameter field="DIRECTORY" name="TEMP_DIRECTORY" value="" show="false"/>
+    <elementParameter field="CHECK" name="CHANGE_HASH_AND_EQUALS_FOR_BIGDECIMAL" value="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tUniqRow_1">
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <metadata connector="UNIQUE" name="UNIQUE">
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <metadata connector="DUPLICATE" name="DUPLICATE">
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tPostgresqlOutput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="800" posY="160">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tDBOutput_1" show="false"/>
     <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
     <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
     <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="V9_X"/>
-    <elementParameter field="TEXT" name="HOST" value="&quot;192.168.0.33&quot;"/>
-    <elementParameter field="TEXT" name="PORT" value="&quot;5432&quot;"/>
-    <elementParameter field="TEXT" name="DBNAME" value="&quot;playersdata&quot;"/>
+    <elementParameter field="TEXT" name="HOST" value="context.postgres_Server"/>
+    <elementParameter field="TEXT" name="PORT" value="context.postgres_Port"/>
+    <elementParameter field="TEXT" name="DBNAME" value="context.postgres_Database"/>
     <elementParameter field="TEXT" name="TYPE" value="PostgreSQL" show="false"/>
-    <elementParameter field="TEXT" name="SCHEMA_DB" value="&quot;public&quot;"/>
-    <elementParameter field="TEXT" name="USER" value="&quot;admin&quot;"/>
-    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:8WNMkrBPDb6mQLxdixJOUZMrvEIBoRRWzqZMr3JwB0Qxq8IzMQk="/>
-    <elementParameter field="DBTABLE" name="TABLE" value="&quot;players&quot;"/>
-    <elementParameter field="CLOSED_LIST" name="TABLE_ACTION" value="CREATE"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="context.postgres_Schema"/>
+    <elementParameter field="TEXT" name="USER" value="context.postgres_user"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:TLYKvHPd/osJUBoP1PVLcxzWZdLBLdWydxdAWfr7pYB671dA0lTaXbuVOlkNydBAFkrPBQ8="/>
+    <elementParameter field="DBTABLE" name="TABLE" value="context.postgres_table_bodytype"/>
+    <elementParameter field="CLOSED_LIST" name="TABLE_ACTION" value="DROP_IF_EXISTS_AND_CREATE"/>
     <elementParameter field="CLOSED_LIST" name="DATA_ACTION" value="INSERT"/>
     <elementParameter field="CHECK" name="USE_SPATIAL_OPTIONS" value="false"/>
     <elementParameter field="CHECK" name="SPATIAL_INDEX" value="false" show="false"/>
@@ -232,7 +344,219 @@
     <elementParameter field="TABLE" name="ADD_COLS"/>
     <elementParameter field="CHECK" name="USE_FIELD_OPTIONS" value="false"/>
     <elementParameter field="TABLE" name="FIELD_OPTIONS" show="false">
-      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="body_type"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="ENABLE_DEBUG_MODE" value="false"/>
+    <elementParameter field="CHECK" name="SUPPORT_NULL_WHERE" value="false"/>
+    <elementParameter field="CHECK" name="CONVERT_COLUMN_TABLE_TO_LOWERCASE" value="false"/>
+    <elementParameter field="CHECK" name="USE_BATCH_SIZE" value="true"/>
+    <elementParameter field="TEXT" name="BATCH_SIZE" value="10000"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tDBOutput_1">
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <metadata connector="REJECT" name="REJECT">
+      <column comment="" key="true" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="true" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tMongoDBInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="160" posY="320">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMongoDBInput_2" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="MONGODB_3_5_X"/>
+    <elementParameter field="CHECK" name="USE_REPLICA_SET" value="false"/>
+    <elementParameter field="TABLE" name="REPLICA_SET" show="false"/>
+    <elementParameter field="TEXT" name="HOST" value="context.mongo_server"/>
+    <elementParameter field="TEXT" name="PORT" value="context.mongo_port"/>
+    <elementParameter field="TEXT" name="DATABASE" value="context.mongo_database"/>
+    <elementParameter field="CHECK" name="USE_SSL" value="false"/>
+    <elementParameter field="CHECK" name="SET_READ_PREFERENCE" value="false"/>
+    <elementParameter field="CLOSED_LIST" name="READ_PREFERENCE" value="PRIMARY" show="false"/>
+    <elementParameter field="LABEL" name="READ_PREFERENCE_NOTE" value="Note : Use Connection component to set Read Preference" show="false"/>
+    <elementParameter field="CHECK" name="REQUIRED_AUTHENTICATION" value="false"/>
+    <elementParameter field="CLOSED_LIST" name="AUTHENTICATION_MECHANISM" value="SCRAMSHA1_MEC" show="false"/>
+    <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
+    <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
+    <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:2WlNQgywlVlLrKNZ39sag8dJvM+/ujmtD4QG0H3N" show="false"/>
+    <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
+    <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
+    <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
+    <elementParameter field="TEXT" name="COLLECTION" value="context.mongo_collection_silver"/>
+    <elementParameter field="CLOSED_LIST" name="QUERY_TYPE" value="FIND_QUERY"/>
+    <elementParameter field="LABEL" name="NOTE_ISOLATION" value="Note : Surround String values in your query with single quotes&#xA;Note : If you are running on a Sharded Cluster, please make sure to include the shard key in the query."/>
+    <elementParameter field="MEMO" name="QUERY" value="&quot;{}&quot;"/>
+    <elementParameter field="TABLE" name="AGGREGATION_STAGES" show="false"/>
+    <elementParameter field="CHECK" name="SPECIFY_FIELDS" value="false"/>
+    <elementParameter field="TABLE" name="FIELDS_TO_RETURN" show="false"/>
+    <elementParameter field="TABLE" name="MAPPING">
+      <elementValue elementRef="SCHEMA_COLUMN" value="shirt_name"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="full_name"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nationality"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="weight_kgs"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="positions"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="height_cm"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="body_type"/>
+      <elementValue elementRef="PARENT_NODE_PATH" value=""/>
+    </elementParameter>
+    <elementParameter field="TABLE" name="SORT"/>
+    <elementParameter field="TEXT" name="LIMIT" value=""/>
+    <elementParameter field="CHECK" name="QUERYOPTION_NOTIMEOUT" value="false"/>
+    <elementParameter field="CHECK" name="EXTERNAL_SORT_AGGREGATION" value="false" show="false"/>
+    <elementParameter field="CHECK" name="CONVERT_BSON_TO_STRING" value="true"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tMongoDBInput_2">
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="352" posY="320">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMap_3" show="false"/>
+    <elementParameter field="EXTERNAL" name="MAP" value=""/>
+    <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO"/>
+    <elementParameter field="DIRECTORY" name="TEMPORARY_DATA_DIRECTORY" value=""/>
+    <elementParameter field="IMAGE" name="PREVIEW" value="_MRtrUNA1EfCAWtx4brs-Zg-tMap_3-PREVIEW.bmp"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="true" show="false"/>
+    <elementParameter field="CHECK" name="LKUP_PARALLELIZE" value="false" show="false"/>
+    <elementParameter field="TEXT" name="LEVENSHTEIN" value="0" show="false"/>
+    <elementParameter field="TEXT" name="JACCARD" value="0" show="false"/>
+    <elementParameter field="CHECK" name="ENABLE_AUTO_CONVERT_TYPE" value="false" show="false"/>
+    <elementParameter field="TEXT" name="ROWS_BUFFER_SIZE" value="2000000"/>
+    <elementParameter field="CHECK" name="CHANGE_HASH_AND_EQUALS_FOR_BIGDECIMAL" value="true"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="gold3">
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="INT4" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <nodeData xsi:type="TalendMapper:MapperData">
+      <uiProperties shellMaximized="true"/>
+      <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
+      <outputTables sizeState="INTERMEDIATE" name="gold3">
+        <mapperTableEntries name="shirt_name" expression="row3.shirt_name " type="id_String" nullable="true"/>
+        <mapperTableEntries name="full_name" expression="row3.full_name " type="id_String" nullable="true"/>
+        <mapperTableEntries name="nationality" expression="row3.nationality " type="id_String" nullable="true"/>
+        <mapperTableEntries name="weight_kgs" expression="row3.weight_kgs " type="id_Float" nullable="true"/>
+        <mapperTableEntries name="positions" expression="row3.positions " type="id_String" nullable="true"/>
+        <mapperTableEntries name="height_cm" expression="row3.height_cm " type="id_Float" nullable="true"/>
+        <mapperTableEntries name="id_body_type" expression="row4.id_body_type " type="id_Integer" nullable="true"/>
+      </outputTables>
+      <inputTables sizeState="INTERMEDIATE" name="row3" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+        <mapperTableEntries name="shirt_name" type="id_String" nullable="true"/>
+        <mapperTableEntries name="full_name" type="id_String" nullable="true"/>
+        <mapperTableEntries name="nationality" type="id_String" nullable="true"/>
+        <mapperTableEntries name="weight_kgs" type="id_Float" nullable="true"/>
+        <mapperTableEntries name="positions" type="id_String" nullable="true"/>
+        <mapperTableEntries name="height_cm" type="id_Float" nullable="true"/>
+        <mapperTableEntries name="body_type" type="id_String" nullable="true"/>
+      </inputTables>
+      <inputTables sizeState="INTERMEDIATE" name="row4" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
+        <mapperTableEntries name="id_body_type" type="id_Integer" nullable="true"/>
+        <mapperTableEntries name="body_type" expression="row3.body_type " type="id_String" nullable="true" operator="="/>
+      </inputTables>
+    </nodeData>
+  </node>
+  <node componentName="tPostgresqlInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="160" posY="416">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tDBInput_1" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="V9_X"/>
+    <elementParameter field="TEXT" name="HOST" value="context.postgres_Server"/>
+    <elementParameter field="TEXT" name="TYPE" value="PostgreSQL" show="false"/>
+    <elementParameter field="TEXT" name="PORT" value="context.postgres_Port"/>
+    <elementParameter field="TEXT" name="DBNAME" value="context.postgres_Database"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="context.postgres_Schema"/>
+    <elementParameter field="TEXT" name="USER" value="context.postgres_user"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:n0/+tN2u4BYpZe9tG34qq5iaRqbDtd5nSywrTEK5f8KqnqXheEA2ZVHbaYllPndTN4F/LB8="/>
+    <elementParameter field="DBTABLE" name="TABLE" value="context.postgres_table_bodytype"/>
+    <elementParameter field="QUERYSTORE_TYPE" name="QUERYSTORE" value="&quot;&quot;"/>
+    <elementParameter field="TECHNICAL" name="QUERYSTORE:REPOSITORY_QUERYSTORE_TYPE" value="" show="false"/>
+    <elementParameter field="TECHNICAL" name="QUERYSTORE:QUERYSTORE_TYPE" value="BUILT_IN"/>
+    <elementParameter field="GUESS_SCHEMA" name="GUESS_SCHEMA" value="&quot;&quot;"/>
+    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT &#xA;  \&quot;&quot;+context.postgres_Schema+&quot;\&quot;.\&quot;&quot;+context.postgres_table_bodytype+&quot;\&quot;.\&quot;id_body_type\&quot;, &#xA;  \&quot;&quot;+context.postgres_Schema+&quot;\&quot;.\&quot;&quot;+context.postgres_table_bodytype+&quot;\&quot;.\&quot;body_type\&quot;&#xA;FROM \&quot;&quot;+context.postgres_Schema+&quot;\&quot;.\&quot;&quot;+context.postgres_table_bodytype+&quot;\&quot;&quot;"/>
+    <elementParameter field="LABEL" name="NOTE" value="This option only applies when deploying and running in the Talend Runtime"/>
+    <elementParameter field="CHECK" name="SPECIFY_DATASOURCE_ALIAS" value="false"/>
+    <elementParameter field="TEXT" name="DATASOURCE_ALIAS" value="&quot;&quot;" show="false"/>
+    <elementParameter field="MAPPING_TYPE" name="MAPPING" value="postgres_id" show="false"/>
+    <elementParameter field="TEXT" name="PROPERTIES" value="&quot;&quot;"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="&quot;ISO-8859-15&quot;" show="false"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15"/>
+    <elementParameter field="CHECK" name="USE_CURSOR" value="false"/>
+    <elementParameter field="TEXT" name="CURSOR_SIZE" value="1000" show="false"/>
+    <elementParameter field="CHECK" name="TRIM_ALL_COLUMN" value="false"/>
+    <elementParameter field="TABLE" name="TRIM_COLUMN">
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="TRIM" value="false"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="body_type"/>
+      <elementValue elementRef="TRIM" value="false"/>
+    </elementParameter>
+    <metadata connector="FLOW" name="tDBInput_1">
+      <column comment="" key="false" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="INT4" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="body_type" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tPostgresqlOutput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="576" posY="320">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tDBOutput_2" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="V9_X"/>
+    <elementParameter field="TEXT" name="HOST" value="context.postgres_Server"/>
+    <elementParameter field="TEXT" name="PORT" value="context.postgres_Port"/>
+    <elementParameter field="TEXT" name="DBNAME" value="context.postgres_Database"/>
+    <elementParameter field="TEXT" name="TYPE" value="PostgreSQL" show="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="context.postgres_Schema"/>
+    <elementParameter field="TEXT" name="USER" value="context.postgres_user"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:lOhHBU4nuW5zaR5mVxuqSeEdZGAWZFnDRZd0baBGQ4UHNudKNCnYJFNJt2Vfr8NYaTUd7S4="/>
+    <elementParameter field="DBTABLE" name="TABLE" value="context.postgres_table_players"/>
+    <elementParameter field="CLOSED_LIST" name="TABLE_ACTION" value="DROP_IF_EXISTS_AND_CREATE"/>
+    <elementParameter field="CLOSED_LIST" name="DATA_ACTION" value="INSERT"/>
+    <elementParameter field="CHECK" name="USE_SPATIAL_OPTIONS" value="false"/>
+    <elementParameter field="CHECK" name="SPATIAL_INDEX" value="false" show="false"/>
+    <elementParameter field="CHECK" name="GEOMETRY_COLUMNS" value="false" show="false"/>
+    <elementParameter field="LABEL" name="NOTE" value="This option only applies when deploying and running in the Talend Runtime"/>
+    <elementParameter field="CHECK" name="SPECIFY_DATASOURCE_ALIAS" value="false"/>
+    <elementParameter field="TEXT" name="DATASOURCE_ALIAS" value="&quot;&quot;" show="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="false"/>
+    <elementParameter field="MAPPING_TYPE" name="MAPPING" value="postgres_id" show="false"/>
+    <elementParameter field="CHECK" name="USE_ALTERNATE_SCHEMA" value="false" show="false"/>
+    <elementParameter field="TEXT" name="ALTERNATE_SCHEMA" value="&quot;&quot;" show="false"/>
+    <elementParameter field="TEXT" name="PROPERTIES" value="&quot;&quot;"/>
+    <elementParameter field="CHECK" name="SAVE_POINT" value="false" show="false"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="&quot;ISO-8859-15&quot;" show="false"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15"/>
+    <elementParameter field="TEXT" name="COMMIT_EVERY" value="10000"/>
+    <elementParameter field="TABLE" name="ADD_COLS"/>
+    <elementParameter field="CHECK" name="USE_FIELD_OPTIONS" value="false"/>
+    <elementParameter field="TABLE" name="FIELD_OPTIONS" show="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="shirt_name"/>
       <elementValue elementRef="UPDATE_KEY" value="false"/>
       <elementValue elementRef="DELETE_KEY" value="false"/>
       <elementValue elementRef="UPDATABLE" value="true"/>
@@ -247,6 +571,26 @@
       <elementValue elementRef="DELETE_KEY" value="false"/>
       <elementValue elementRef="UPDATABLE" value="true"/>
       <elementValue elementRef="INSERTABLE" value="true"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="weight_kgs"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="positions"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="height_cm"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="UPDATE_KEY" value="false"/>
+      <elementValue elementRef="DELETE_KEY" value="false"/>
+      <elementValue elementRef="UPDATABLE" value="true"/>
+      <elementValue elementRef="INSERTABLE" value="true"/>
     </elementParameter>
     <elementParameter field="CHECK" name="ENABLE_DEBUG_MODE" value="false"/>
     <elementParameter field="CHECK" name="SUPPORT_NULL_WHERE" value="false"/>
@@ -254,29 +598,88 @@
     <elementParameter field="CHECK" name="USE_BATCH_SIZE" value="true"/>
     <elementParameter field="TEXT" name="BATCH_SIZE" value="10000"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tDBOutput_1">
-      <column comment="" key="false" length="-1" name="name" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+    <metadata connector="FLOW" name="tDBOutput_2">
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="INT4" type="id_Integer" originalLength="-1" usefulColumn="true"/>
     </metadata>
     <metadata connector="REJECT" name="REJECT">
-      <column comment="" key="false" length="-1" name="name" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="shirt_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="full_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nationality" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="weight_kgs" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="positions" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="height_cm" nullable="true" pattern="" precision="-1" sourceType="" type="id_Float" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="id_body_type" nullable="true" pattern="" precision="-1" sourceType="INT4" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
   <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tMongoDBInput_1" offsetLabelX="0" offsetLabelY="0" source="tMongoDBInput_1" target="tMap_1">
+    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
+      <elementValue elementRef="TRACE_COLUMN" value="height_cm"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+      <elementValue elementRef="TRACE_COLUMN" value="weight_kgs"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+      <elementValue elementRef="TRACE_COLUMN" value="positions"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+      <elementValue elementRef="TRACE_COLUMN" value="body_type"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+    </elementParameter>
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row1" show="false"/>
   </connection>
-  <connection connectorName="FLOW" label="gold" lineStyle="0" metaname="gold" offsetLabelX="0" offsetLabelY="0" source="tMap_1" target="tDBOutput_1">
+  <connection connectorName="FLOW" label="gold" lineStyle="0" metaname="gold" offsetLabelX="0" offsetLabelY="0" source="tMap_1" target="tUniqRow_1">
+    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
+      <elementValue elementRef="TRACE_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+    </elementParameter>
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="gold" show="false"/>
   </connection>
+  <connection connectorName="UNIQUE" label="row2" lineStyle="0" metaname="UNIQUE" offsetLabelX="0" offsetLabelY="0" source="tUniqRow_1" target="tDBOutput_1">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row2" show="false"/>
+  </connection>
+  <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tDBOutput_1" offsetLabelX="0" offsetLabelY="0" source="tDBOutput_1" target="tMongoDBInput_2">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk1" show="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="row3" lineStyle="0" metaname="tMongoDBInput_2" offsetLabelX="0" offsetLabelY="0" source="tMongoDBInput_2" target="tMap_3">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" show="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="gold3" lineStyle="0" metaname="gold3" offsetLabelX="0" offsetLabelY="0" source="tMap_3" target="tDBOutput_2">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="gold3" show="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="row4" lineStyle="8" metaname="tDBInput_1" offsetLabelX="0" offsetLabelY="0" source="tDBInput_1" target="tMap_3">
+    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
+      <elementValue elementRef="TRACE_COLUMN" value="id_body_type"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+      <elementValue elementRef="TRACE_COLUMN" value="body_type"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row4" show="false"/>
+  </connection>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMongoDBInput_1" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMongoDBInput_2" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>

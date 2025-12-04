@@ -121,6 +121,90 @@ protected static void logIgnoredError(String message, Throwable cause) {
 
 		public void synchronizeContext(){
 			
+			if(mongo_collection_bronze != null){
+				
+					this.setProperty("mongo_collection_bronze", mongo_collection_bronze.toString());
+				
+			}
+			
+			if(mongo_collection_silver != null){
+				
+					this.setProperty("mongo_collection_silver", mongo_collection_silver.toString());
+				
+			}
+			
+			if(mongo_database != null){
+				
+					this.setProperty("mongo_database", mongo_database.toString());
+				
+			}
+			
+			if(mongo_port != null){
+				
+					this.setProperty("mongo_port", mongo_port.toString());
+				
+			}
+			
+			if(mongo_server != null){
+				
+					this.setProperty("mongo_server", mongo_server.toString());
+				
+			}
+			
+			if(postgres_database != null){
+				
+					this.setProperty("postgres_database", postgres_database.toString());
+				
+			}
+			
+			if(postgres_password != null){
+				
+					this.setProperty("postgres_password", postgres_password.toString());
+				
+			}
+			
+			if(postgres_port != null){
+				
+					this.setProperty("postgres_port", postgres_port.toString());
+				
+			}
+			
+			if(postgres_schema != null){
+				
+					this.setProperty("postgres_schema", postgres_schema.toString());
+				
+			}
+			
+			if(postgres_server != null){
+				
+					this.setProperty("postgres_server", postgres_server.toString());
+				
+			}
+			
+			if(postgres_table_players != null){
+				
+					this.setProperty("postgres_table_players", postgres_table_players.toString());
+				
+			}
+			
+			if(postgres_table_nationality != null){
+				
+					this.setProperty("postgres_table_nationality", postgres_table_nationality.toString());
+				
+			}
+			
+			if(postgres_user != null){
+				
+					this.setProperty("postgres_user", postgres_user.toString());
+				
+			}
+			
+			if(source != null){
+				
+					this.setProperty("source", source.toString());
+				
+			}
+			
 		}
 		
 		//if the stored or passed value is "<TALEND_NULL>" string, it mean null
@@ -132,6 +216,62 @@ protected static void logIgnoredError(String message, Throwable cause) {
 			return origin_value;
 		}
 
+public String mongo_collection_bronze;
+public String getMongo_collection_bronze(){
+	return this.mongo_collection_bronze;
+}
+public String mongo_collection_silver;
+public String getMongo_collection_silver(){
+	return this.mongo_collection_silver;
+}
+public String mongo_database;
+public String getMongo_database(){
+	return this.mongo_database;
+}
+public String mongo_port;
+public String getMongo_port(){
+	return this.mongo_port;
+}
+public String mongo_server;
+public String getMongo_server(){
+	return this.mongo_server;
+}
+public String postgres_database;
+public String getPostgres_database(){
+	return this.postgres_database;
+}
+public String postgres_password;
+public String getPostgres_password(){
+	return this.postgres_password;
+}
+public String postgres_port;
+public String getPostgres_port(){
+	return this.postgres_port;
+}
+public String postgres_schema;
+public String getPostgres_schema(){
+	return this.postgres_schema;
+}
+public String postgres_server;
+public String getPostgres_server(){
+	return this.postgres_server;
+}
+public String postgres_table_players;
+public String getPostgres_table_players(){
+	return this.postgres_table_players;
+}
+public String postgres_table_nationality;
+public String getPostgres_table_nationality(){
+	return this.postgres_table_nationality;
+}
+public String postgres_user;
+public String getPostgres_user(){
+	return this.postgres_user;
+}
+public String source;
+public String getSource(){
+	return this.source;
+}
 	}
 	protected ContextProperties context = new ContextProperties(); // will be instanciated by MS.
 	public ContextProperties getContext() {
@@ -329,10 +469,10 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
     static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
 
 	
-			    public String name;
+			    public String shirt_name;
 
-				public String getName () {
-					return this.name;
+				public String getShirt_name () {
+					return this.shirt_name;
 				}
 				
 			    public String full_name;
@@ -345,6 +485,36 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 
 				public String getNationality () {
 					return this.nationality;
+				}
+				
+			    public Float weight_kgs;
+
+				public Float getWeight_kgs () {
+					return this.weight_kgs;
+				}
+				
+			    public String positions;
+
+				public String getPositions () {
+					return this.positions;
+				}
+				
+			    public Float height_cm;
+
+				public Float getHeight_cm () {
+					return this.height_cm;
+				}
+				
+			    public String preferred_foot;
+
+				public String getPreferred_foot () {
+					return this.preferred_foot;
+				}
+				
+			    public String body_type;
+
+				public String getBody_type () {
+					return this.body_type;
 				}
 				
 
@@ -418,11 +588,31 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 
         		int length = 0;
 		
-					this.name = readString(dis);
+					this.shirt_name = readString(dis);
 					
 					this.full_name = readString(dis);
 					
 					this.nationality = readString(dis);
+					
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.weight_kgs = null;
+           				} else {
+           			    	this.weight_kgs = dis.readFloat();
+           				}
+					
+					this.positions = readString(dis);
+					
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.height_cm = null;
+           				} else {
+           			    	this.height_cm = dis.readFloat();
+           				}
+					
+					this.preferred_foot = readString(dis);
+					
+					this.body_type = readString(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -446,11 +636,31 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 
         		int length = 0;
 		
-					this.name = readString(dis);
+					this.shirt_name = readString(dis);
 					
 					this.full_name = readString(dis);
 					
 					this.nationality = readString(dis);
+					
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.weight_kgs = null;
+           				} else {
+           			    	this.weight_kgs = dis.readFloat();
+           				}
+					
+					this.positions = readString(dis);
+					
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.height_cm = null;
+           				} else {
+           			    	this.height_cm = dis.readFloat();
+           				}
+					
+					this.preferred_foot = readString(dis);
+					
+					this.body_type = readString(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -472,7 +682,7 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		
 					// String
 				
-						writeString(this.name,dos);
+						writeString(this.shirt_name,dos);
 					
 					// String
 				
@@ -481,6 +691,36 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 					// String
 				
 						writeString(this.nationality,dos);
+					
+					// Float
+				
+						if(this.weight_kgs == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeFloat(this.weight_kgs);
+		            	}
+					
+					// String
+				
+						writeString(this.positions,dos);
+					
+					// Float
+				
+						if(this.height_cm == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeFloat(this.height_cm);
+		            	}
+					
+					// String
+				
+						writeString(this.preferred_foot,dos);
+					
+					// String
+				
+						writeString(this.body_type,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -495,7 +735,7 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		
 					// String
 				
-						writeString(this.name,dos);
+						writeString(this.shirt_name,dos);
 					
 					// String
 				
@@ -504,6 +744,36 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 					// String
 				
 						writeString(this.nationality,dos);
+					
+					// Float
+				
+						if(this.weight_kgs == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeFloat(this.weight_kgs);
+		            	}
+					
+					// String
+				
+						writeString(this.positions,dos);
+					
+					// Float
+				
+						if(this.height_cm == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeFloat(this.height_cm);
+		            	}
+					
+					// String
+				
+						writeString(this.preferred_foot,dos);
+					
+					// String
+				
+						writeString(this.body_type,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -518,9 +788,14 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append("[");
-		sb.append("name="+name);
+		sb.append("shirt_name="+shirt_name);
 		sb.append(",full_name="+full_name);
 		sb.append(",nationality="+nationality);
+		sb.append(",weight_kgs="+String.valueOf(weight_kgs));
+		sb.append(",positions="+positions);
+		sb.append(",height_cm="+String.valueOf(height_cm));
+		sb.append(",preferred_foot="+preferred_foot);
+		sb.append(",body_type="+body_type);
 	    sb.append("]");
 
 	    return sb.toString();
@@ -854,24 +1129,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					return this.composure;
 				}
 				
-			    public String marking;
-
-				public String getMarking () {
-					return this.marking;
-				}
-				
-			    public String standing_tackle;
-
-				public String getStanding_tackle () {
-					return this.standing_tackle;
-				}
-				
-			    public String sliding_tackle;
-
-				public String getSliding_tackle () {
-					return this.sliding_tackle;
-				}
-				
 
 
 
@@ -1039,12 +1296,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					
 					this.composure = readString(dis);
 					
-					this.marking = readString(dis);
-					
-					this.standing_tackle = readString(dis);
-					
-					this.sliding_tackle = readString(dis);
-					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
 
@@ -1162,12 +1413,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					this.penalties = readString(dis);
 					
 					this.composure = readString(dis);
-					
-					this.marking = readString(dis);
-					
-					this.standing_tackle = readString(dis);
-					
-					this.sliding_tackle = readString(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1379,18 +1624,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.composure,dos);
 					
-					// String
-				
-						writeString(this.marking,dos);
-					
-					// String
-				
-						writeString(this.standing_tackle,dos);
-					
-					// String
-				
-						writeString(this.sliding_tackle,dos);
-					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
         }
@@ -1594,18 +1827,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.composure,dos);
 					
-					// String
-				
-						writeString(this.marking,dos);
-					
-					// String
-				
-						writeString(this.standing_tackle,dos);
-					
-					// String
-				
-						writeString(this.sliding_tackle,dos);
-					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
         }
@@ -1667,9 +1888,6 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		sb.append(",vision="+vision);
 		sb.append(",penalties="+penalties);
 		sb.append(",composure="+composure);
-		sb.append(",marking="+marking);
-		sb.append(",standing_tackle="+standing_tackle);
-		sb.append(",sliding_tackle="+sliding_tackle);
 	    sb.append("]");
 
 	    return sb.toString();
@@ -1843,9 +2061,14 @@ final String applicationName_tMongoDBOutput_1 = "Talend";
             DBObjectUtil_tMongoDBOutput_1 queryObjectUtil_tMongoDBOutput_1=new DBObjectUtil_tMongoDBOutput_1();
             java.util.Map<String, String> pathMap_tMongoDBOutput_1=new java.util.HashMap<>();
 
-                pathMap_tMongoDBOutput_1.put("name","");
+                pathMap_tMongoDBOutput_1.put("shirt_name","");
                 pathMap_tMongoDBOutput_1.put("full_name","");
                 pathMap_tMongoDBOutput_1.put("nationality","");
+                pathMap_tMongoDBOutput_1.put("weight_kgs","");
+                pathMap_tMongoDBOutput_1.put("positions","");
+                pathMap_tMongoDBOutput_1.put("height_cm","");
+                pathMap_tMongoDBOutput_1.put("preferred_foot","");
+                pathMap_tMongoDBOutput_1.put("body_type","");
 
 
 
@@ -1859,17 +2082,18 @@ final String applicationName_tMongoDBOutput_1 = "Talend";
             // Empty client credentials list
             java.util.List<com.mongodb.MongoCredential> mongoCredentialList_tMongoDBOutput_1 = new java.util.ArrayList<com.mongodb.MongoCredential>();
 
-                com.mongodb.ServerAddress serverAddress_tMongoDBOutput_1 = new com.mongodb.ServerAddress("192.168.0.31", 27017);
+                com.mongodb.ServerAddress serverAddress_tMongoDBOutput_1 = new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue());
                 mongo_tMongoDBOutput_1 = new com.mongodb.MongoClient(serverAddress_tMongoDBOutput_1, mongoCredentialList_tMongoDBOutput_1, clientOptions_tMongoDBOutput_1);
 
 
             resourceMap.put("mongo_tMongoDBOutput_1", mongo_tMongoDBOutput_1);
-                db_tMongoDBOutput_1 = mongo_tMongoDBOutput_1.getDatabase("playersdata");
+                db_tMongoDBOutput_1 = mongo_tMongoDBOutput_1.getDatabase(context.mongo_database);
 
 
 
 
-    com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBOutput_1 = db_tMongoDBOutput_1.getCollection("silver");
+        db_tMongoDBOutput_1.getCollection(context.mongo_collection_silver).drop();
+    com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBOutput_1 = db_tMongoDBOutput_1.getCollection(context.mongo_collection_silver);
 
 
  
@@ -1986,19 +2210,19 @@ final String applicationName_tMongoDBInput_1 = "Talend";
             // Empty client credentials list
             java.util.List<com.mongodb.MongoCredential> mongoCredentialList_tMongoDBInput_1 = new java.util.ArrayList<com.mongodb.MongoCredential>();
 
-                com.mongodb.ServerAddress serverAddress_tMongoDBInput_1 = new com.mongodb.ServerAddress("192.168.0.31", 27017);
+                com.mongodb.ServerAddress serverAddress_tMongoDBInput_1 = new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue());
                 mongo_tMongoDBInput_1 = new com.mongodb.MongoClient(serverAddress_tMongoDBInput_1, mongoCredentialList_tMongoDBInput_1, clientOptions_tMongoDBInput_1);
 
 
             resourceMap.put("mongo_tMongoDBInput_1", mongo_tMongoDBInput_1);
-                db_tMongoDBInput_1 = mongo_tMongoDBInput_1.getDatabase("playersdata");
+                db_tMongoDBInput_1 = mongo_tMongoDBInput_1.getDatabase(context.mongo_database);
 
 
 
 
 
 				
-					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_1 = db_tMongoDBInput_1.getCollection("bronze");
+					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_1 = db_tMongoDBInput_1.getCollection(context.mongo_collection_bronze);
 				
 				
 				
@@ -2127,9 +2351,6 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 				pathMap_tMongoDBInput_1.put("vision","");
 				pathMap_tMongoDBInput_1.put("penalties","");
 				pathMap_tMongoDBInput_1.put("composure","");
-				pathMap_tMongoDBInput_1.put("marking","");
-				pathMap_tMongoDBInput_1.put("standing_tackle","");
-				pathMap_tMongoDBInput_1.put("sliding_tackle","");
 
 						
 					com.mongodb.client.MongoCursor<org.bson.Document> cursor_tMongoDBInput_1 = findIterable_tMongoDBInput_1.iterator();
@@ -2330,18 +2551,6 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 					
 				row2.composure = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("marking"),"marking",o_tMongoDBInput_1);
-					
-				row2.marking = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("standing_tackle"),"standing_tackle",o_tMongoDBInput_1);
-					
-				row2.standing_tackle = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("sliding_tackle"),"sliding_tackle",o_tMongoDBInput_1);
-					
-				row2.sliding_tackle = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
 
 
  
@@ -2438,17 +2647,15 @@ coucou = null;
 
 
 // # Output table : 'coucou'
-// # Filter conditions 
-if( 
-
-row2.nationality.equals("France")
-
- ) {
-coucou_tmp.name = row2.name ;
+coucou_tmp.shirt_name = row2.name ;
 coucou_tmp.full_name = row2.full_name ;
 coucou_tmp.nationality = row2.nationality ;
+coucou_tmp.weight_kgs = Float.parseFloat(row2.weight_kgs) ;
+coucou_tmp.positions = row2.positions ;
+coucou_tmp.height_cm = Float.parseFloat(row2.height_cm) ;
+coucou_tmp.preferred_foot = row2.preferred_foot ;
+coucou_tmp.body_type = row2.body_type ;
 coucou = coucou_tmp;
-} // closing filter/reject
 // ###############################
 
 } // end of Var scope
@@ -2525,9 +2732,14 @@ try{
 				
 
 				
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("name"),"name", coucou.name);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("shirt_name"),"shirt_name", coucou.shirt_name);
                                         updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("full_name"),"full_name", coucou.full_name);
                                         updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("nationality"),"nationality", coucou.nationality);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("weight_kgs"),"weight_kgs", coucou.weight_kgs);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("positions"),"positions", coucou.positions);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("height_cm"),"height_cm", coucou.height_cm);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("preferred_foot"),"preferred_foot", coucou.preferred_foot);
+                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("body_type"),"body_type", coucou.body_type);
 				org.bson.Document updateObj_tMongoDBOutput_1 = updateObjectUtil_tMongoDBOutput_1.getObject();
 				
 						coll_tMongoDBOutput_1.insertOne(updateObj_tMongoDBOutput_1);
@@ -3015,6 +3227,90 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
             }
             class ContextProcessing {
                 private void processContext_0() {
+                        context.setContextType("mongo_collection_bronze", "id_String");
+                        if(context.getStringValue("mongo_collection_bronze") == null) {
+                            context.mongo_collection_bronze = null;
+                        } else {
+                            context.mongo_collection_bronze=(String) context.getProperty("mongo_collection_bronze");
+                        }
+                        context.setContextType("mongo_collection_silver", "id_String");
+                        if(context.getStringValue("mongo_collection_silver") == null) {
+                            context.mongo_collection_silver = null;
+                        } else {
+                            context.mongo_collection_silver=(String) context.getProperty("mongo_collection_silver");
+                        }
+                        context.setContextType("mongo_database", "id_String");
+                        if(context.getStringValue("mongo_database") == null) {
+                            context.mongo_database = null;
+                        } else {
+                            context.mongo_database=(String) context.getProperty("mongo_database");
+                        }
+                        context.setContextType("mongo_port", "id_String");
+                        if(context.getStringValue("mongo_port") == null) {
+                            context.mongo_port = null;
+                        } else {
+                            context.mongo_port=(String) context.getProperty("mongo_port");
+                        }
+                        context.setContextType("mongo_server", "id_String");
+                        if(context.getStringValue("mongo_server") == null) {
+                            context.mongo_server = null;
+                        } else {
+                            context.mongo_server=(String) context.getProperty("mongo_server");
+                        }
+                        context.setContextType("postgres_database", "id_String");
+                        if(context.getStringValue("postgres_database") == null) {
+                            context.postgres_database = null;
+                        } else {
+                            context.postgres_database=(String) context.getProperty("postgres_database");
+                        }
+                        context.setContextType("postgres_password", "id_String");
+                        if(context.getStringValue("postgres_password") == null) {
+                            context.postgres_password = null;
+                        } else {
+                            context.postgres_password=(String) context.getProperty("postgres_password");
+                        }
+                        context.setContextType("postgres_port", "id_String");
+                        if(context.getStringValue("postgres_port") == null) {
+                            context.postgres_port = null;
+                        } else {
+                            context.postgres_port=(String) context.getProperty("postgres_port");
+                        }
+                        context.setContextType("postgres_schema", "id_String");
+                        if(context.getStringValue("postgres_schema") == null) {
+                            context.postgres_schema = null;
+                        } else {
+                            context.postgres_schema=(String) context.getProperty("postgres_schema");
+                        }
+                        context.setContextType("postgres_server", "id_String");
+                        if(context.getStringValue("postgres_server") == null) {
+                            context.postgres_server = null;
+                        } else {
+                            context.postgres_server=(String) context.getProperty("postgres_server");
+                        }
+                        context.setContextType("postgres_table_players", "id_String");
+                        if(context.getStringValue("postgres_table_players") == null) {
+                            context.postgres_table_players = null;
+                        } else {
+                            context.postgres_table_players=(String) context.getProperty("postgres_table_players");
+                        }
+                        context.setContextType("postgres_table_nationality", "id_String");
+                        if(context.getStringValue("postgres_table_nationality") == null) {
+                            context.postgres_table_nationality = null;
+                        } else {
+                            context.postgres_table_nationality=(String) context.getProperty("postgres_table_nationality");
+                        }
+                        context.setContextType("postgres_user", "id_String");
+                        if(context.getStringValue("postgres_user") == null) {
+                            context.postgres_user = null;
+                        } else {
+                            context.postgres_user=(String) context.getProperty("postgres_user");
+                        }
+                        context.setContextType("source", "id_String");
+                        if(context.getStringValue("source") == null) {
+                            context.source = null;
+                        } else {
+                            context.source=(String) context.getProperty("source");
+                        }
                 } 
                 public void processAllContext() {
                         processContext_0();
@@ -3028,7 +3324,35 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
         }
 
         // get context value from parent directly
-        if (parentContextMap != null && !parentContextMap.isEmpty()) {
+        if (parentContextMap != null && !parentContextMap.isEmpty()) {if (parentContextMap.containsKey("mongo_collection_bronze")) {
+                context.mongo_collection_bronze = (String) parentContextMap.get("mongo_collection_bronze");
+            }if (parentContextMap.containsKey("mongo_collection_silver")) {
+                context.mongo_collection_silver = (String) parentContextMap.get("mongo_collection_silver");
+            }if (parentContextMap.containsKey("mongo_database")) {
+                context.mongo_database = (String) parentContextMap.get("mongo_database");
+            }if (parentContextMap.containsKey("mongo_port")) {
+                context.mongo_port = (String) parentContextMap.get("mongo_port");
+            }if (parentContextMap.containsKey("mongo_server")) {
+                context.mongo_server = (String) parentContextMap.get("mongo_server");
+            }if (parentContextMap.containsKey("postgres_database")) {
+                context.postgres_database = (String) parentContextMap.get("postgres_database");
+            }if (parentContextMap.containsKey("postgres_password")) {
+                context.postgres_password = (String) parentContextMap.get("postgres_password");
+            }if (parentContextMap.containsKey("postgres_port")) {
+                context.postgres_port = (String) parentContextMap.get("postgres_port");
+            }if (parentContextMap.containsKey("postgres_schema")) {
+                context.postgres_schema = (String) parentContextMap.get("postgres_schema");
+            }if (parentContextMap.containsKey("postgres_server")) {
+                context.postgres_server = (String) parentContextMap.get("postgres_server");
+            }if (parentContextMap.containsKey("postgres_table_players")) {
+                context.postgres_table_players = (String) parentContextMap.get("postgres_table_players");
+            }if (parentContextMap.containsKey("postgres_table_nationality")) {
+                context.postgres_table_nationality = (String) parentContextMap.get("postgres_table_nationality");
+            }if (parentContextMap.containsKey("postgres_user")) {
+                context.postgres_user = (String) parentContextMap.get("postgres_user");
+            }if (parentContextMap.containsKey("source")) {
+                context.source = (String) parentContextMap.get("source");
+            }
         }
 
         //Resume: init the resumeUtil
@@ -3257,6 +3581,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     90769 characters generated by Talend Open Studio for Big Data 
- *     on the 4 décembre 2025 à 00:16:00 CET
+ *     104573 characters generated by Talend Open Studio for Big Data 
+ *     on the 4 décembre 2025 à 18:35:10 CET
  ************************************************************************************************/
