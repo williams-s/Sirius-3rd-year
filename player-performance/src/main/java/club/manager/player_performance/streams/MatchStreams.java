@@ -1,7 +1,6 @@
 package club.manager.player_performance.streams;
 
-import club.manager.player_performance.model.Player;
-
+import club.manager.commonlibrary.dto.PlayerStatsDTO;
 import club.manager.player_performance.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,38 +32,38 @@ public class MatchStreams {
     );
 
     @Bean
-    public KStream<String, Player> matchStream(StreamsBuilder builder) {
+    public KStream<String, PlayerStatsDTO> matchStream(StreamsBuilder builder) {
 
-        KStream<String, Player> matchEvents =
+        KStream<String, PlayerStatsDTO> matchEvents =
                 builder.stream("match-events", Consumed.with(Serdes.String(), Serdes.String()))
                         .mapValues(this::extractPayload)
                         .filter((k, v) -> v != null);
 
-        KStream<String, Player> playerPosition =
+        KStream<String, PlayerStatsDTO> playerPosition =
                 builder.stream("players-position", Consumed.with(Serdes.String(), Serdes.String()))
                         .mapValues(this::extractPayload)
                         .filter((k, v) -> v != null);
 
-        KStream<String, Player> playerHealth =
+        KStream<String, PlayerStatsDTO> playerHealth =
                 builder.stream("players-health", Consumed.with(Serdes.String(), Serdes.String()))
                         .mapValues(this::extractPayload)
                         .filter((k, v) -> v != null);
 
-        KStream<String, Player> matchByPlayer =
+        KStream<String, PlayerStatsDTO> matchByPlayer =
                 matchEvents.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
-        KStream<String, Player> positionByPlayer =
+        KStream<String, PlayerStatsDTO> positionByPlayer =
                 playerPosition.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
-        KStream<String, Player> healthByPlayer =
+        KStream<String, PlayerStatsDTO> healthByPlayer =
                 playerHealth.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
-        Serde<Player> playerSerde = playerSerde();
+        Serde<PlayerStatsDTO> playerSerde = playerSerde();
 
-        StreamJoined<String, Player, Player> joined =
+        StreamJoined<String, PlayerStatsDTO, PlayerStatsDTO> joined =
                 StreamJoined.with(Serdes.String(), playerSerde, playerSerde);
 
-        KStream<String, Player> playerPositionAndHealth =
+        KStream<String, PlayerStatsDTO> playerPositionAndHealth =
                 positionByPlayer.join(
                         healthByPlayer,
                         playerService::mergeTopics,
@@ -72,34 +71,34 @@ public class MatchStreams {
                         joined
                 );
 
-        KStream<String, Player> allPlayerInfos =
+        KStream<String, PlayerStatsDTO> allPlayerInfos =
                 playerPositionAndHealth.leftJoin(
                         matchByPlayer,
                         playerService::mergeTopics,
                         JoinWindows.ofTimeDifferenceWithNoGrace(Duration.ofMillis(100)),
                         joined
                 );
-        allPlayerInfos.peek((k, player) -> playerService.addStats(player));
-        allPlayerInfos.filter((k, v) -> v.getHasBall()).peek((k, v) -> log.info("Player info [{}] : {}", k, v));
+        allPlayerInfos.peek((k, playerStatsDTO) -> playerService.addStats(playerStatsDTO)).to("front-data", Produced.with(Serdes.String(), playerSerde));
+        //allPlayerInfos.filter((k, v) -> v.getHasBall()).peek((k, v) -> log.info("Player info [{}] : {}", k, v));
         return allPlayerInfos;
     }
 
-    private Player extractPayload(String value) {
+    private PlayerStatsDTO extractPayload(String value) {
         try {
             JsonNode root = objectMapper.readTree(value);
             if (root.has("payload")) {
-                return objectMapper.readValue(root.get("payload").asString(), Player.class);
+                return objectMapper.readValue(root.get("payload").asString(), PlayerStatsDTO.class);
             }
-            return objectMapper.treeToValue(root, Player.class);
+            return objectMapper.treeToValue(root, PlayerStatsDTO.class);
         } catch (Exception e) {
             log.error("Invalid JSON: {}", value, e);
             return null;
         }
     }
 
-    private Serde<Player> playerSerde() {
+    private Serde<PlayerStatsDTO> playerSerde() {
 
-        Serializer<Player> serializer = (key, data) -> {
+        Serializer<PlayerStatsDTO> serializer = (key, data) -> {
             try {
                 return objectMapper.writeValueAsBytes(data);
             } catch (Exception e) {
@@ -107,9 +106,9 @@ public class MatchStreams {
             }
         };
 
-        Deserializer<Player> deserializer = (key, data) -> {
+        Deserializer<PlayerStatsDTO> deserializer = (key, data) -> {
             try {
-                return objectMapper.readValue(data, Player.class);
+                return objectMapper.readValue(data, PlayerStatsDTO.class);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

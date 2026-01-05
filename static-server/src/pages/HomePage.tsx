@@ -35,6 +35,9 @@ const HomePage: React.FC = () => {
             client.subscribe("/topic/matchHistory", (message) => {
                 console.log("Message reçu:", message.body);
             });
+            client.subscribe("/topic/live-match", (message) => {
+                //console.log("Message reçu:", message.body);
+            })
         };
 
         client.onStompError = (frame) => {

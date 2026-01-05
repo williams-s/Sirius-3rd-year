@@ -26,11 +26,11 @@ public class WebSocketEventListener {
         String sessionId = accessor.getSessionId();
         log.debug("Nouvelle connexion STOMP : {}", sessionId);
         //if ("/user/queue/matchHistory".equals(accessor.getDestination())){
-            log.debug("Sending match history to session: {}", sessionId);
+            //log.debug("Sending match history to session: {}", sessionId);
             //List<MatchResponseDto> matches = matchService.getMatches();
-            List<MatchResponseDto> matches = randomMatches();
+            //List<MatchResponseDto> matches = randomMatches();
             //webSocketService.sendMatchHistoryToSession(sessionId, matches);
-            webSocketService.sendMatchHistoryToTopic(matches, "matchHistory");
+            //webSocketService.sendMatchHistoryToTopic(matches, "matchHistory");
         //}
     }
 

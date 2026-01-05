@@ -1,18 +1,18 @@
-package club.manager.player_performance.model;
+package club.manager.commonlibrary.dto;
 
-import club.manager.player_performance.enums.EventType;
-import club.manager.player_performance.enums.Position;
+import club.manager.commonlibrary.enums.EventType;
+import club.manager.commonlibrary.enums.Position;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Player {
+public class PlayerStatsDTO {
     @JsonProperty("match_id")
     private Long matchId;
 
@@ -42,6 +42,6 @@ public class Player {
 
     private Position position;
 
-    private Stats stats;
+    private StatsDTO statsDTO;
 
 }

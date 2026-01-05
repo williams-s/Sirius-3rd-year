@@ -1,4 +1,4 @@
-package club.manager.player_performance.enums;
+package club.manager.commonlibrary.enums;
 
 public enum EventType {
     PASS_SUCCESS,

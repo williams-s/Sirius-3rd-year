@@ -1,7 +1,8 @@
 package club.manager.player_performance.service;
 
-import club.manager.player_performance.model.Player;
-import club.manager.player_performance.model.Stats;
+import club.manager.commonlibrary.dto.PlayerStatsDTO;
+import club.manager.commonlibrary.dto.StatsDTO;
+import club.manager.commonlibrary.keys.PlayerKey;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,10 @@ import java.util.HashMap;
 @Slf4j
 public class PlayerService {
 
-    public record PlayerKey(Long matchId, Long playerId) {}
+    public final HashMap<PlayerKey, PlayerStatsDTO> playersInMatch = new HashMap<>();
 
-    public final HashMap<PlayerKey, Player> playersInMatch = new HashMap<>();
-
-    public Player mergeTopics(Player p1, Player p2) {
-        Player res = null;
+    public PlayerStatsDTO mergeTopics(PlayerStatsDTO p1, PlayerStatsDTO p2) {
+        PlayerStatsDTO res = null;
         if (p1 == null) {
             res = merge(getPlayerInMatch(p2),p2);
         }
@@ -31,9 +30,9 @@ public class PlayerService {
         return res;
     }
 
-    private Player merge(Player p1, Player p2) {
+    private PlayerStatsDTO merge(PlayerStatsDTO p1, PlayerStatsDTO p2) {
 
-        Player.PlayerBuilder merge = Player.builder()
+        PlayerStatsDTO.PlayerStatsDTOBuilder merge = PlayerStatsDTO.builder()
                 .matchId(p1.getMatchId())
                 .playerId(p1.getPlayerId())
                 .team(p1.getTeam())
@@ -46,7 +45,7 @@ public class PlayerService {
                 .position(p1.getPosition())
                 .temperature(p1.getTemperature())
                 .eventType(p1.getEventType())
-                .stats(p1.getStats())
+                .statsDTO(p1.getStatsDTO())
                 .timestamp(p1.getTimestamp());
 
         if (p2.getX() != null) merge.x(p2.getX());
@@ -63,65 +62,65 @@ public class PlayerService {
         return merge.build();
     }
 
-    public Player getPlayerInMatch(Player p) {
+    public PlayerStatsDTO getPlayerInMatch(PlayerStatsDTO p) {
         addPlayerInMatchIfNotExist(p);
         return playersInMatch.get(new PlayerKey(p.getMatchId(), p.getPlayerId()));
     }
 
-    public void addPlayerInMatchIfNotExist(Player p) {
+    public void addPlayerInMatchIfNotExist(PlayerStatsDTO p) {
         if (!playersInMatch.containsKey(new PlayerKey(p.getMatchId(), p.getPlayerId()))) {
-            p.setStats(new Stats());
+            p.setStatsDTO(new StatsDTO());
             playersInMatch.put(new PlayerKey(p.getMatchId(), p.getPlayerId()), p);
         }
     }
 
 
-    public void addStats(Player p) {
+    public void addStats(PlayerStatsDTO p) {
         addPlayerInMatchIfNotExist(p);
         if (p.getEventType() != null) {
             matchEventType(p);
         }
         if (p.getHasBall() != null) {
             if (p.getHasBall()) {
-                Stats stats = p.getStats();
-                stats.setTouches(stats.getTouches() + 1);
+                StatsDTO statsDTO = p.getStatsDTO();
+                statsDTO.setTouches(statsDTO.getTouches() + 1);
             }
         }
-        Stats stats = p.getStats();
-        stats.setDistanceCovered(stats.getDistanceCovered() + p.getDistanceCovered());
+        StatsDTO statsDTO = p.getStatsDTO();
+        statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getDistanceCovered());
     }
 
-    private void matchEventType(Player p) {
-        Stats stats = p.getStats();
+    private void matchEventType(PlayerStatsDTO p) {
+        StatsDTO statsDTO = p.getStatsDTO();
         switch (p.getEventType()) {
-            case GOAL -> stats.setGoals(stats.getGoals() + 1);
-            case ASSIST -> stats.setAssists(stats.getAssists() + 1);
+            case GOAL -> statsDTO.setGoals(statsDTO.getGoals() + 1);
+            case ASSIST -> statsDTO.setAssists(statsDTO.getAssists() + 1);
 
-            case SHOT_MISS -> stats.setShots(stats.getShots() + 1);
+            case SHOT_MISS -> statsDTO.setShots(statsDTO.getShots() + 1);
             case SHOT_ON_TARGET -> {
-                stats.setShots(stats.getShots() + 1);
-                stats.setShotsOnTarget(stats.getShotsOnTarget() + 1);
+                statsDTO.setShots(statsDTO.getShots() + 1);
+                statsDTO.setShotsOnTarget(statsDTO.getShotsOnTarget() + 1);
             }
 
-            case PASS_FAILED -> stats.setPasses(stats.getPasses() + 1);
+            case PASS_FAILED -> statsDTO.setPasses(statsDTO.getPasses() + 1);
             case PASS_SUCCESS -> {
-                stats.setPassesSuccess(stats.getPassesSuccess() + 1);
-                stats.setPasses(stats.getPasses() + 1);
+                statsDTO.setPassesSuccess(statsDTO.getPassesSuccess() + 1);
+                statsDTO.setPasses(statsDTO.getPasses() + 1);
             }
 
-            case TACKLE_FAILED -> stats.setTackles(stats.getTackles() + 1);
+            case TACKLE_FAILED -> statsDTO.setTackles(statsDTO.getTackles() + 1);
             case TACKLE_SUCCESS -> {
-                stats.setTackles(stats.getTackles() + 1);
-                stats.setTacklesSuccess(stats.getTacklesSuccess() + 1);
+                statsDTO.setTackles(statsDTO.getTackles() + 1);
+                statsDTO.setTacklesSuccess(statsDTO.getTacklesSuccess() + 1);
             }
 
-            case SHOT_SAVED -> stats.setSaves(stats.getSaves() + 1);
-            case INTERCEPTION -> stats.setInterceptions(stats.getInterceptions() + 1);
+            case SHOT_SAVED -> statsDTO.setSaves(statsDTO.getSaves() + 1);
+            case INTERCEPTION -> statsDTO.setInterceptions(statsDTO.getInterceptions() + 1);
 
-            case DRIBBLE_FAILED -> stats.setDribbles(stats.getDribbles() + 1);
+            case DRIBBLE_FAILED -> statsDTO.setDribbles(statsDTO.getDribbles() + 1);
             case DRIBBLE_SUCCESS -> {
-                stats.setDribbles(stats.getDribbles() + 1);
-                stats.setDribblesSuccess(stats.getDribblesSuccess() + 1);
+                statsDTO.setDribbles(statsDTO.getDribbles() + 1);
+                statsDTO.setDribblesSuccess(statsDTO.getDribblesSuccess() + 1);
             }
 
         }

@@ -1,4 +1,4 @@
-package club.manager.player_performance.model;
+package club.manager.commonlibrary.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Stats {
+public class StatsDTO {
 
     private Integer goals = 0;
     private Integer assists = 0;
