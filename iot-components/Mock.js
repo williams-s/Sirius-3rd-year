@@ -53,8 +53,8 @@ class MockIoTMatch {
         this.fieldWidth = 105;
         this.fieldHeight = 68;
         this.matchId = match_id;
-        this.teamA = this.initPlayers(TEAM_A, 11, 20);
-        this.teamB = this.initPlayers(TEAM_B, 11, 85);
+        this.teamA = this.initPlayers(TEAM_A, 11, 20, 1);
+        this.teamB = this.initPlayers(TEAM_B, 11, 85, 12);
 
         this.ball = {x: 52.5, y: 34, z: 0, speed: 0};
         this.ballOwner = null;
@@ -65,15 +65,15 @@ class MockIoTMatch {
         this.matchTime = 0;
     }
 
-    initPlayers(team, count, xStart) {
+    initPlayers(team, count, xStart, idStart = 1) {
         const players = [];
         const positions = ["GOALKEEPER", "DEFENDER", "DEFENDER", "DEFENDER", "DEFENDER",
             "MIDFIELDER", "MIDFIELDER", "MIDFIELDER", "FORWARD", "FORWARD", "FORWARD"];
-
+        let id = idStart;
         for (let i = 0; i < count; i++) {
             const position = i < positions.length ? positions[i] : "MIDFIELDER";
             players.push({
-                id: `${team}_P${i + 1}`,
+                id: id,
                 team: team,
                 position: position,
                 x: xStart + Math.random() * 20 - 10,
@@ -85,6 +85,7 @@ class MockIoTMatch {
                 hasBall: false,
                 carryStreak: 0
             });
+            id++;
         }
         return players;
     }
@@ -208,6 +209,7 @@ class MockIoTMatch {
                 this.ballOwner = opponent;
                 result.intercepted_by = opponent;
                 this.publishActionEvent(player, "PASS_FAILED", opponent);
+                this.publishActionEvent(opponent, "INTERCEPTION", player);
             }
         } else if (actionType === "carry") {
             player.carryStreak++;
@@ -215,7 +217,7 @@ class MockIoTMatch {
             if (success) {
                 const direction = player.team === TEAM_A ? 1 : -1;
 
-                const speedBonus = Math.min(player.carryStreak * 0.5, 3); // Max +3m
+                const speedBonus = Math.min(player.carryStreak * 0.5, 3);
                 const baseDistance = 2 + speedBonus;
 
                 player.x += direction * (baseDistance + Math.random() * 2);
@@ -237,7 +239,7 @@ class MockIoTMatch {
 
                 const direction = player.team === TEAM_A ? 1 : -1;
                 this.ball.x = player.x + direction * 3;
-                this.ball.y = Math.random() < 0.5 ? 0 : this.fieldHeight; // Sort en haut ou en bas
+                this.ball.y = Math.random() < 0.5 ? 0 : this.fieldHeight;
 
                 const [opponent, _] = this.findClosestOpponent(player);
                 this.ballOwner = opponent;
@@ -247,19 +249,20 @@ class MockIoTMatch {
             }
         } else if (actionType === "dribble") {
             player.carryStreak = 0;
-
+            const [opponent, _] = this.findClosestOpponent(player);
             if (success) {
                 const direction = player.team === TEAM_A ? 1 : -1;
                 player.x += direction * (Math.random() * 4 + 3);
                 player.y += Math.random() * 6 - 3;
                 this.ball.x = player.x;
                 this.ball.y = player.y;
-                this.publishActionEvent(player, "DRIBBLE_SUCCESS");
+                this.publishActionEvent(player, "DRIBBLE_SUCCESS", opponent);
+                this.publishActionEvent(opponent, "TACKLE_FAILED", player);
             } else {
-                const [opponent, _] = this.findClosestOpponent(player);
                 this.ballOwner = opponent;
                 result.tackled_by = opponent;
                 this.publishActionEvent(player, "DRIBBLE_FAILED", opponent);
+                this.publishActionEvent(opponent, "TACKLE_SUCCESS", player);
             }
         } else if (actionType === "shot") {
             player.carryStreak = 0;
@@ -376,7 +379,7 @@ class MockIoTMatch {
         this.ball.x = 52.5;
         this.ball.y = 34;
 
-        console.log(`⚽ Coup d'envoi! ${player1.id} passe à ${player2.id}`);
+        console.log(`Coup d'envoi! ${player1.id} passe à ${player2.id}`);
 
         this.ball.x = player2.x + Math.random() - 0.5;
         this.ball.y = player2.y + Math.random() - 0.5;
@@ -393,8 +396,7 @@ class MockIoTMatch {
             player_id: player.id,
             team: player.team,
             position: player.position,
-            match_time: this.matchTime,
-            carry_streak: player.carryStreak || 0
+            match_time: this.matchTime
         };
 
         if (target) {
@@ -402,12 +404,7 @@ class MockIoTMatch {
         }
 
         this.client.publish("match/events", JSON.stringify(data));
-
-        if (actionType === "CARRY_SUCCESS" && player.carryStreak > 1) {
-            console.log(`🏃 ${actionType}: ${player.id} (${player.position}) - Streak: ${player.carryStreak}`);
-        } else {
-            console.log(`🎯 ${actionType}: ${player.id} (${player.position})`);
-        }
+        console.log(`${actionType}: ${player.id} (${player.position})`);
     }
 
     publishPlayersHealth() {
@@ -437,8 +434,7 @@ class MockIoTMatch {
                 x: Math.round(player.x * 100) / 100,
                 y: Math.round(player.y * 100) / 100,
                 speed: Math.round(player.speed * 100) / 100,
-                has_ball: player.hasBall || false,
-                carry_streak: player.carryStreak || 0
+                has_ball: player.hasBall || false
             };
             this.client.publish("players/position", JSON.stringify(data));
         }
@@ -470,10 +466,19 @@ class MockIoTMatch {
             goalkeeper_id: goalkeeper.id
         };
         this.client.publish("match/events", JSON.stringify(data));
-        console.log(`⚽ BUT! ${team} marque! Score: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+        const data2 = {
+            match_id: this.matchId,
+            timestamp: new Date().toISOString(),
+            event_type: "SCORE_UPDATE",
+            team: team,
+            match_time: this.matchTime,
+            score: {...this.score}
+        }
+        this.client.publish("match/state", JSON.stringify(data2));
+        console.log(`BUT! ${team} marque! Score: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
     }
 
-    publishMatchEvent(eventType) {
+    publishMatchState(eventType) {
         const data = {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
@@ -481,7 +486,7 @@ class MockIoTMatch {
             match_time: this.matchTime,
             score: {...this.score}
         };
-        this.client.publish("match/events", JSON.stringify(data));
+        this.client.publish("match/state", JSON.stringify(data));
     }
 
     simulateStep() {
@@ -500,25 +505,21 @@ class MockIoTMatch {
     startSimulation(duration = 90, actionsPerSecond = 3) {
         console.log(`Début du match! Durée: ${duration} secondes`);
 
-        this.publishMatchEvent("KICK_OFF");
+        this.publishMatchState("KICK_OFF");
         this.kickoff();
         this.running = true;
 
         const interval = setInterval(async () => {
             if (!this.running || this.matchTime >= duration) {
                 clearInterval(interval);
-                this.publishMatchEvent("FULL_TIME");
-                console.log(`\n🏁 Fin du match! Score final: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+                this.publishMatchState("FULL_TIME");
+                console.log(`\nFin du match! Score final: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
                 this.stop();
                 return;
             }
             for (let i = 0; i < actionsPerSecond; i++) {
                 this.simulateStep();
                 await new Promise(resolve => setTimeout(resolve, 1000 / actionsPerSecond));
-            }
-
-            if (this.matchTime % 10 === 0) {
-                console.log(`⏱️ Temps: ${this.matchTime}s | Score: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
             }
             this.matchTime++;
         }, 1000);
@@ -533,12 +534,12 @@ class MockIoTMatch {
     connect() {
         return new Promise((resolve) => {
             this.client.on('connect', () => {
-                console.log('✓ Connecté au broker MQTT');
+                console.log('Connecté au broker MQTT');
                 resolve(true);
             });
 
             this.client.on('error', (err) => {
-                console.error(`✗ Erreur de connexion: ${err}`);
+                console.error(`Erreur de connexion: ${err}`);
                 resolve(false);
             });
         });

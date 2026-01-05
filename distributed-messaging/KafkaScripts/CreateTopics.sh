@@ -3,3 +3,4 @@
 /opt/kafka/bin/kafka-topics.sh --create --topic players-health --bootstrap-server localhost:9092
 /opt/kafka/bin/kafka-topics.sh --create --topic match-events --bootstrap-server localhost:9092
 /opt/kafka/bin/kafka-topics.sh --create --topic ball-events --bootstrap-server localhost:9092
+/opt/kafka/bin/kafka-topics.sh --create --topic match-state --bootstrap-server localhost:9092

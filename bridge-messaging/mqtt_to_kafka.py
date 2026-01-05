@@ -17,16 +17,18 @@ mqtt_topic_to_kafka_topic = {
     "players/health": "players-health",
     "players/position": "players-position",
     "ball/events": "ball-events",
-    "match/events": "match-events"
+    "match/events": "match-events",
+    "match/state": "match-state"
 }
 
 
 def on_connect(client, userdata, flags, rc):
-    print("✅ Connected to MQTT")
+    print("Connected to MQTT")
     client.subscribe("players/health")
     client.subscribe("players/position")
     client.subscribe("ball/events")
     client.subscribe("match/events")
+    client.subscribe("match/state")
 
 
 def on_message(client, userdata, msg):
