@@ -1,4 +1,6 @@
 const mqtt = require('mqtt');
+const {OPTIONS_MIDFIELDER,OPTIONS_DEFENDER,OPTIONS_FORWARD, OPTIONS_GOALKEEPER, SUCCESS_RATES} = require("./Constants");
+const {getPositionsWithPlacement} = require("./Positions");
 
 const args = process.argv.slice(2);
 const match_id = args[0];
@@ -6,44 +8,6 @@ const match_id = args[0];
 const TEAM_A = "PSG";
 const TEAM_B = "OM";
 
-const OPTIONS_MIDFIELDER = [
-    {action: "carry", probability: 4},
-    {action: "pass", probability: 3, to_position: "MIDFIELDER"},
-    {action: "pass", probability: 1.3, to_position: "FORWARD"},
-    {action: "pass", probability: 1.3, to_position: "DEFENDER"},
-    {action: "pass", probability: 0.01, to_position: "GOALKEEPER"},
-    {action: "dribble", probability: 0.3}
-];
-
-const OPTIONS_FORWARD = [
-    {action: "carry", probability: 3},
-    {action: "pass", probability: 1, to_position: "MIDFIELDER"},
-    {action: "pass", probability: 1, to_position: "FORWARD"},
-    {action: "pass", probability: 0.009, to_position: "DEFENDER"},
-    {action: "dribble", probability: 1.5}
-];
-
-const OPTIONS_DEFENDER = [
-    {action: "carry", probability: 3},
-    {action: "pass", probability: 2.5, to_position: "MIDFIELDER"},
-    {action: "pass", probability: 0.1, to_position: "FORWARD"},
-    {action: "pass", probability: 1.8, to_position: "DEFENDER"},
-    {action: "pass", probability: 0.2, to_position: "GOALKEEPER"},
-    {action: "dribble", probability: 0.2}
-];
-
-const OPTIONS_GOALKEEPER = [
-    {action: "pass", probability: 0.4, to_position: "MIDFIELDER"},
-    {action: "pass", probability: 0.05, to_position: "FORWARD"},
-    {action: "pass", probability: 1.0, to_position: "DEFENDER"}
-];
-
-const SUCCESS_RATES = {
-    "MIDFIELDER": {pass: 0.8, dribble: 0.6, carry: 0.95, shot: 0.1, tackle: 0.4},
-    "FORWARD": {pass: 0.6, dribble: 0.4, carry: 0.9, shot: 0.25, tackle: 0.2},
-    "DEFENDER": {pass: 0.85, dribble: 0.6, carry: 0.95, shot: 0.1, tackle: 0.7},
-    "GOALKEEPER": {pass: 0.95, carry: 0.98, save: 0.85}
-};
 
 class MockIoTMatch {
     constructor(broker = "mqtt://localhost:1883") {
@@ -53,8 +17,19 @@ class MockIoTMatch {
         this.fieldWidth = 105;
         this.fieldHeight = 68;
         this.matchId = match_id;
-        this.teamA = this.initPlayers(TEAM_A, 11, 20, 1);
-        this.teamB = this.initPlayers(TEAM_B, 11, 85, 12);
+        this.teamA = {
+            name : TEAM_A,
+            players : this.initPlayers("LEFT", TEAM_A, 11 ,1),
+            side : "LEFT"
+        };
+        this.teamB = {
+            name : TEAM_B,
+            players: this.initPlayers("RIGHT", TEAM_B, 11, 12),
+            side : "RIGHT"
+        };
+
+        console.log(this.teamA.players);
+        console.log(this.teamB.players);
 
         this.ball = {x: 52.5, y: 34, z: 0, speed: 0};
         this.ballOwner = null;
@@ -63,25 +38,30 @@ class MockIoTMatch {
         this.score[TEAM_A] = 0;
         this.score[TEAM_B] = 0;
         this.matchTime = 0;
+        this.matchTime90minutes = 0;
+        this.lastPasser = null;
     }
 
-    initPlayers(team, count, xStart, idStart = 1) {
+
+
+    initPlayers(side, team, count, idStart = 1) {
         const players = [];
-        const positions = ["GOALKEEPER", "DEFENDER", "DEFENDER", "DEFENDER", "DEFENDER",
-            "MIDFIELDER", "MIDFIELDER", "MIDFIELDER", "FORWARD", "FORWARD", "FORWARD"];
+        const positions = getPositionsWithPlacement(side, this.fieldWidth, this.fieldHeight);
         let id = idStart;
         for (let i = 0; i < count; i++) {
-            const position = i < positions.length ? positions[i] : "MIDFIELDER";
+            const positionWithPlacement = positions[i];
+            const position = positionWithPlacement.position;
             players.push({
                 id: id,
                 team: team,
+                side: side,
                 position: position,
-                x: xStart + Math.random() * 20 - 10,
-                y: Math.random() * 48 + 10,
+                x: positionWithPlacement.x,
+                y: positionWithPlacement.y,
                 stamina: 100,
                 heart_rate: 70 + Math.floor(Math.random() * 20),
                 temperature: 36.5 + Math.random() * 0.5,
-                speed: 0,
+                distanceCovered: 0,
                 hasBall: false,
                 carryStreak: 0
             });
@@ -91,9 +71,9 @@ class MockIoTMatch {
     }
 
     getOptionsForPosition(position) {
-        if (position === "MIDFIELDER") return OPTIONS_MIDFIELDER;
-        if (position === "FORWARD") return OPTIONS_FORWARD;
-        if (position === "DEFENDER") return OPTIONS_DEFENDER;
+        if (position.includes("MIDFIELDER")) return OPTIONS_MIDFIELDER;
+        if (position.includes("WING") || position === "STRIKER") return OPTIONS_FORWARD;
+        if (position.includes("BACK")) return OPTIONS_DEFENDER;
         if (position === "GOALKEEPER") return OPTIONS_GOALKEEPER;
         return OPTIONS_MIDFIELDER;
     }
@@ -107,9 +87,9 @@ class MockIoTMatch {
         if (distanceToGoal <= 20) {
             shotProba = 3.0;
         } else if (distanceToGoal <= 35) {
-            shotProba = 1.0;
+            shotProba = 0.4;
         } else if (distanceToGoal <= 50) {
-            shotProba = 0.2;
+            shotProba = 0.08;
         } else {
             shotProba = 0.05;
         }
@@ -152,7 +132,7 @@ class MockIoTMatch {
     }
 
     findClosestOpponent(player) {
-        const opponentTeam = player.team === TEAM_A ? this.teamB : this.teamA;
+        const opponentTeam = player.team === TEAM_A ? this.teamB.players : this.teamA.players;
         let closest = null;
         let minDist = Infinity;
 
@@ -168,7 +148,7 @@ class MockIoTMatch {
     }
 
     findTeammateByPosition(player, targetPosition) {
-        const teammates = player.team === TEAM_A ? this.teamA : this.teamB;
+        const teammates = player.team === TEAM_A ? this.teamA.players : this.teamB.players;
         let candidates = teammates.filter(p => p.position === targetPosition && p.id !== player.id);
 
         if (candidates.length === 0) {
@@ -204,12 +184,14 @@ class MockIoTMatch {
                 this.ballOwner = targetPlayer;
                 result.target = targetPlayer;
                 this.publishActionEvent(player, "PASS_SUCCESS", targetPlayer);
+                this.lastPasser = player;
             } else {
                 const [opponent, _] = this.findClosestOpponent(player);
                 this.ballOwner = opponent;
                 result.intercepted_by = opponent;
                 this.publishActionEvent(player, "PASS_FAILED", opponent);
                 this.publishActionEvent(opponent, "INTERCEPTION", player);
+                this.lastPasser = null;
             }
         } else if (actionType === "carry") {
             player.carryStreak++;
@@ -229,7 +211,7 @@ class MockIoTMatch {
                 this.ball.x = player.x;
                 this.ball.y = player.y;
 
-                player.speed = 2 + speedBonus;
+                player.distanceCovered = 2 + speedBonus;
                 player.heart_rate = Math.min(190, player.heart_rate + player.carryStreak * 2);
                 player.stamina = Math.max(0, player.stamina - (0.3 + player.carryStreak * 0.1));
 
@@ -243,15 +225,15 @@ class MockIoTMatch {
 
                 const [opponent, _] = this.findClosestOpponent(player);
                 this.ballOwner = opponent;
-                result.throw_in_by = opponent;
 
                 this.publishActionEvent(player, "CARRY_FAILED", opponent);
+                this.lastPasser = null;
             }
         } else if (actionType === "dribble") {
             player.carryStreak = 0;
             const [opponent, _] = this.findClosestOpponent(player);
             if (success) {
-                const direction = player.team === TEAM_A ? 1 : -1;
+                const direction = player.side === "LEFT" ? 1 : -1;
                 player.x += direction * (Math.random() * 4 + 3);
                 player.y += Math.random() * 6 - 3;
                 this.ball.x = player.x;
@@ -263,11 +245,12 @@ class MockIoTMatch {
                 result.tackled_by = opponent;
                 this.publishActionEvent(player, "DRIBBLE_FAILED", opponent);
                 this.publishActionEvent(opponent, "TACKLE_SUCCESS", player);
+                this.lastPasser = null;
             }
         } else if (actionType === "shot") {
             player.carryStreak = 0;
 
-            const opponentTeam = player.team === TEAM_A ? this.teamB : this.teamA;
+            const opponentTeam = player.team === TEAM_A ? this.teamB.players : this.teamA.players;
             const goalkeeper = opponentTeam.find(p => p.position === "GOALKEEPER");
 
             const shotOnTarget = Math.random() < 0.7;
@@ -275,6 +258,7 @@ class MockIoTMatch {
             if (!shotOnTarget) {
                 this.publishActionEvent(player, "SHOT_MISS");
                 this.ballOwner = goalkeeper;
+                this.lastPasser = null;
             } else {
                 this.publishActionEvent(player, "SHOT_ON_TARGET", goalkeeper);
                 if (success && goalkeeper) {
@@ -284,6 +268,7 @@ class MockIoTMatch {
                 } else {
                     this.publishActionEvent(goalkeeper, "SHOT_SAVED", player);
                     this.ballOwner = goalkeeper;
+                    this.lastPasser = null;
                 }
             }
         }
@@ -293,7 +278,22 @@ class MockIoTMatch {
 
     updatePlayerPosition(player) {
         if (player.hasBall) return;
-
+        if (player.position === "GOALKEEPER") {
+            const moveX = 0.3;
+            //const moveY = 0.2;
+            if (this.ball.x > this.fieldWidth / 2) {
+                console.log(player, this.ball.x);
+                player.x = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldWidth, player.x + moveX)) : Math.max(0, Math.min(this.fieldWidth, player.x - moveX));
+                //player.y = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldHeight, player.y + moveY)) : Math.max(0, Math.min(this.fieldHeight, player.y - moveY));
+            } else {
+                console.log(player, this.ball.x);
+                player.x = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldWidth, player.x - moveX)) : Math.max(0, Math.min(this.fieldWidth, player.x + moveX));
+                //player.y = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldHeight, player.y - moveX)) : Math.max(0, Math.min(this.fieldHeight, player.y + moveX));
+            }
+            player.distanceCovered = moveX;
+            //player.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
+            return;
+        }
         const dx = this.ball.x - player.x;
         const dy = this.ball.y - player.y;
         const distance = Math.sqrt(dx ** 2 + dy ** 2);
@@ -309,11 +309,11 @@ class MockIoTMatch {
 
         player.x = Math.max(0, Math.min(this.fieldWidth, player.x + moveX));
         player.y = Math.max(0, Math.min(this.fieldHeight, player.y + moveY));
-        player.speed = Math.sqrt(moveX ** 2 + moveY ** 2);
+        player.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
     }
 
     updatePlayerHealth(player) {
-        if (player.speed > 1) {
+        if (player.distanceCovered > 1) {
             player.stamina = Math.max(0, player.stamina - (Math.random() * 0.2 + 0.1));
         } else {
             player.stamina = Math.min(100, player.stamina + (Math.random() * 0.1 + 0.05));
@@ -326,7 +326,7 @@ class MockIoTMatch {
 
     updateBallPossession() {
         if (!this.ballOwner) {
-            const allPlayers = [...this.teamA, ...this.teamB];
+            const allPlayers = [...this.teamA.players, ...this.teamB.players];
             let closest = null;
             let minDist = Infinity;
 
@@ -348,7 +348,7 @@ class MockIoTMatch {
             const action = this.chooseAction(this.ballOwner);
             this.executeAction(this.ballOwner, action);
 
-            for (let p of [...this.teamA, ...this.teamB]) {
+            for (let p of [...this.teamA.players, ...this.teamB.players]) {
                 p.hasBall = false;
             }
 
@@ -362,14 +362,17 @@ class MockIoTMatch {
         this.ball = {x: 52.5, y: 34, z: 0, speed: 0};
         this.ballOwner = null;
 
-        for (let p of [...this.teamA, ...this.teamB]) {
+        for (let p of [...this.teamA.players, ...this.teamB.players]) {
             p.carryStreak = 0;
         }
     }
 
     kickoff() {
-        const player1 = this.teamA[0];
-        const player2 = this.teamA[1];
+
+        let playersToKickOff = this.teamA.players.filter(p => !p.position.includes("BACK") && p.position !== "GOALKEEPER");
+        const player1 = playersToKickOff[Math.floor(Math.random() * playersToKickOff.length)];
+        playersToKickOff = playersToKickOff.filter(p => p !== player1);
+        const player2 = playersToKickOff[Math.floor(Math.random() * playersToKickOff.length)];
 
         player1.x = 52.5;
         player1.y = 34;
@@ -396,7 +399,6 @@ class MockIoTMatch {
             player_id: player.id,
             team: player.team,
             position: player.position,
-            match_time: this.matchTime
         };
 
         if (target) {
@@ -404,11 +406,11 @@ class MockIoTMatch {
         }
 
         this.client.publish("match/events", JSON.stringify(data));
-        console.log(`${actionType}: ${player.id} (${player.position})`);
+        //console.log(`${actionType}: ${player.id} (${player.position})`);
     }
 
     publishPlayersHealth() {
-        const allPlayers = [...this.teamA, ...this.teamB];
+        const allPlayers = [...this.teamA.players, ...this.teamB.players];
         for (let player of allPlayers) {
             const data = {
                 match_id: this.matchId,
@@ -424,16 +426,17 @@ class MockIoTMatch {
     }
 
     publishPlayersPosition() {
-        const allPlayers = [...this.teamA, ...this.teamB];
+        const allPlayers = [...this.teamA.players, ...this.teamB.players];
         for (let player of allPlayers) {
             const data = {
                 match_id: this.matchId,
                 player_id: player.id,
                 team: player.team,
+                position: player.position,
                 timestamp: new Date().toISOString(),
                 x: Math.round(player.x * 100) / 100,
                 y: Math.round(player.y * 100) / 100,
-                speed: Math.round(player.speed * 100) / 100,
+                distance_covered: Math.round(player.distanceCovered * 100) / 100,
                 has_ball: player.hasBall || false
             };
             this.client.publish("players/position", JSON.stringify(data));
@@ -460,22 +463,33 @@ class MockIoTMatch {
             timestamp: new Date().toISOString(),
             event_type: "GOAL",
             team: team,
-            match_time: this.matchTime,
             score: {...this.score},
             player_id: player.id,
             goalkeeper_id: goalkeeper.id
         };
         this.client.publish("match/events", JSON.stringify(data));
+        if (this.lastPasser) {
+            const data3 = {
+                match_id: this.matchId,
+                timestamp: new Date().toISOString(),
+                event_type: "ASSIST",
+                team: team,
+                score: {...this.score},
+                player_id: this.lastPasser.id,
+            }
+            this.client.publish("match/events", JSON.stringify(data3));
+        }
         const data2 = {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
             event_type: "SCORE_UPDATE",
             team: team,
-            match_time: this.matchTime,
+            match_time: this.matchTime90minutes,
             score: {...this.score}
         }
         this.client.publish("match/state", JSON.stringify(data2));
         console.log(`BUT! ${team} marque! Score: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+        this.lastPasser = null;
     }
 
     publishMatchState(eventType) {
@@ -483,14 +497,14 @@ class MockIoTMatch {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
             event_type: eventType,
-            match_time: this.matchTime,
+            match_time: this.matchTime90minutes,
             score: {...this.score}
         };
         this.client.publish("match/state", JSON.stringify(data));
     }
 
     simulateStep() {
-        for (let player of [...this.teamA, ...this.teamB]) {
+        for (let player of [...this.teamA.players, ...this.teamB.players]) {
             this.updatePlayerPosition(player);
             this.updatePlayerHealth(player);
         }
@@ -504,7 +518,6 @@ class MockIoTMatch {
 
     startSimulation(duration = 90, actionsPerSecond = 3) {
         console.log(`Début du match! Durée: ${duration} secondes`);
-
         this.publishMatchState("KICK_OFF");
         this.kickoff();
         this.running = true;
@@ -517,11 +530,17 @@ class MockIoTMatch {
                 this.stop();
                 return;
             }
+            if (this.matchTime === Math.round(duration / 2)) {
+                this.publishMatchState("HALF_TIME");
+                console.log(`Score a la mi temps : ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+            }
             for (let i = 0; i < actionsPerSecond; i++) {
                 this.simulateStep();
                 await new Promise(resolve => setTimeout(resolve, 1000 / actionsPerSecond));
             }
             this.matchTime++;
+            this.matchTime90minutes = (this.matchTime / duration * 90).toFixed(2);
+            this.publishMatchState("TIME_UPDATE");
         }, 1000);
     }
 
@@ -552,7 +571,7 @@ const simulator = new MockIoTMatch(BROKER);
 simulator.connect().then((connected) => {
     if (connected) {
         try {
-            simulator.startSimulation(90, 5);
+            simulator.startSimulation(300, 3);
         } catch (error) {
             console.error("Erreur:", error);
             simulator.stop();

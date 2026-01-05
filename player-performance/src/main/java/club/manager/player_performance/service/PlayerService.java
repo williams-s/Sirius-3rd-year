@@ -37,11 +37,14 @@ public class PlayerService {
                 .matchId(p1.getMatchId())
                 .playerId(p1.getPlayerId())
                 .team(p1.getTeam())
-                .speed(p1.getSpeed())
+                .distanceCovered(p1.getDistanceCovered())
                 .hasBall(p1.getHasBall())
                 .x(p1.getX())
                 .y(p1.getY())
                 .stamina(p1.getStamina())
+                .heartRate(p1.getHeartRate())
+                .position(p1.getPosition())
+                .temperature(p1.getTemperature())
                 .eventType(p1.getEventType())
                 .stats(p1.getStats())
                 .timestamp(p1.getTimestamp());
@@ -51,8 +54,11 @@ public class PlayerService {
         if (p2.getStamina() != null) merge.stamina(p2.getStamina());
         if (p2.getEventType() != null) merge.eventType(p2.getEventType());
         if (p2.getTimestamp() != null) merge.timestamp(p2.getTimestamp());
-        if (p2.getSpeed() != null) merge.speed(p2.getSpeed());
+        if (p2.getDistanceCovered() != null) merge.distanceCovered(p2.getDistanceCovered());
         if (p2.getHasBall() != null) merge.hasBall(p2.getHasBall());
+        if (p2.getHeartRate() != null) merge.heartRate(p2.getHeartRate());
+        if (p2.getTemperature() != null) merge.temperature(p2.getTemperature());
+        if (p2.getPosition() != null) merge.position(p2.getPosition());
 
         return merge.build();
     }
@@ -81,26 +87,34 @@ public class PlayerService {
                 stats.setTouches(stats.getTouches() + 1);
             }
         }
+        Stats stats = p.getStats();
+        stats.setDistanceCovered(stats.getDistanceCovered() + p.getDistanceCovered());
     }
 
     private void matchEventType(Player p) {
         Stats stats = p.getStats();
         switch (p.getEventType()) {
             case GOAL -> stats.setGoals(stats.getGoals() + 1);
+            case ASSIST -> stats.setAssists(stats.getAssists() + 1);
+
+            case SHOT_MISS -> stats.setShots(stats.getShots() + 1);
             case SHOT_ON_TARGET -> {
                 stats.setShots(stats.getShots() + 1);
                 stats.setShotsOnTarget(stats.getShotsOnTarget() + 1);
             }
+
             case PASS_FAILED -> stats.setPasses(stats.getPasses() + 1);
             case PASS_SUCCESS -> {
                 stats.setPassesSuccess(stats.getPassesSuccess() + 1);
                 stats.setPasses(stats.getPasses() + 1);
             }
+
             case TACKLE_FAILED -> stats.setTackles(stats.getTackles() + 1);
             case TACKLE_SUCCESS -> {
                 stats.setTackles(stats.getTackles() + 1);
                 stats.setTacklesSuccess(stats.getTacklesSuccess() + 1);
             }
+
             case SHOT_SAVED -> stats.setSaves(stats.getSaves() + 1);
             case INTERCEPTION -> stats.setInterceptions(stats.getInterceptions() + 1);
 

@@ -1,0 +1,16 @@
+package club.manager.player_performance.enums;
+
+public enum Position {
+    GOALKEEPER,
+    RIGHT_BACK,
+    LEFT_BACK,
+    CENTER_BACK,
+    LEFT_MIDFIELDER,
+    RIGHT_MIDFIELDER,
+    CENTER_MIDFIELDER,
+    CENTER_DEFENSIVE_MIDFIELDER,
+    CENTER_ATTACKING_MIDFIELDER,
+    LEFT_WINGER,
+    RIGHT_WINGER,
+    STRIKER
+}

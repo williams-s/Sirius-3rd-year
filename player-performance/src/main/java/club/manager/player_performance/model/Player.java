@@ -1,6 +1,7 @@
 package club.manager.player_performance.model;
 
 import club.manager.player_performance.enums.EventType;
+import club.manager.player_performance.enums.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,9 @@ public class Player {
     private String timestamp;
     private Double x;
     private Double y;
-    private Double speed;
+
+    @JsonProperty("distance_covered")
+    private Double distanceCovered;
 
     @JsonProperty("has_ball")
     private Boolean hasBall;
@@ -37,7 +40,7 @@ public class Player {
     @JsonProperty("event_type")
     private EventType eventType;
 
-    private String position;
+    private Position position;
 
     private Stats stats;
 

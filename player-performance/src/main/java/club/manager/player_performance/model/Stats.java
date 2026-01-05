@@ -11,23 +11,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Stats {
 
-    private int goals;
+    private Integer goals = 0;
+    private Integer assists = 0;
+    private Integer touches = 0;
+    private Integer passesSuccess = 0;
+    private Integer passes = 0;
+    // Integer crosses;
+    private Integer shots = 0;
+    private Integer shotsOnTarget = 0;
+    private Integer tackles = 0;
+    private Integer tacklesSuccess = 0;
+    private Integer interceptions = 0;
+    private Integer duels = 0;
+    private Integer duelsWon = 0;
+    private Integer dribbles = 0;
+    private Integer dribblesSuccess = 0;
+    private Integer fouls = 0;
+    private Integer foulsDrawn = 0;
 
-    private int touches;
-    private int passesSuccess;
-    private int passes;
-    // int crosses;
-    private int shots;
-    private int shotsOnTarget;
-    private int tackles;
-    private int tacklesSuccess;
-    private int interceptions;
-    private int duels;
-    private int duelsWon;
-    private int dribbles;
-    private int dribblesSuccess;
-    private int fouls;
-    private int foulsDrawn;
+    private Double distanceCovered = 0.0;
 
-    private int saves;
+    private Integer saves = 0;
 }

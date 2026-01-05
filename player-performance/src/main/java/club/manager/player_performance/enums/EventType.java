@@ -13,5 +13,6 @@ public enum EventType {
     SHOT_ON_TARGET,
     SHOT_SAVED,
     INTERCEPTION,
-    GOAL
+    GOAL,
+    ASSIST
 }
