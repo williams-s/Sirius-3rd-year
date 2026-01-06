@@ -1,4 +1,4 @@
-package club.manager.commonlibrary.dto;
+package club.manager.common_library.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

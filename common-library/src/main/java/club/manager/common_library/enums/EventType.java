@@ -1,4 +1,4 @@
-package club.manager.commonlibrary.enums;
+package club.manager.common_library.enums;
 
 public enum EventType {
     PASS_SUCCESS,

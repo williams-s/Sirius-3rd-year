@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
                 console.log("Message reçu:", message.body);
             });
             client.subscribe("/topic/live-match", (message) => {
-                //console.log("Message reçu:", message.body);
+                console.log("Message reçu:", message.body);
             })
         };
 

@@ -1,8 +1,7 @@
 package club.manager.player_performance.service;
 
-import club.manager.commonlibrary.dto.PlayerStatsDTO;
-import club.manager.commonlibrary.dto.StatsDTO;
-import club.manager.commonlibrary.keys.PlayerKey;
+import club.manager.common_library.dto.*;
+import club.manager.common_library.keys.PlayerKey;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,10 @@ import java.util.HashMap;
 @Slf4j
 public class PlayerService {
 
-    public final HashMap<PlayerKey, PlayerStatsDTO> playersInMatch = new HashMap<>();
+    public final HashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new HashMap<>();
 
-    public PlayerStatsDTO mergeTopics(PlayerStatsDTO p1, PlayerStatsDTO p2) {
-        PlayerStatsDTO res = null;
+    public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
+        PlayerLiveMatchDetailDTO res = null;
         if (p1 == null) {
             res = merge(getPlayerInMatch(p2),p2);
         }
@@ -30,69 +29,61 @@ public class PlayerService {
         return res;
     }
 
-    private PlayerStatsDTO merge(PlayerStatsDTO p1, PlayerStatsDTO p2) {
+    private PlayerLiveMatchDetailDTO merge(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
 
-        PlayerStatsDTO.PlayerStatsDTOBuilder merge = PlayerStatsDTO.builder()
+        PlayerLiveMatchDetailDTO.PlayerLiveMatchDetailDTOBuilder merge = PlayerLiveMatchDetailDTO.builder()
                 .matchId(p1.getMatchId())
+                .timestamp(p1.getTimestamp())
                 .playerId(p1.getPlayerId())
-                .team(p1.getTeam())
-                .distanceCovered(p1.getDistanceCovered())
-                .hasBall(p1.getHasBall())
-                .x(p1.getX())
-                .y(p1.getY())
-                .stamina(p1.getStamina())
-                .heartRate(p1.getHeartRate())
-                .position(p1.getPosition())
-                .temperature(p1.getTemperature())
-                .eventType(p1.getEventType())
-                .statsDTO(p1.getStatsDTO())
-                .timestamp(p1.getTimestamp());
+                .playerPosition(p1.getPlayerPosition())
+                .playerHealth(p1.getPlayerHealth())
+                .matchEvent(p1.getMatchEvent())
+                .statsDTO(p1.getStatsDTO());
 
-        if (p2.getX() != null) merge.x(p2.getX());
-        if (p2.getY() != null) merge.y(p2.getY());
-        if (p2.getStamina() != null) merge.stamina(p2.getStamina());
-        if (p2.getEventType() != null) merge.eventType(p2.getEventType());
-        if (p2.getTimestamp() != null) merge.timestamp(p2.getTimestamp());
-        if (p2.getDistanceCovered() != null) merge.distanceCovered(p2.getDistanceCovered());
-        if (p2.getHasBall() != null) merge.hasBall(p2.getHasBall());
-        if (p2.getHeartRate() != null) merge.heartRate(p2.getHeartRate());
-        if (p2.getTemperature() != null) merge.temperature(p2.getTemperature());
-        if (p2.getPosition() != null) merge.position(p2.getPosition());
+
+        if (p2.getPlayerPosition() != null) merge.playerPosition(p2.getPlayerPosition());
+        if (p2.getPlayerHealth() != null) merge.playerHealth(p2.getPlayerHealth());
+        if (p2.getMatchEvent() != null) merge.matchEvent(p2.getMatchEvent());
 
         return merge.build();
     }
 
-    public PlayerStatsDTO getPlayerInMatch(PlayerStatsDTO p) {
+    public PlayerLiveMatchDetailDTO getPlayerInMatch(PlayerLiveMatchDetailDTO p) {
         addPlayerInMatchIfNotExist(p);
         return playersInMatch.get(new PlayerKey(p.getMatchId(), p.getPlayerId()));
     }
 
-    public void addPlayerInMatchIfNotExist(PlayerStatsDTO p) {
+    public void addPlayerInMatchIfNotExist(PlayerLiveMatchDetailDTO p) {
         if (!playersInMatch.containsKey(new PlayerKey(p.getMatchId(), p.getPlayerId()))) {
             p.setStatsDTO(new StatsDTO());
             playersInMatch.put(new PlayerKey(p.getMatchId(), p.getPlayerId()), p);
+            log.debug(p.toString());
         }
     }
 
 
-    public void addStats(PlayerStatsDTO p) {
+    public void addStats(PlayerLiveMatchDetailDTO p) {
         addPlayerInMatchIfNotExist(p);
-        if (p.getEventType() != null) {
-            matchEventType(p);
-        }
-        if (p.getHasBall() != null) {
-            if (p.getHasBall()) {
-                StatsDTO statsDTO = p.getStatsDTO();
-                statsDTO.setTouches(statsDTO.getTouches() + 1);
+        if (p.getMatchEvent() != null) {
+            if (p.getMatchEvent().getEventType() != null) {
+                matchEventType(p);
             }
         }
-        StatsDTO statsDTO = p.getStatsDTO();
-        statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getDistanceCovered());
+        if (p.getPlayerPosition() != null) {
+            if (p.getPlayerPosition().getHasBall() != null) {
+                if (p.getPlayerPosition().getHasBall()) {
+                    StatsDTO statsDTO = p.getStatsDTO();
+                    statsDTO.setTouches(statsDTO.getTouches() + 1);
+                }
+            }
+            StatsDTO statsDTO = p.getStatsDTO();
+            statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getPlayerPosition().getDistanceCovered());
+        }
     }
 
-    private void matchEventType(PlayerStatsDTO p) {
+    private void matchEventType(PlayerLiveMatchDetailDTO p) {
         StatsDTO statsDTO = p.getStatsDTO();
-        switch (p.getEventType()) {
+        switch (p.getMatchEvent().getEventType()) {
             case GOAL -> statsDTO.setGoals(statsDTO.getGoals() + 1);
             case ASSIST -> statsDTO.setAssists(statsDTO.getAssists() + 1);
 

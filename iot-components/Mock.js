@@ -7,6 +7,8 @@ const match_id = args[0];
 
 const TEAM_A = "PSG";
 const TEAM_B = "OM";
+const TEAM_A_ID = 1;
+const TEAM_B_ID = 2;
 
 
 class MockIoTMatch {
@@ -18,25 +20,26 @@ class MockIoTMatch {
         this.fieldHeight = 68;
         this.matchId = match_id;
         this.teamA = {
+            team_id : TEAM_A_ID,
             name : TEAM_A,
             players : this.initPlayers("LEFT", TEAM_A, 11 ,1),
-            side : "LEFT"
+            side : "LEFT",
+            score : 0
         };
         this.teamB = {
+            team_id : TEAM_B_ID,
             name : TEAM_B,
             players: this.initPlayers("RIGHT", TEAM_B, 11, 12),
-            side : "RIGHT"
+            side : "RIGHT",
+            score : 0
         };
 
-        console.log(this.teamA.players);
-        console.log(this.teamB.players);
+        //console.log(this.teamA.players);
+        //console.log(this.teamB.players);
 
         this.ball = {x: 52.5, y: 34, z: 0, speed: 0};
         this.ballOwner = null;
 
-        this.score = {};
-        this.score[TEAM_A] = 0;
-        this.score[TEAM_B] = 0;
         this.matchTime = 0;
         this.matchTime90minutes = 0;
         this.lastPasser = null;
@@ -44,28 +47,51 @@ class MockIoTMatch {
 
 
 
-    initPlayers(side, team, count, idStart = 1) {
+    initPlayers(side, team, count, idStart = 1, firstHalfPlayers = []) {
         const players = [];
         const positions = getPositionsWithPlacement(side, this.fieldWidth, this.fieldHeight);
         let id = idStart;
-        for (let i = 0; i < count; i++) {
-            const positionWithPlacement = positions[i];
-            const position = positionWithPlacement.position;
-            players.push({
-                id: id,
-                team: team,
-                side: side,
-                position: position,
-                x: positionWithPlacement.x,
-                y: positionWithPlacement.y,
-                stamina: 100,
-                heart_rate: 70 + Math.floor(Math.random() * 20),
-                temperature: 36.5 + Math.random() * 0.5,
-                distanceCovered: 0,
-                hasBall: false,
-                carryStreak: 0
-            });
-            id++;
+        if (firstHalfPlayers.length > 0) {
+            for (let i = 0; i < firstHalfPlayers.length; i++) {
+                const player = firstHalfPlayers[i];
+                const positionWithPlacement = positions[i];
+                const position = positionWithPlacement.position;
+                players.push({
+                    id: id,
+                    team: team,
+                    side: side,
+                    position: position,
+                    x: positionWithPlacement.x,
+                    y: positionWithPlacement.y,
+                    stamina: player.stamina,
+                    heart_rate: player.heart_rate,
+                    temperature: player.temperature,
+                    distanceCovered: 0,
+                    hasBall: false,
+                    carryStreak: 0
+                })
+            }
+        }
+        else {
+            for (let i = 0; i < count; i++) {
+                const positionWithPlacement = positions[i];
+                const position = positionWithPlacement.position;
+                players.push({
+                    id: id,
+                    team: team,
+                    side: side,
+                    position: position,
+                    x: positionWithPlacement.x,
+                    y: positionWithPlacement.y,
+                    stamina: 100,
+                    heart_rate: 70 + Math.floor(Math.random() * 20),
+                    temperature: 36.5 + Math.random() * 0.5,
+                    distanceCovered: 0,
+                    hasBall: false,
+                    carryStreak: 0
+                });
+                id++;
+            }
         }
         return players;
     }
@@ -262,7 +288,7 @@ class MockIoTMatch {
             } else {
                 this.publishActionEvent(player, "SHOT_ON_TARGET", goalkeeper);
                 if (success && goalkeeper) {
-                    this.score[player.team]++;
+                    this.getTeamFromPlayer(player).score++;
                     this.publishGoalEvent(player, goalkeeper);
                     this.resetBall();
                 } else {
@@ -276,17 +302,39 @@ class MockIoTMatch {
         return result;
     }
 
+    getTeamFromPlayer(player) {
+        return this.teamA.players.includes(player) ? this.teamA : this.teamB;
+    }
+
+    getScore () {
+        const homeTeam = {
+            team_id: this.teamA.team_id,
+            name: this.teamA.name,
+            score: this.teamA.score,
+        }
+
+        const awayTeam = {
+            team_id: this.teamB.team_id,
+            name: this.teamB.name,
+            score: this.teamB.score,
+        }
+        return {
+            homeTeam,
+            awayTeam
+        }
+    }
+
     updatePlayerPosition(player) {
         if (player.hasBall) return;
         if (player.position === "GOALKEEPER") {
             const moveX = 0.3;
             //const moveY = 0.2;
             if (this.ball.x > this.fieldWidth / 2) {
-                console.log(player, this.ball.x);
+                //console.log(player, this.ball.x);
                 player.x = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldWidth, player.x + moveX)) : Math.max(0, Math.min(this.fieldWidth, player.x - moveX));
                 //player.y = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldHeight, player.y + moveY)) : Math.max(0, Math.min(this.fieldHeight, player.y - moveY));
             } else {
-                console.log(player, this.ball.x);
+                //console.log(player, this.ball.x);
                 player.x = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldWidth, player.x - moveX)) : Math.max(0, Math.min(this.fieldWidth, player.x + moveX));
                 //player.y = player.side === "LEFT" ? Math.max(0, Math.min(this.fieldHeight, player.y - moveX)) : Math.max(0, Math.min(this.fieldHeight, player.y + moveX));
             }
@@ -393,65 +441,76 @@ class MockIoTMatch {
 
     publishActionEvent(player, actionType, target = null) {
         const data = {
-            match_id: this.matchId,
-            timestamp: new Date().toISOString(),
             event_type: actionType,
-            player_id: player.id,
             team: player.team,
-            position: player.position,
         };
 
         if (target) {
             data.target_player = target.id;
         }
 
-        this.client.publish("match/events", JSON.stringify(data));
+        this.client.publish("match/events", JSON.stringify(
+            {
+                match_id: this.matchId,
+                player_id: player.id,
+                match_event_data: data,
+                timestamp: new Date().toISOString(),
+
+            }));
         //console.log(`${actionType}: ${player.id} (${player.position})`);
     }
 
     publishPlayersHealth() {
         const allPlayers = [...this.teamA.players, ...this.teamB.players];
         for (let player of allPlayers) {
-            const data = {
-                match_id: this.matchId,
-                player_id: player.id,
-                team: player.team,
-                timestamp: new Date().toISOString(),
-                stamina: Math.round(player.stamina * 10) / 10,
+            const player_health = {
+                stamina: player.stamina.toFixed(1),
                 heart_rate: player.heart_rate,
-                temperature: Math.round(player.temperature * 100) / 100
+                temperature: player.temperature.toFixed(2)
+            }
+            const data = {
+                team: player.team,
+                player_health: player_health
             };
-            this.client.publish("players/health", JSON.stringify(data));
+            this.client.publish("players/health", JSON.stringify(
+                {
+                    match_id: this.matchId,
+                    player_id: player.id,
+                    player_health_data: data,
+                    timestamp: new Date().toISOString()
+                }
+            ));
         }
     }
 
     publishPlayersPosition() {
         const allPlayers = [...this.teamA.players, ...this.teamB.players];
+        const player_coordinates = {x: this.ball.x.toFixed(2), y: this.ball.y.toFixed(2)};
         for (let player of allPlayers) {
             const data = {
-                match_id: this.matchId,
-                player_id: player.id,
                 team: player.team,
                 position: player.position,
-                timestamp: new Date().toISOString(),
-                x: Math.round(player.x * 100) / 100,
-                y: Math.round(player.y * 100) / 100,
-                distance_covered: Math.round(player.distanceCovered * 100) / 100,
+                player_coordinates: player_coordinates,
+                distance_covered: player.distanceCovered.toFixed(2),
                 has_ball: player.hasBall || false
             };
-            this.client.publish("players/position", JSON.stringify(data));
+            this.client.publish("players/position", JSON.stringify(
+            {
+                match_id: this.matchId,
+                player_id: player.id,
+                player_position_data: data,
+                timestamp: new Date().toISOString(),
+            }));
         }
     }
 
     publishBallPosition() {
+        const ball_coordinates = {x: this.ball.x.toFixed(2), y: this.ball.y.toFixed(2), z: this.ball.z.toFixed(2)};
         const data = {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
-            x: Math.round(this.ball.x * 100) / 100,
-            y: Math.round(this.ball.y * 100) / 100,
-            z: Math.round(this.ball.z * 100) / 100,
-            speed: Math.round(this.ball.speed * 100) / 100,
-            owner: this.ballOwner ? this.ballOwner.id : null
+            ball_coordinates: ball_coordinates,
+            speed: this.ball.speed.toFixed(2)
         };
         this.client.publish("ball/events", JSON.stringify(data));
     }
@@ -459,36 +518,39 @@ class MockIoTMatch {
     publishGoalEvent(player, goalkeeper) {
         const team = player.team;
         const data = {
-            match_id: this.matchId,
-            timestamp: new Date().toISOString(),
             event_type: "GOAL",
             team: team,
-            score: {...this.score},
-            player_id: player.id,
-            goalkeeper_id: goalkeeper.id
         };
-        this.client.publish("match/events", JSON.stringify(data));
+        this.client.publish("match/events", JSON.stringify(
+            {
+                match_id: this.matchId,
+                player_id: player.id,
+                match_event_data: data,
+                timestamp: new Date().toISOString(),
+            }));
         if (this.lastPasser) {
             const data3 = {
-                match_id: this.matchId,
-                timestamp: new Date().toISOString(),
                 event_type: "ASSIST",
-                team: team,
-                score: {...this.score},
-                player_id: this.lastPasser.id,
+                team: team
             }
-            this.client.publish("match/events", JSON.stringify(data3));
+            this.client.publish("match/events", JSON.stringify(
+                {
+                    match_id: this.matchId,
+                    player_id: this.lastPasser.id,
+                    match_event_data: data3,
+                    timestamp: new Date().toISOString(),
+                }));
         }
         const data2 = {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
-            event_type: "SCORE_UPDATE",
+            match_event: "SCORE_UPDATE",
             team: team,
             match_time: this.matchTime90minutes,
-            score: {...this.score}
+            score: this.getScore()
         }
         this.client.publish("match/state", JSON.stringify(data2));
-        console.log(`BUT! ${team} marque! Score: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+        console.log(`BUT! ${team} marque! Score: ${this.getScore()}`);
         this.lastPasser = null;
     }
 
@@ -496,9 +558,9 @@ class MockIoTMatch {
         const data = {
             match_id: this.matchId,
             timestamp: new Date().toISOString(),
-            event_type: eventType,
+            match_event: eventType,
             match_time: this.matchTime90minutes,
-            score: {...this.score}
+            score: this.getScore()
         };
         this.client.publish("match/state", JSON.stringify(data));
     }
@@ -516,32 +578,40 @@ class MockIoTMatch {
         this.publishBallPosition();
     }
 
-    startSimulation(duration = 90, actionsPerSecond = 3) {
+    secondHalfStart() {
+        this.teamA.players = this.initPlayers("RIGHT", TEAM_A, 11, 1, this.teamA.players);
+        this.teamA.side = "RIGHT";
+        this.teamB.players = this.initPlayers("LEFT", TEAM_B, 11, 12, this.teamB.players);
+        this.teamB.side = "LEFT";
+        this.publishMatchState("SECOND_HALF_KICK_OFF");
+    }
+
+    async startSimulation(duration = 90, actionsPerSecond = 3) {
         console.log(`Début du match! Durée: ${duration} secondes`);
         this.publishMatchState("KICK_OFF");
         this.kickoff();
         this.running = true;
 
-        const interval = setInterval(async () => {
-            if (!this.running || this.matchTime >= duration) {
-                clearInterval(interval);
-                this.publishMatchState("FULL_TIME");
-                console.log(`\nFin du match! Score final: ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
-                this.stop();
-                return;
-            }
+        while (this.running && this.matchTime < duration) {
             if (this.matchTime === Math.round(duration / 2)) {
                 this.publishMatchState("HALF_TIME");
-                console.log(`Score a la mi temps : ${this.score[TEAM_A]}-${this.score[TEAM_B]}`);
+                console.log(`Score à la mi-temps : ${this.getScore()}`);
+                await new Promise(resolve => setTimeout(resolve, 30000));
+                this.secondHalfStart();
             }
+
             for (let i = 0; i < actionsPerSecond; i++) {
                 this.simulateStep();
                 await new Promise(resolve => setTimeout(resolve, 1000 / actionsPerSecond));
             }
+
             this.matchTime++;
             this.matchTime90minutes = (this.matchTime / duration * 90).toFixed(2);
             this.publishMatchState("TIME_UPDATE");
-        }, 1000);
+        }
+        this.publishMatchState("FULL_TIME");
+        console.log(`\nFin du match! Score final: ${this.getScore()}`);
+        this.stop();
     }
 
     stop() {
