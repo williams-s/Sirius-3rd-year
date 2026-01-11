@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.31.0",
     "@stomp/stompjs": "^7.2.1",
+    "konva": "^10.0.12",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-konva": "^19.2.1",
     "react-router-dom": "^7.11.0",
     "sockjs-client": "^1.6.1"
   },
