@@ -3,7 +3,7 @@ const {OPTIONS_MIDFIELDER,OPTIONS_DEFENDER,OPTIONS_FORWARD, OPTIONS_GOALKEEPER, 
 const {getPositionsWithPlacement} = require("./Positions");
 
 const args = process.argv.slice(2);
-const match_id = args[0];
+const match_id = args[0] || 1;
 
 const TEAM_A = "PSG";
 const TEAM_B = "OM";
@@ -70,6 +70,7 @@ class MockIoTMatch {
                     hasBall: false,
                     carryStreak: 0
                 })
+                id++;
             }
         }
         else {

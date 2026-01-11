@@ -2,3 +2,5 @@
 scripts/*.iml
 scripts/venv
 /clearTopics.sh
+/generate-ts.py
+/club-manager-parent.iml

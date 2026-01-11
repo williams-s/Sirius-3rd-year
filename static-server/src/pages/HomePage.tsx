@@ -15,7 +15,6 @@ export interface Match {
 
 const HomePage: React.FC = () => {
     const [matches, setMatches] = useState<Match[]>([]);
-
     useEffect(() => {
         const client = ConnectToWebSocketSTOMP();
 
@@ -35,9 +34,6 @@ const HomePage: React.FC = () => {
             client.subscribe("/topic/matchHistory", (message) => {
                 console.log("Message reçu:", message.body);
             });
-            client.subscribe("/topic/live-match", (message) => {
-                console.log("Message reçu:", message.body);
-            })
         };
 
         client.onStompError = (frame) => {

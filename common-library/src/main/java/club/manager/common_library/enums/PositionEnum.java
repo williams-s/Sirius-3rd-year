@@ -1,6 +1,6 @@
 package club.manager.common_library.enums;
 
-public enum Position {
+public enum PositionEnum {
     GOALKEEPER,
     RIGHT_BACK,
     LEFT_BACK,

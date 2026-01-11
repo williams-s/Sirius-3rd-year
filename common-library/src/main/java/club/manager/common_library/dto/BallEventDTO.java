@@ -1,6 +1,5 @@
 package club.manager.common_library.dto;
 
-import club.manager.common_library.enums.Position;
 import club.manager.common_library.utils.Coordinates.Coordinates3D;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

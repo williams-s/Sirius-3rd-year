@@ -15,13 +15,13 @@ public class PlayerLiveMatchDetailDTO extends GenericDTO {
     private Long playerId;
 
     @JsonProperty("player_position_data")
-    PlayerPositionDTO playerPosition;
+    private PlayerPositionDTO playerPosition;
 
     @JsonProperty("player_health_data")
-    PlayerHealthDTO playerHealth;
+    private PlayerHealthDTO playerHealth;
 
     @JsonProperty("match_event_data")
-    MatchEventDTO matchEvent;
+    private MatchEventDTO matchEvent;
 
     private StatsDTO statsDTO;
 }

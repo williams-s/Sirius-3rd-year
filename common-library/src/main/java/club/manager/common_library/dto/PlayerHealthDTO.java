@@ -13,7 +13,7 @@ public class PlayerHealthDTO {
     private String team;
 
     @JsonProperty("player_health")
-    PlayerHealth playerHealth;
+    private PlayerHealthInformation playerHealth;
 
-    private record PlayerHealth(@JsonProperty("heart_rate") Integer heartRate, Double stamina, Double temperature) {}
+    private record PlayerHealthInformation(@JsonProperty("heart_rate") Integer heartRate, Double stamina, Double temperature) {}
 }

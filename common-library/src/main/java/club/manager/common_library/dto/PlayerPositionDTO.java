@@ -1,10 +1,9 @@
 package club.manager.common_library.dto;
 
-import club.manager.common_library.enums.Position;
-import club.manager.common_library.utils.Coordinates;
+import club.manager.common_library.enums.PositionEnum;
+import club.manager.common_library.utils.Coordinates.Coordinates2D;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Data
 @Builder
@@ -15,7 +14,7 @@ public class PlayerPositionDTO  {
     private String team;
 
     @JsonProperty("player_coordinates")
-    private Coordinates.Coordinates2D playerCoordinates;
+    private Coordinates2D playerCoordinates;
 
     @JsonProperty("distance_covered")
     private Double distanceCovered;
@@ -23,6 +22,6 @@ public class PlayerPositionDTO  {
     @JsonProperty("has_ball")
     private Boolean hasBall;
 
-    private Position position;
+    private PositionEnum position;
     
 }

@@ -4,7 +4,7 @@ import club.manager.common_library.dto.BallEventDTO;
 import club.manager.common_library.dto.LiveMatchDTO;
 import club.manager.common_library.dto.MatchStateDTO;
 import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
-import club.manager.common_library.enums.MatchEvent;
+import club.manager.common_library.enums.MatchEventEnum;
 import club.manager.common_library.keys.PlayerKey;
 import club.manager.entrance_cockpit.messaging.websocket.WebSocketService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class DataConsumer {
     private boolean matchIsLive = false;
     private boolean halfTime = false;
     @KafkaListener(topics = "front-data", groupId = "entrance-cockpit")
-    public void consumeFrontData(String message ) {
+    public void consumeFrontData(String message) {
         //log.debug("Received message: {}", message);
         PlayerLiveMatchDetailDTO playerLiveMatchDetailDTO = mapper.readValue(message, PlayerLiveMatchDetailDTO.class);
         playersInMatch.put(new PlayerKey(playerLiveMatchDetailDTO.getMatchId(), playerLiveMatchDetailDTO.getPlayerId()), playerLiveMatchDetailDTO);
@@ -52,10 +52,10 @@ public class DataConsumer {
         JsonNode jsonNode = mapper.readTree(message);
         String payload = jsonNode.get("payload").asString();
         lastMatchState = mapper.readValue(payload, MatchStateDTO.class);
-        if (lastMatchState.getMatchEvent().equals(MatchEvent.KICK_OFF)) {
+        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.KICK_OFF)) {
             matchIsLive = true;
         }
-        if (lastMatchState.getMatchEvent().equals(MatchEvent.SECOND_HALF_KICK_OFF)) {
+        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.SECOND_HALF_KICK_OFF)) {
             halfTime = false;
         }
     }
@@ -68,16 +68,16 @@ public class DataConsumer {
         LiveMatchDTO liveMatchDTO =
                 LiveMatchDTO.builder()
                         .ballEvent(lastBallEvent)
-                        .playerStats(playersInMatch.values().stream().toList())
+                        .allPlayers(playersInMatch.values().stream().toList())
                         .matchState(lastMatchState)
                 .build();
 
         webSocketService.sendLiveMatchToTopic(liveMatchDTO, "live-match");
 
-        if (lastMatchState.getMatchEvent().equals(MatchEvent.FULL_TIME)) {
+        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.FULL_TIME)) {
             matchIsLive = false;
         }
-        if (lastMatchState.getMatchEvent().equals(MatchEvent.HALF_TIME)) {
+        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.HALF_TIME)) {
             halfTime = true;
         }
     }

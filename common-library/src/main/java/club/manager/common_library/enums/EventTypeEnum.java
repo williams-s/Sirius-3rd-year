@@ -1,6 +1,6 @@
 package club.manager.common_library.enums;
 
-public enum EventType {
+public enum EventTypeEnum {
     PASS_SUCCESS,
     PASS_FAILED,
     CARRY_SUCCESS,

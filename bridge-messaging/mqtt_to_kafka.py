@@ -1,13 +1,17 @@
 import json
 import paho.mqtt.client as mqtt
 import confluent_kafka as kafka
+import sys
 
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
-MQTT_TOPIC = "test/#"
 
 KAFKA_BOOTSTRAP = "172.29.241.105:9092"
-KAFKA_TOPIC = "test"
+
+if sys.argv[1] is not None:
+    KAFKA_BOOTSTRAP = sys.argv[1]
+
+print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
 
 producer = kafka.Producer({
     "bootstrap.servers": KAFKA_BOOTSTRAP
@@ -23,7 +27,7 @@ mqtt_topic_to_kafka_topic = {
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected to MQTT")
+    print(f"Connected to MQTT: {MQTT_BROKER}:{MQTT_PORT}")
     client.subscribe("players/health")
     client.subscribe("players/position")
     client.subscribe("ball/events")
