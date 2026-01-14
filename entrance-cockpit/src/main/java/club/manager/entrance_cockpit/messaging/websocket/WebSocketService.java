@@ -1,6 +1,6 @@
 package club.manager.entrance_cockpit.messaging.websocket;
 
-import club.manager.common_library.dto.GenericDTO;
+import club.manager.common_library.parentDTO.GenericDTO;
 import club.manager.common_library.dto.LiveMatchDTO;
 import club.manager.entrance_cockpit.application.dto.MatchResponseDto;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package club.manager.entrance_cockpit.messaging.consumer;
+package club.manager.entrance_cockpit.messaging.bridge;
 
 import club.manager.common_library.dto.BallEventDTO;
 import club.manager.common_library.dto.LiveMatchDTO;
@@ -20,8 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class DataConsumer {
-
+public class DataConsumerWsSender {
     private final WebSocketService webSocketService;
     private final ObjectMapper mapper;
     private BallEventDTO lastBallEvent;
@@ -60,7 +59,7 @@ public class DataConsumer {
         }
     }
 
-    @Scheduled(fixedRate = 200)
+    @Scheduled(fixedRate = 33)
     public void sendPlayersInMatch() {
         if (halfTime || !matchIsLive || lastBallEvent == null || lastMatchState == null || playersInMatch.isEmpty()) {
             return;

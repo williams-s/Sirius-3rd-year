@@ -1,21 +1,20 @@
 import json
 import paho.mqtt.client as mqtt
 import confluent_kafka as kafka
-import sys
+import os
 
-MQTT_BROKER = "localhost"
-MQTT_PORT = 1883
+MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
+MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 
-KAFKA_BOOTSTRAP = "172.29.241.105:9092"
+KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP")
 
-if sys.argv[1] is not None:
-    KAFKA_BOOTSTRAP = sys.argv[1]
-
-print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
 
 producer = kafka.Producer({
     "bootstrap.servers": KAFKA_BOOTSTRAP
 })
+
+print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
+print(f"Connected to MQTT: {MQTT_BROKER}:{MQTT_PORT}")
 
 mqtt_topic_to_kafka_topic = {
     "players/health": "players-health",
@@ -53,5 +52,5 @@ mqtt_client = mqtt.Client()
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
 
-mqtt_client.connect(MQTT_BROKER, MQTT_PORT)
+mqtt_client.connect(MQTT_BROKER, int(MQTT_PORT))
 mqtt_client.loop_forever()

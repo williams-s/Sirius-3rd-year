@@ -4,6 +4,8 @@ const {getPositionsWithPlacement} = require("./Positions");
 
 const args = process.argv.slice(2);
 const match_id = args[0] || 1;
+const MQTT_BROKER = "172.31.249.162:1883"
+
 
 const TEAM_A = "PSG";
 const TEAM_B = "OM";
@@ -11,9 +13,10 @@ const TEAM_A_ID = 1;
 const TEAM_B_ID = 2;
 
 
+
 class MockIoTMatch {
-    constructor(broker = "mqtt://localhost:1883") {
-        this.client = mqtt.connect(broker);
+    constructor() {
+        this.client = mqtt.connect("mqtt://" + MQTT_BROKER);
         this.running = false;
 
         this.fieldWidth = 105;
@@ -486,12 +489,11 @@ class MockIoTMatch {
 
     publishPlayersPosition() {
         const allPlayers = [...this.teamA.players, ...this.teamB.players];
-        const player_coordinates = {x: this.ball.x.toFixed(2), y: this.ball.y.toFixed(2)};
         for (let player of allPlayers) {
             const data = {
                 team: player.team,
                 position: player.position,
-                player_coordinates: player_coordinates,
+                player_coordinates: {x: player.x.toFixed(2), y: player.y.toFixed(2)},
                 distance_covered: player.distanceCovered.toFixed(2),
                 has_ball: player.hasBall || false
             };
@@ -636,13 +638,12 @@ class MockIoTMatch {
     }
 }
 
-const BROKER = "mqtt://localhost:1883";
-const simulator = new MockIoTMatch(BROKER);
+const simulator = new MockIoTMatch();
 
 simulator.connect().then((connected) => {
     if (connected) {
         try {
-            simulator.startSimulation(300, 3);
+            simulator.startSimulation(10, 3);
         } catch (error) {
             console.error("Erreur:", error);
             simulator.stop();

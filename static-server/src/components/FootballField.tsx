@@ -1,19 +1,20 @@
 import {Stage, Layer, Rect, Line, Circle} from 'react-konva';
 import {useEffect, useState} from "react";
-import {Center} from "@chakra-ui/react";
 import {PlayerCircle} from "./PlayerCircle.tsx";
+import type {LiveMatch} from "../types/generated/LiveMatch.ts";
+import {BallCircle} from "./BallCircle.tsx";
 
-export function FootballField() {
+export function FootballField({liveMatch}: {liveMatch :LiveMatch}) {
 
     const [dimensions, setDimensions] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: window.innerWidth /2,
+        height: window.innerHeight /1.02
     });
 
     const fieldInformations = {
         x: 30,
         y: 0,
-        width: dimensions.width / 3,
+        width: dimensions.width - 50,
         height: dimensions.height - 20,
     };
 
@@ -40,7 +41,7 @@ export function FootballField() {
     useEffect(() => {
         const handleResize = () => {
             setDimensions({
-                width: window.innerWidth,
+                width: window.innerWidth /2,
                 height: window.innerHeight
             });
         };
@@ -67,6 +68,10 @@ export function FootballField() {
                       stroke="white" strokeWidth={2} />
                 <Line points={[linesPosition.left,centerPoint.y,linesPosition.right,centerPoint.y]} stroke="white" strokeWidth={3}/>
                 <Circle x={centerPoint.x} y={centerPoint.y} radius={radiusCenterCircle} stroke="white" strokeWidth={3}/>
+                {liveMatch.allPlayers.map(p =>
+                    <PlayerCircle player={p} fieldDimensions={linesPosition}/>
+                )}
+                <BallCircle ball={liveMatch.ballEvent} fieldDimensions={linesPosition}/>
             </Layer>
         </Stage>
     );

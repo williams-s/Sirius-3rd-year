@@ -1,6 +1,7 @@
 package club.manager.common_library.dto;
 
 import club.manager.common_library.enums.MatchEventEnum;
+import club.manager.common_library.parentDTO.GenericDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
