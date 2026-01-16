@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -14,8 +16,8 @@ import java.util.HashMap;
 public class PlayerService {
 
     public final HashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new HashMap<>();
-
-    public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
+    public final HashMap<PlayerKey, StatsDTO> playersStats = new HashMap<>();
+   /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
         PlayerLiveMatchDetailDTO res = null;
         if (p1 == null) {
             res = merge(getPlayerInMatch(p2),p2);
@@ -27,9 +29,9 @@ public class PlayerService {
             res = merge(merge(getPlayerInMatch(p1),p1),p2);
         }
         return res;
-    }
+    }*/
 
-    private PlayerLiveMatchDetailDTO merge(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
+    /*private PlayerLiveMatchDetailDTO merge(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
 
         PlayerLiveMatchDetailDTO.PlayerLiveMatchDetailDTOBuilder merge = PlayerLiveMatchDetailDTO.builder()
                 .matchId(p1.getMatchId())
@@ -46,7 +48,7 @@ public class PlayerService {
         if (p2.getMatchEvent() != null) merge.matchEvent(p2.getMatchEvent());
 
         return merge.build();
-    }
+    }*/
 
     public PlayerLiveMatchDetailDTO getPlayerInMatch(PlayerLiveMatchDetailDTO p) {
         addPlayerInMatchIfNotExist(p);
@@ -61,29 +63,34 @@ public class PlayerService {
         }
     }
 
+    public StatsDTO getPlayerStats(PlayerKey playerKey) {
+        addStatsIfNotExist(playerKey);
+        return playersStats.get(playerKey);
+    }
 
-    public void addStats(PlayerLiveMatchDetailDTO p) {
-        addPlayerInMatchIfNotExist(p);
-        if (p.getMatchEvent() != null) {
-            if (p.getMatchEvent().getEventType() != null) {
-                matchEventType(p);
-            }
-        }
-        if (p.getPlayerPosition() != null) {
-            if (p.getPlayerPosition().getHasBall() != null) {
-                if (p.getPlayerPosition().getHasBall()) {
-                    StatsDTO statsDTO = p.getStatsDTO();
-                    statsDTO.setTouches(statsDTO.getTouches() + 1);
-                }
-            }
-            StatsDTO statsDTO = p.getStatsDTO();
-            statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getPlayerPosition().getDistanceCovered());
+    private void addStatsIfNotExist(PlayerKey playerKey) {
+        if (!playersStats.containsKey(playerKey)) {
+            playersStats.put(playerKey, StatsDTO.builder().playerId(playerKey.playerId()).matchId(playerKey.matchId()).build());
         }
     }
 
-    private void matchEventType(PlayerLiveMatchDetailDTO p) {
-        StatsDTO statsDTO = p.getStatsDTO();
-        switch (p.getMatchEvent().getEventType()) {
+    public void addStats(MatchEventDTO matchEventDTO) {
+        if (matchEventDTO != null) {
+            if (matchEventDTO.getEventType() != null) {
+                StatsDTO statsDTO = getPlayerStats(new PlayerKey(matchEventDTO.getMatchId(), matchEventDTO.getPlayerId()));
+                matchEventType(matchEventDTO, statsDTO);
+            }
+        }
+        //statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getPlayerPosition().getDistanceCovered());
+    }
+
+    public void addDistanceCovered(PlayerPositionDTO p) {
+        StatsDTO statsDTO = getPlayerStats(new PlayerKey(p.getMatchId(), p.getPlayerId()));
+        statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getDistanceCovered());
+    }
+
+    private void matchEventType(MatchEventDTO matchEventDTO, StatsDTO statsDTO) {
+        switch (matchEventDTO.getEventType()) {
             case GOAL -> statsDTO.setGoals(statsDTO.getGoals() + 1);
             case ASSIST -> statsDTO.setAssists(statsDTO.getAssists() + 1);
 

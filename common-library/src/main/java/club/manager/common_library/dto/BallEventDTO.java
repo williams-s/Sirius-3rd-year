@@ -6,16 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BallEventDTO extends GenericDTO {
+public class BallEventDTO {
+
+    private Long matchId;
 
     private Double speed;
 
-    @JsonProperty("ball_coordinates")
+    //@JsonProperty("ball_coordinates")
     private Coordinates3D ballCoordinates;
+
 
 }

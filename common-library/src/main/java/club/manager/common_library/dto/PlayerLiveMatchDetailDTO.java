@@ -5,15 +5,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayerLiveMatchDetailDTO extends GenericDTO {
+public class PlayerLiveMatchDetailDTO{
 
-    @JsonProperty("player_id")
+    private Long matchId;
+
+    //@JsonProperty("player_id")
     private Long playerId;
+
+    //@JsonProperty("team_id")
+    private Long teamId;
 
     @JsonProperty("player_position_data")
     private PlayerPositionDTO playerPosition;

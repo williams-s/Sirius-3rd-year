@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StatsDTO {
 
+    private Long playerId;
+    private Long matchId;
+
     private Integer goals = 0;
     private Integer assists = 0;
     private Integer touches = 0;

@@ -6,17 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchStateDTO extends GenericDTO {
+public class MatchStateDTO {
 
-    @JsonProperty("match_event")
+    private Long matchId;
+
+    private Long teamId;
+
     private MatchEventEnum matchEvent;
 
-    @JsonProperty("match_time")
     private Double matchTime;
 
     private String team;

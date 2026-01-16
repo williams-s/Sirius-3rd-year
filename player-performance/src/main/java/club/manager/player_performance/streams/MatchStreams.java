@@ -1,6 +1,10 @@
 package club.manager.player_performance.streams;
 
+import club.manager.common_library.dto.MatchEventDTO;
+import club.manager.common_library.dto.PlayerHealthDTO;
 import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
+import club.manager.common_library.dto.PlayerPositionDTO;
+import club.manager.common_library.keys.PlayerKey;
 import club.manager.player_performance.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +16,13 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @AllArgsConstructor
@@ -24,40 +31,48 @@ public class MatchStreams {
 
     private final ObjectMapper objectMapper;
     private final PlayerService playerService;
+    private final ConcurrentHashMap<PlayerKey, PlayerPositionDTO> currentPlayerPositions = new ConcurrentHashMap<>();
 
     @Bean
-    public KStream<String, PlayerLiveMatchDetailDTO> matchStream(StreamsBuilder builder) {
+    public void matchStream(StreamsBuilder builder) {
 
-        KStream<String, PlayerLiveMatchDetailDTO> matchEvents =
+        KStream<String, MatchEventDTO> matchEvents =
                 builder.stream("match-events", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::extractPayload)
+                        .mapValues(this::extractPayloadMatchEvent)
                         .filter((k, v) -> v != null);
 
-        KStream<String, PlayerLiveMatchDetailDTO> playerPosition =
+        KStream<String, List<PlayerPositionDTO>> playerPosition =
                 builder.stream("players-position", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::extractPayload)
+                        .mapValues(this::<PlayerPositionDTO>extractPayloadList)
                         .filter((k, v) -> v != null);
 
-        KStream<String, PlayerLiveMatchDetailDTO> playerHealth =
+        KStream<String, List<PlayerHealthDTO>> playerHealth =
                 builder.stream("players-health", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::extractPayload)
+                        .mapValues(this::<PlayerHealthDTO>extractPayloadList)
                         .filter((k, v) -> v != null);
 
-        KStream<String, PlayerLiveMatchDetailDTO> matchByPlayer =
-                matchEvents.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
+        KStream<String, MatchEventDTO> matchByPlayer =
+                matchEvents
+                        .peek((k,v) -> playerService.addStats(v))
+                        .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
-        KStream<String, PlayerLiveMatchDetailDTO> positionByPlayer =
-                playerPosition.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
+        KStream<String, PlayerPositionDTO> positionByPlayer =
+                playerPosition
+                        .flatMapValues(l -> l)
+                        .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId())
+                        .peek((k, v) -> updatePlayerPosition(v));
 
-        KStream<String, PlayerLiveMatchDetailDTO> healthByPlayer =
-                playerHealth.selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
+        KStream<String, PlayerHealthDTO> healthByPlayer =
+                playerHealth
+                        .flatMapValues(l -> l)
+                        .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
         Serde<PlayerLiveMatchDetailDTO> playerSerde = playerSerde();
 
         StreamJoined<String, PlayerLiveMatchDetailDTO, PlayerLiveMatchDetailDTO> joined =
                 StreamJoined.with(Serdes.String(), playerSerde, playerSerde);
 
-        KStream<String, PlayerLiveMatchDetailDTO> playerPositionAndHealth =
+        /*KStream<String, PlayerLiveMatchDetailDTO> playerPositionAndHealth =
                 positionByPlayer.join(
                         healthByPlayer,
                         playerService::mergeTopics,
@@ -74,16 +89,30 @@ public class MatchStreams {
                 );
         allPlayerInfos.peek((k, playerLiveMatchDetailDTO) -> playerService.addStats(playerLiveMatchDetailDTO)).to("front-data", Produced.with(Serdes.String(), playerSerde));
         //allPlayerInfos.peek((k, v) -> log.info("Player info [{}] : {}", k, v));
-        return allPlayerInfos;
+        return allPlayerInfos;*/
     }
 
-    private PlayerLiveMatchDetailDTO extractPayload(String value) {
+    private MatchEventDTO extractPayloadMatchEvent(String value) {
         try {
             JsonNode root = objectMapper.readTree(value);
             if (root.has("payload")) {
-                return objectMapper.readValue(root.get("payload").asString(), PlayerLiveMatchDetailDTO.class);
+                return objectMapper.readValue(root.get("payload").asString(), MatchEventDTO.class);
             }
-            return objectMapper.treeToValue(root, PlayerLiveMatchDetailDTO.class);
+            return objectMapper.treeToValue(root, MatchEventDTO.class);
+        } catch (Exception e) {
+            log.error("Invalid JSON: {}", value, e);
+            return null;
+        }
+    }
+
+    private <T> List<T> extractPayloadList(String value){
+        try {
+            JsonNode root = objectMapper.readTree(value);
+            if (root.has("payload")) {
+                JsonNode payload = root.get("payload");
+                return objectMapper.readValue(payload.toString(), new TypeReference<List<T>>() {});
+            }
+            return List.of();
         } catch (Exception e) {
             log.error("Invalid JSON: {}", value, e);
             return null;
@@ -109,5 +138,11 @@ public class MatchStreams {
         };
 
         return Serdes.serdeFrom(serializer, deserializer);
+    }
+
+    private PlayerPositionDTO updatePlayerPosition(PlayerPositionDTO playerPositionDTO) {
+        currentPlayerPositions.put(new PlayerKey(playerPositionDTO.getMatchId(), playerPositionDTO.getPlayerId()), playerPositionDTO);
+        playerService.addDistanceCovered(playerPositionDTO);
+        return playerPositionDTO;
     }
 }

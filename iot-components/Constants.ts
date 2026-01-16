@@ -1,3 +1,7 @@
+import {MqttPublish} from "./classes/MqttPublish";
+import {Player} from "./classes/Player";
+import {PositionEnum} from "./enums/generated/PositionEnum";
+
 export const OPTIONS_MIDFIELDER = [
     {action: "carry", probability: 4},
     {action: "pass", probability: 3, to_position: "MIDFIELDER"},
@@ -36,3 +40,21 @@ export const SUCCESS_RATES = {
     "DEFENDER": {pass: 0.92, dribble: 0.6, carry: 0.95, shot: 0.1, tackle: 0.7},
     "GOALKEEPER": {pass: 0.95, carry: 0.98, save: 0.85}
 };
+
+export const FIELD_WIDTH = 105;
+export const FIELD_HEIGHT = 68;
+
+
+export interface TeamSimulate {
+    players : Player[],
+    side : string,
+    teamId : number
+}
+
+export const getOptionsForPosition = (position: PositionEnum)=> {
+    if (position.includes("MIDFIELDER")) return OPTIONS_MIDFIELDER;
+    if (position.includes("WING") || position === "STRIKER") return OPTIONS_FORWARD;
+    if (position.includes("BACK")) return OPTIONS_DEFENDER;
+    if (position === "GOALKEEPER") return OPTIONS_GOALKEEPER;
+    return OPTIONS_MIDFIELDER;
+}
