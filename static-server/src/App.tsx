@@ -7,7 +7,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/live" element={<LiveMatchPage/>}/>
+                <Route path="/live/:matchId" element={<LiveMatchPage/>}/>
             </Routes>
         </BrowserRouter>
     );

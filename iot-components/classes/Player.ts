@@ -36,21 +36,21 @@ export class Player {
     private initPlayerPosition(position : PositionEnum, x : number, y : number): void {
         this.playerPosition = {
             matchId: this.matchId,
-            player_id: this.playerId,
-            team_id: this.teamId,
+            playerId: this.playerId,
+            teamId: this.teamId,
             position: position,
-            player_coordinates: {x,y},
-            has_ball: false,
-            distance_covered: 0
+            playerCoordinates: {x,y},
+            hasBall: false,
+            distanceCovered: 0
         }
     }
 
     private initPlayerHealth(): void {
         this.playerHealth = {
             matchId : this.matchId,
-            player_id : this.playerId,
-            team_id : this.teamId,
-            heart_rate : 100,
+            playerId : this.playerId,
+            teamId : this.teamId,
+            heartRate : 100,
             stamina : 100,
             temperature : 37
         }
@@ -58,7 +58,7 @@ export class Player {
 
 
     setPlayerCoordinates(x : number,y : number): void {
-        this.playerPosition.player_coordinates.x = x;
-        this.playerPosition.player_coordinates.y = y;
+        this.playerPosition.playerCoordinates.x = x;
+        this.playerPosition.playerCoordinates.y = y;
     }
 }

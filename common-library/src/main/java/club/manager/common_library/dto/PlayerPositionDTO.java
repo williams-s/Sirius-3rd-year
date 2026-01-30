@@ -17,19 +17,14 @@ public class PlayerPositionDTO {
     private Long matchId;
 
     //private String team;
-    //@JsonProperty("player_id")
     private Long playerId;
 
-    //@JsonProperty("team_id")
     private Long teamId;
 
-    //@JsonProperty("player_coordinates")
     private Coordinates2D playerCoordinates;
 
-    //@JsonProperty("distance_covered")
     private Double distanceCovered;
 
-    //@JsonProperty("has_ball")
     private Boolean hasBall;
 
     private PositionEnum position;

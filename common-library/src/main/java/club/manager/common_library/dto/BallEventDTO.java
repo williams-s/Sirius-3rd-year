@@ -16,7 +16,6 @@ public class BallEventDTO {
 
     private Double speed;
 
-    //@JsonProperty("ball_coordinates")
     private Coordinates3D ballCoordinates;
 
 

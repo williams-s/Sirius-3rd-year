@@ -1,5 +1,7 @@
 package club.manager.entrance_cockpit.messaging.websocket;
 
+import club.manager.common_library.dto.BallEventDTO;
+import club.manager.common_library.dto.PlayerPositionDTO;
 import club.manager.common_library.parentDTO.GenericDTO;
 import club.manager.common_library.dto.LiveMatchDTO;
 import club.manager.entrance_cockpit.application.dto.MatchResponseDto;
@@ -30,8 +32,8 @@ public class WebSocketService {
         );
     }
 
-    public void sendObjectToTopic(JsonNode jsonObject, String topic) {
-        messagingTemplate.convertAndSend("/topic/" + topic, jsonObject);
+    public void sendObjectToTopic(Object object, String topic) {
+        messagingTemplate.convertAndSend("/topic/" + topic, object);
     }
 
     public void sendDTOtoTopic(GenericDTO genericDTO, String topic) {
@@ -45,4 +47,9 @@ public class WebSocketService {
     public void sendMatchHistoryToTopic(List<MatchResponseDto> jsonObject, String topic) {
         messagingTemplate.convertAndSend("/topic/" + topic, jsonObject);
     }
+
+    public void sendPlayersPositionsToTopic(List<PlayerPositionDTO> playerPositionDTOList, String topic) {
+        messagingTemplate.convertAndSend("/topic/" + topic, playerPositionDTOList);
+    }
+
 }

@@ -1,11 +1,14 @@
 /**
  * Generated from: MatchEventDTO.java
- * Generated on: 2026-01-14 18:21:34
+ * Generated on: 2026-01-30 12:16:55
  */
 
 import { EventTypeEnum } from '../../enums/generated/EventTypeEnum';
 
 export interface MatchEvent {
-  team: string;
-  event_type: EventTypeEnum;
+  matchId: number;
+  playerId: number;
+  teamId: number;
+  eventType: EventTypeEnum;
+  ballTouched: boolean;
 }

@@ -70,7 +70,10 @@ public class PlayerService {
 
     private void addStatsIfNotExist(PlayerKey playerKey) {
         if (!playersStats.containsKey(playerKey)) {
-            playersStats.put(playerKey, StatsDTO.builder().playerId(playerKey.playerId()).matchId(playerKey.matchId()).build());
+            StatsDTO statsDTO = new StatsDTO();
+            statsDTO.setPlayerId(playerKey.playerId());
+            statsDTO.setMatchId(playerKey.matchId());
+            playersStats.put(playerKey, statsDTO);
         }
     }
 

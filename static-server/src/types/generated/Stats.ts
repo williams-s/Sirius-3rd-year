@@ -1,9 +1,11 @@
 /**
  * Generated from: StatsDTO.java
- * Generated on: 2026-01-10 16:32:05
+ * Generated on: 2026-01-30 12:16:55
  */
 
 export interface Stats {
+  playerId: number;
+  matchId: number;
   goals: number;
   assists: number;
   touches: number;

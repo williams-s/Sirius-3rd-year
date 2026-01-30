@@ -1,20 +1,33 @@
 import React,{useState, useEffect} from "react";
-import type {LiveMatch} from "../../types/generated/LiveMatch.ts";
 import {ConnectToWebSocketSTOMP} from "../../utils/websocketConnection.ts";
 import {FootballField} from "../../components/FootballField.tsx";
-import {Scoreboard} from "../../components/Scoreboard.tsx";
+import {useParams} from "react-router-dom";
+import type {PlayerPosition} from "../../types/generated/PlayerPosition.ts";
+import type {BallEvent} from "../../types/generated/BallEvent.ts";
 
 export const LiveMatchPage : React.FC = () => {
-    const [liveMatch,setLiveMatch] = useState<LiveMatch>();
+    const [playersPosition,setPlayersPosition] = useState<PlayerPosition[]>();
+    const [ballEvent,setBallEvent] = useState<BallEvent>();
+    const matchId = useParams().matchId;
     useEffect(() => {
         //console.log("Live match page")
         const client = ConnectToWebSocketSTOMP();
         client.onConnect = () => {
             console.log("STOMP connecté");
-            client.subscribe("/topic/live-match", (message) => {
+            client.subscribe("/topic/live-match/" + matchId + "/players-position", (message) => {
                 try {
-                    const liveMatchData: LiveMatch = JSON.parse(message.body);
-                    setLiveMatch(liveMatchData);
+                    const playerPositionsData: PlayerPosition[] = JSON.parse(message.body);
+                    console.log(playerPositionsData);
+                    setPlayersPosition(playerPositionsData);
+                } catch (error) {
+                    console.error("Erreur de parsing du message:", error);
+                }
+            });
+            client.subscribe("/topic/live-match/" + matchId + "/ball-events", (message) => {
+                try {
+                    const ballEvent: BallEvent = JSON.parse(message.body);
+                    console.log(ballEvent);
+                    setBallEvent(ballEvent);
                 } catch (error) {
                     console.error("Erreur de parsing du message:", error);
                 }
@@ -27,16 +40,16 @@ export const LiveMatchPage : React.FC = () => {
         };
     }, []);
 
-    if (!liveMatch) {
+    if (!playersPosition || !ballEvent) {
         return <div>Loading match data...</div>;
     }
 
     return (
         <div className="flex w-screen h-screen bg-slate-900">
             <div className="pt-4">
-                <FootballField liveMatch={liveMatch}/>
+                <FootballField playerPositions={playersPosition} ballEvent={ballEvent}/>
             </div>
-            <Scoreboard matchState={liveMatch.matchState}/>
+            {/*<Scoreboard matchState={liveMatch.matchState}/>*/}
         </div>
     )
 

@@ -13,10 +13,8 @@ public class PlayerLiveMatchDetailDTO{
 
     private Long matchId;
 
-    //@JsonProperty("player_id")
     private Long playerId;
 
-    //@JsonProperty("team_id")
     private Long teamId;
 
     @JsonProperty("player_position_data")

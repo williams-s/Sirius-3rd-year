@@ -35,16 +35,22 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    payload = msg.payload.decode()
+    raw_payload = msg.payload.decode()
     kafka_topic = mqtt_topic_to_kafka_topic[msg.topic]
 
+    try:
+        parsed_payload = json.loads(raw_payload)
+    except json.JSONDecodeError:
+        print("Invalid JSON from MQTT")
+        return
+
     message = {
-        "payload": payload
+        "payload": parsed_payload
     }
 
     producer.produce(
         kafka_topic,
-        value=json.dumps(message),
+        value=json.dumps(message)
     )
     producer.poll(0)
 

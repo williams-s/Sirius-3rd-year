@@ -77,18 +77,18 @@ export class MqttPublish {
                 }
             ));
         }*/
-        const playerHealths : PlayerHealth[] = allPlayers.map((player)=>{
+        const playersHealth : PlayerHealth[] = allPlayers.map((player)=>{
             return player.getPlayerHealth();
         })
-        this.client.publish("players/health", JSON.stringify(playerHealths));
+        this.client.publish("players/health", JSON.stringify({playersHealth}));
     }
 
     publishPlayersPosition(allPlayers : Player[], matchId : number) {
         //const allPlayers = [...this.teamA.players, ...this.teamB.players];
-        const playerPositions : PlayerPosition[] = allPlayers.map((player)=>{
+        const playersPosition : PlayerPosition[] = allPlayers.map((player)=>{
             return player.getPlayerPosition();
         })
-        this.client.publish("players/position", JSON.stringify(playerPositions));
+        this.client.publish("players/position", JSON.stringify({playersPosition}));
         /*for (let player of allPlayers) {
             const data = {
                 team: player.team,
@@ -109,7 +109,7 @@ export class MqttPublish {
 
     publishBallPosition(ball : BallEvent, matchId : number) {
         //const ball_coordinates = {x: this.ball.x.toFixed(2), y: this.ball.y.toFixed(2), z: this.ball.z.toFixed(2)};
-        const ballCoordinates = ball.ball_coordinates;
+        const ballCoordinates = ball.ballCoordinates;
         const data = {
             matchId,
             ballCoordinates,

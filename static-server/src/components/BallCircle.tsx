@@ -11,7 +11,7 @@ export const BallCircle = ({
     fieldDimensions
 }:{ball:BallEvent, fieldDimensions: FieldDimensions}
 ) => {
-    const ballCoordinates = ball.ball_coordinates;
+    const ballCoordinates = ball.ballCoordinates;
     const normalizedCoords = {
         y: ballCoordinates.x * fieldDimensions.bot / 105,
         x: ballCoordinates.y * fieldDimensions.right / 68

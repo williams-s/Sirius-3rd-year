@@ -1,6 +1,6 @@
 /**
  * Generated from: PlayerLiveMatchDetailDTO.java
- * Generated on: 2026-01-16 15:43:32
+ * Generated on: 2026-01-30 11:37:43
  */
 
 import type { MatchEvent } from './MatchEvent';
@@ -10,8 +10,8 @@ import type { Stats } from './Stats';
 
 export interface PlayerLiveMatchDetail {
   matchId: number;
-  player_id: number;
-  team_id: number;
+  playerId: number;
+  teamId: number;
   player_position_data: PlayerPosition;
   player_health_data: PlayerHealth;
   match_event_data: MatchEvent;

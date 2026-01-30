@@ -29,21 +29,13 @@ public class DataConsumerWsSender {
 
     private boolean matchIsLive = false;
     private boolean halfTime = false;
-    @KafkaListener(topics = "front-data", groupId = "entrance-cockpit")
+    /*@KafkaListener(topics = "front-data", groupId = "entrance-cockpit")
     public void consumeFrontData(String message) {
         //log.debug("Received message: {}", message);
         PlayerLiveMatchDetailDTO playerLiveMatchDetailDTO = mapper.readValue(message, PlayerLiveMatchDetailDTO.class);
         playersInMatch.put(new PlayerKey(playerLiveMatchDetailDTO.getMatchId(), playerLiveMatchDetailDTO.getPlayerId()), playerLiveMatchDetailDTO);
     }
 
-
-    @KafkaListener(topics = "ball-events", groupId = "entrance-cockpit")
-    public void consumeBallEvent(String message) {
-        //log.debug("Received message: {}", message);
-        JsonNode jsonNode = mapper.readTree(message);
-        String payload = jsonNode.get("payload").asString();
-        lastBallEvent = mapper.readValue(payload, BallEventDTO.class);
-    }
 
     @KafkaListener(topics = "match-state", groupId = "entrance-cockpit")
     public void consumeMatchState(String message) {
@@ -57,9 +49,9 @@ public class DataConsumerWsSender {
         if (lastMatchState.getMatchEvent().equals(MatchEventEnum.SECOND_HALF_KICK_OFF)) {
             halfTime = false;
         }
-    }
+    }*/
 
-    @Scheduled(fixedRate = 33)
+    /*@Scheduled(fixedRate = 33)
     public void sendPlayersInMatch() {
         if (halfTime || !matchIsLive || lastBallEvent == null || lastMatchState == null || playersInMatch.isEmpty()) {
             return;
@@ -79,5 +71,5 @@ public class DataConsumerWsSender {
         if (lastMatchState.getMatchEvent().equals(MatchEventEnum.HALF_TIME)) {
             halfTime = true;
         }
-    }
+    }*/
 }

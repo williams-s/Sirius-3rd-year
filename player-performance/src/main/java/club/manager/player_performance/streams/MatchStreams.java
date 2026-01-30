@@ -5,6 +5,7 @@ import club.manager.common_library.dto.PlayerHealthDTO;
 import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
 import club.manager.common_library.dto.PlayerPositionDTO;
 import club.manager.common_library.keys.PlayerKey;
+import club.manager.common_library.utils.ExtractPayload;
 import club.manager.player_performance.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +17,8 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -32,23 +30,25 @@ public class MatchStreams {
     private final ObjectMapper objectMapper;
     private final PlayerService playerService;
     private final ConcurrentHashMap<PlayerKey, PlayerPositionDTO> currentPlayerPositions = new ConcurrentHashMap<>();
+    private final ExtractPayload extractPayload = new ExtractPayload();
 
     @Bean
-    public void matchStream(StreamsBuilder builder) {
+    public KStream<String, MatchEventDTO> matchStream(StreamsBuilder builder) {
+
 
         KStream<String, MatchEventDTO> matchEvents =
                 builder.stream("match-events", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::extractPayloadMatchEvent)
+                        .mapValues(extractPayload::extractMatchEvent)
                         .filter((k, v) -> v != null);
 
         KStream<String, List<PlayerPositionDTO>> playerPosition =
                 builder.stream("players-position", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::<PlayerPositionDTO>extractPayloadList)
+                        .mapValues(extractPayload::extractPlayersPositions)
                         .filter((k, v) -> v != null);
 
         KStream<String, List<PlayerHealthDTO>> playerHealth =
                 builder.stream("players-health", Consumed.with(Serdes.String(), Serdes.String()))
-                        .mapValues(this::<PlayerHealthDTO>extractPayloadList)
+                        .mapValues(extractPayload::extractPlayersHealth)
                         .filter((k, v) -> v != null);
 
         KStream<String, MatchEventDTO> matchByPlayer =
@@ -90,33 +90,7 @@ public class MatchStreams {
         allPlayerInfos.peek((k, playerLiveMatchDetailDTO) -> playerService.addStats(playerLiveMatchDetailDTO)).to("front-data", Produced.with(Serdes.String(), playerSerde));
         //allPlayerInfos.peek((k, v) -> log.info("Player info [{}] : {}", k, v));
         return allPlayerInfos;*/
-    }
-
-    private MatchEventDTO extractPayloadMatchEvent(String value) {
-        try {
-            JsonNode root = objectMapper.readTree(value);
-            if (root.has("payload")) {
-                return objectMapper.readValue(root.get("payload").asString(), MatchEventDTO.class);
-            }
-            return objectMapper.treeToValue(root, MatchEventDTO.class);
-        } catch (Exception e) {
-            log.error("Invalid JSON: {}", value, e);
-            return null;
-        }
-    }
-
-    private <T> List<T> extractPayloadList(String value){
-        try {
-            JsonNode root = objectMapper.readTree(value);
-            if (root.has("payload")) {
-                JsonNode payload = root.get("payload");
-                return objectMapper.readValue(payload.toString(), new TypeReference<List<T>>() {});
-            }
-            return List.of();
-        } catch (Exception e) {
-            log.error("Invalid JSON: {}", value, e);
-            return null;
-        }
+        return matchByPlayer;
     }
 
     private Serde<PlayerLiveMatchDetailDTO> playerSerde() {

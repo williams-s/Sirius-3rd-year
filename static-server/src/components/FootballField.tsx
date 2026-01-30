@@ -1,10 +1,15 @@
 import {Stage, Layer, Rect, Line, Circle} from 'react-konva';
 import {useEffect, useState} from "react";
 import {PlayerCircle} from "./PlayerCircle.tsx";
-import type {LiveMatch} from "../types/generated/LiveMatch.ts";
 import {BallCircle} from "./BallCircle.tsx";
+import type {PlayerPosition} from "../types/generated/PlayerPosition.ts";
+import type {BallEvent} from "../types/generated/BallEvent.ts";
 
-export function FootballField({liveMatch}: {liveMatch :LiveMatch}) {
+export function FootballField({ballEvent,playerPositions}: {ballEvent :BallEvent, playerPositions :PlayerPosition[]}) {
+
+
+    const [firstTeamId, setFirstTeamId] = useState<number>(0);
+    const [secondTeamId, setSecondTeamId] = useState<number>(0);
 
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth /2,
@@ -68,10 +73,22 @@ export function FootballField({liveMatch}: {liveMatch :LiveMatch}) {
                       stroke="white" strokeWidth={2} />
                 <Line points={[linesPosition.left,centerPoint.y,linesPosition.right,centerPoint.y]} stroke="white" strokeWidth={3}/>
                 <Circle x={centerPoint.x} y={centerPoint.y} radius={radiusCenterCircle} stroke="white" strokeWidth={3}/>
-                {liveMatch.allPlayers.map(p =>
-                    <PlayerCircle player={p} fieldDimensions={linesPosition}/>
-                )}
-                <BallCircle ball={liveMatch.ballEvent} fieldDimensions={linesPosition}/>
+                {playerPositions.map(p => {
+
+                    if (firstTeamId === 0){
+                        setFirstTeamId(p.teamId)
+                    }
+                    else {
+                        if (secondTeamId === 0){
+                            if (p.teamId !== firstTeamId)
+                                setSecondTeamId(p.teamId)
+                        }
+                    }
+                    return (
+                    <PlayerCircle player={p} fieldDimensions={linesPosition} teamIds={{firstTeamId, secondTeamId}}/>
+                    )
+                })}
+                <BallCircle ball={ballEvent} fieldDimensions={linesPosition}/>
             </Layer>
         </Stage>
     );

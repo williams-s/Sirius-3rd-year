@@ -15,13 +15,10 @@ public class MatchEventDTO {
 
     //private String team;
 
-    //@JsonProperty("player_id")
     private Long playerId;
 
-    //@JsonProperty("team_id")
     private Long teamId;
 
-    //@JsonProperty("event_type")
     private EventTypeEnum eventType;
 
     private boolean ballTouched;
