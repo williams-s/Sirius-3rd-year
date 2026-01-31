@@ -3,13 +3,15 @@ import subprocess
 from typing import final
 
 firewallIp = "usercm@172.31.249.162"
-
+mockIp = "usercm@172.31.249.132"
 
 def matchNameWithAddress(machine):
     finaladdress = firewallIp
     match machine:
         #case "talend":
         #    finaladdress += " -p 130"
+        case "rp":
+            finaladdress += " -p 110"
         case "mongo":
             finaladdress += " -p 131"
         case "spark":
@@ -28,8 +30,16 @@ def matchNameWithAddress(machine):
             finaladdress += " -p 165"
         case "vault":
             finaladdress += " -p 170"
+        case "front":
+            finaladdress += " -p 180"
+        case "performance":
+            finaladdress += " -p 190"
         case "cicd":
             finaladdress += " -p 200"
+        case "mock" :
+            return mockIp
+        case "mocks" :
+            return mockIp
         case _:
             return None
     return finaladdress

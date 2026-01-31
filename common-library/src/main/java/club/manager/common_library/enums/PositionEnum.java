@@ -1,0 +1,16 @@
+package club.manager.common_library.enums;
+
+public enum PositionEnum {
+    GOALKEEPER,
+    RIGHT_BACK,
+    LEFT_BACK,
+    CENTER_BACK,
+    LEFT_MIDFIELDER,
+    RIGHT_MIDFIELDER,
+    CENTER_MIDFIELDER,
+    CENTER_DEFENSIVE_MIDFIELDER,
+    CENTER_ATTACKING_MIDFIELDER,
+    LEFT_WINGER,
+    RIGHT_WINGER,
+    STRIKER
+}

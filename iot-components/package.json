@@ -1,0 +1,11 @@
+{
+  "name": "iot-components",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "mqtt": "^5.14.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}

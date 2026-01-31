@@ -26,4 +26,4 @@ if [ -z "$TOPIC" ] || [ -z "$SERVER" ]; then
     exit 1
 fi
 echo "Consuming from topic: $TOPIC on server: $SERVER"
-/opt/kafka/bin/kafka-console-consumer.sh --topic "$TOPIC" --from-beginning --bootstrap-server "$SERVER"
+/opt/kafka/bin/kafka-console-consumer.sh --topic "$TOPIC" --bootstrap-server "$SERVER"

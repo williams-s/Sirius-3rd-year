@@ -1,0 +1,16 @@
+/**
+ * Generated from: MatchStateDTO.java
+ * Generated on: 2026-01-30 12:16:55
+ */
+
+import { MatchEventEnum } from '../../enums/generated/MatchEventEnum';
+import type { Score } from './Score';
+
+export interface MatchState {
+  matchId: number;
+  teamId: number;
+  matchEvent: MatchEventEnum;
+  matchTime: number;
+  team: string;
+  score: Score;
+}
