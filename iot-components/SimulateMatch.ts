@@ -5,7 +5,9 @@ import {PositionEnum} from "./enums/generated/PositionEnum";
 import {MqttPublish} from "./classes/MqttPublish";
 import {EventTypeEnum} from "./enums/generated/EventTypeEnum";
 import {getPlacementByPosition} from "./Positions";
-import {MatchEventEnum} from "./enums/generated/MatchEventEnum";
+import {MatchStateEnum} from "./enums/generated/MatchStateEnum";
+import {TeamScore} from "./types/generated/TeamScore";
+import {Score} from "./types/generated/Score";
 
 
 const MQTT_BROKER = "172.31.249.162:1883"
@@ -29,6 +31,8 @@ export class SimulateMatch {
     private matchTime : number;
     private matchTime90minutes : number;
     public running : boolean;
+    public score: Score;
+
     constructor(teamA : TeamSimulate, teamB : TeamSimulate, ball : BallEvent, mqttPublish : MqttPublish, matchId : number) {
         this.mqttPublish = mqttPublish;
         this.running = false;
@@ -61,6 +65,23 @@ export class SimulateMatch {
         this.matchTime90minutes = 0;
         this.lastPasser = null;
         this.currentCarryStreak = 0;
+
+        let scoreTeamA : TeamScore = {
+            teamId: this.teamA.teamId,
+            name: this.teamA.name,
+            score: 0
+        };
+
+        let scoreTeamB : TeamScore = {
+            teamId: this.teamB.teamId,
+            name: this.teamB.name,
+            score: 0
+        }
+
+        this.score = {
+            homeTeam: scoreTeamA,
+            awayTeam: scoreTeamB
+        }
 
     }
 
@@ -306,7 +327,9 @@ export class SimulateMatch {
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.SHOT_ON_TARGET, this.matchId, false);
                 if (success && goalkeeper) {
                     //this.getTeamFromPlayer(player).score++;
-                    this.mqttPublish.publishGoalEvent(player, this.matchId, this.matchTime90minutes, this.lastPasser);
+                    let teamThatScored = this.getTeamFromPlayer(player);
+                    this.score.awayTeam.teamId === teamThatScored.teamId ? this.score.awayTeam.score++ : this.score.homeTeam.score++;
+                    this.mqttPublish.publishGoalEvent(player, this.matchId, this.matchTime90minutes, this.score, this.lastPasser);
                     this.resetBall();
                 } else {
                     this.mqttPublish.publishActionEvent(goalkeeper, EventTypeEnum.SHOT_SAVED, this.matchId, false);
@@ -473,7 +496,7 @@ export class SimulateMatch {
         this.resetPositionOfPlayers([...this.teamA.players, ...this.teamB.players]);
         //this.teamA.players = this.initPlayers("RIGHT", TEAM_A, 11, 1, this.teamA.players);
         //this.teamB.players = this.initPlayers("LEFT", TEAM_B, 11, 12, this.teamB.players);
-        this.mqttPublish.publishMatchState(MatchEventEnum.SECOND_HALF_KICK_OFF, this.matchId, this.matchTime90minutes);
+        this.mqttPublish.publishMatchState(MatchStateEnum.SECOND_HALF_KICK_OFF, this.matchId, this.matchTime90minutes, this.score);
     }
 
     resetPositionOfPlayers(allPlayers : Player[]) {
@@ -486,13 +509,13 @@ export class SimulateMatch {
 
     async startSimulation(duration = 90, actionsPerSecond = 3) {
         console.log(`Début du match! Durée: ${duration} secondes`);
-        this.mqttPublish.publishMatchState(MatchEventEnum.KICK_OFF, this.matchId, this.matchTime90minutes);
+        this.mqttPublish.publishMatchState(MatchStateEnum.KICK_OFF, this.matchId, this.matchTime90minutes,this.score);
         this.kickoff();
         this.running = true;
 
         while (this.running && this.matchTime < duration) {
             if (this.matchTime === Math.round(duration / 2)) {
-                this.mqttPublish.publishMatchState(MatchEventEnum.HALF_TIME, this.matchId, this.matchTime90minutes);
+                this.mqttPublish.publishMatchState(MatchStateEnum.HALF_TIME, this.matchId, this.matchTime90minutes,this.score);
                 console.log(`MI-TEMPS`);
                 await new Promise(resolve => setTimeout(resolve, 30000));
                 this.secondHalfStart();
@@ -505,9 +528,9 @@ export class SimulateMatch {
 
             this.matchTime++;
             this.matchTime90minutes = Number((this.matchTime / duration * 90).toFixed(2));
-            this.mqttPublish.publishMatchState(MatchEventEnum.TIME_UPDATE, this.matchId, this.matchTime90minutes);
+            this.mqttPublish.publishMatchState(MatchStateEnum.TIME_UPDATE, this.matchId, this.matchTime90minutes,this.score);
         }
-        this.mqttPublish.publishMatchState(MatchEventEnum.FULL_TIME, this.matchId, this.matchTime90minutes);
+        this.mqttPublish.publishMatchState(MatchStateEnum.FULL_TIME, this.matchId, this.matchTime90minutes,this.score);
         console.log(`\nFin du match!`);
         this.running = false;
     }

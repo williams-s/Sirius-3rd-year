@@ -2,18 +2,18 @@ import type {MatchState} from "../types/generated/MatchState.ts";
 import React from 'react';
 import {Clock, RadioTower, CirclePause} from 'lucide-react';
 import {convertDecimalTime} from "../utils/timeConverter.ts";
-import {MatchEventEnum} from "../enums/generated/MatchEventEnum.ts";
+import {MatchStateEnum} from "../enums/generated/MatchStateEnum.ts";
 import {MatchEventComponent} from "./MatchEventComponent.tsx";
 
 export const Scoreboard = ({matchState}:{matchState:MatchState}) => {
     const homeTeam = matchState.score.homeTeam;
     const awayTeam = matchState.score.awayTeam;
-    const matchTime = convertDecimalTime(matchState.match_time);
+    const matchTime = convertDecimalTime(matchState.matchTime);
     const minutes = matchTime.minutes;
     const seconds = matchTime.seconds;
 
-    const matchEvent = matchState.match_event;
-    console.log(matchEvent);
+    const matchStateEnum = matchState.matchStateEnum;
+    console.log(matchStateEnum);
     return (
         <div className="min-h-screen w-screen flex flex-col p-8">
             <div className="w-[80%] mx-auto">
@@ -24,7 +24,7 @@ export const Scoreboard = ({matchState}:{matchState:MatchState}) => {
                             <span>{minutes}:{seconds}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <ScoreboardHeader matchEvent={matchEvent}/>
+                            <ScoreboardHeader matchStateEnum={matchStateEnum}/>
                         </div>
                     </div>
 
@@ -47,22 +47,22 @@ export const Scoreboard = ({matchState}:{matchState:MatchState}) => {
                     </div>
                 </div>
             </div>
-            {matchEvent !== MatchEventEnum.TIME_UPDATE && (
-                <MatchEventComponent matchEvent={matchEvent}/>
+            {matchStateEnum !== MatchStateEnum.TIME_UPDATE && (
+                <MatchEventComponent matchStateEnum={matchStateEnum}/>
             )}
         </div>
     );
 };
 
-const ScoreboardHeader = ({matchEvent}:{matchEvent:MatchEventEnum}) => {
-    switch (matchEvent){
-        case MatchEventEnum.FULL_TIME:
+const ScoreboardHeader = ({matchStateEnum}:{matchStateEnum:MatchStateEnum}) => {
+    switch (matchStateEnum){
+        case MatchStateEnum.FULL_TIME:
             return (
                 <>
                     <span>Match terminé</span>
                 </>
             )
-        case MatchEventEnum.HALF_TIME:
+        case MatchStateEnum.HALF_TIME:
             return (
                 <>
                     <CirclePause size={18}/>

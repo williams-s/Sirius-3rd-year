@@ -4,34 +4,50 @@ import {FootballField} from "../../components/FootballField.tsx";
 import {useParams} from "react-router-dom";
 import type {PlayerPosition} from "../../types/generated/PlayerPosition.ts";
 import type {BallEvent} from "../../types/generated/BallEvent.ts";
+import {liveMatchTopic} from "../../utils/topics.ts";
+import type {MatchState} from "../../types/generated/MatchState.ts";
+import {Scoreboard} from "../../components/Scoreboard.tsx";
 
 export const LiveMatchPage : React.FC = () => {
     const [playersPosition,setPlayersPosition] = useState<PlayerPosition[]>();
     const [ballEvent,setBallEvent] = useState<BallEvent>();
+    const [matchState,setMatchState] = useState<MatchState>();
     const matchId = useParams().matchId;
     useEffect(() => {
         //console.log("Live match page")
         const client = ConnectToWebSocketSTOMP();
+        if (!matchId) {
+            return;
+        }
         client.onConnect = () => {
             console.log("STOMP connecté");
-            client.subscribe("/topic/live-match/" + matchId + "/players-position", (message) => {
+            client.subscribe(liveMatchTopic(matchId,"players-position"), (message) => {
                 try {
                     const playerPositionsData: PlayerPosition[] = JSON.parse(message.body);
-                    console.log(playerPositionsData);
+                    //console.log(playerPositionsData);
                     setPlayersPosition(playerPositionsData);
                 } catch (error) {
                     console.error("Erreur de parsing du message:", error);
                 }
             });
-            client.subscribe("/topic/live-match/" + matchId + "/ball-events", (message) => {
+            client.subscribe(liveMatchTopic(matchId,"ball-events"), (message) => {
                 try {
-                    const ballEvent: BallEvent = JSON.parse(message.body);
-                    console.log(ballEvent);
-                    setBallEvent(ballEvent);
+                    const ballEventData: BallEvent = JSON.parse(message.body);
+                    //console.log(ballEvent);
+                    setBallEvent(ballEventData);
                 } catch (error) {
                     console.error("Erreur de parsing du message:", error);
                 }
             });
+            client.subscribe(liveMatchTopic(matchId,"match-state"), (message) => {
+                try {
+                    const matchStateData: MatchState = JSON.parse(message.body);
+                    console.log(matchStateData);
+                    setMatchState(matchStateData)
+                } catch (error) {
+                    console.error("Erreur de parsing du message:", error);
+                }
+            })
         }
         client.activate();
 
@@ -49,7 +65,9 @@ export const LiveMatchPage : React.FC = () => {
             <div className="pt-4">
                 <FootballField playerPositions={playersPosition} ballEvent={ballEvent}/>
             </div>
-            {/*<Scoreboard matchState={liveMatch.matchState}/>*/}
+            {
+                matchState && <Scoreboard matchState={matchState}/>
+            }
         </div>
     )
 

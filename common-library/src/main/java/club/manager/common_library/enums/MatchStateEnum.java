@@ -1,6 +1,6 @@
 package club.manager.common_library.enums;
 
-public enum MatchEventEnum {
+public enum MatchStateEnum {
     SCORE_UPDATE,
     KICK_OFF,
     HALF_TIME,

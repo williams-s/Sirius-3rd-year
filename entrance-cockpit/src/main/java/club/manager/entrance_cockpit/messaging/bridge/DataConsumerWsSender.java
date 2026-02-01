@@ -1,18 +1,13 @@
 package club.manager.entrance_cockpit.messaging.bridge;
 
 import club.manager.common_library.dto.BallEventDTO;
-import club.manager.common_library.dto.LiveMatchDTO;
 import club.manager.common_library.dto.MatchStateDTO;
 import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
-import club.manager.common_library.enums.MatchEventEnum;
 import club.manager.common_library.keys.PlayerKey;
 import club.manager.entrance_cockpit.messaging.websocket.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,10 +38,10 @@ public class DataConsumerWsSender {
         JsonNode jsonNode = mapper.readTree(message);
         String payload = jsonNode.get("payload").asString();
         lastMatchState = mapper.readValue(payload, MatchStateDTO.class);
-        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.KICK_OFF)) {
+        if (lastMatchState.getMatchEvent().equals(MatchStateEnum.KICK_OFF)) {
             matchIsLive = true;
         }
-        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.SECOND_HALF_KICK_OFF)) {
+        if (lastMatchState.getMatchEvent().equals(MatchStateEnum.SECOND_HALF_KICK_OFF)) {
             halfTime = false;
         }
     }*/
@@ -65,10 +60,10 @@ public class DataConsumerWsSender {
 
         webSocketService.sendLiveMatchToTopic(liveMatchDTO, "live-match");
 
-        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.FULL_TIME)) {
+        if (lastMatchState.getMatchEvent().equals(MatchStateEnum.FULL_TIME)) {
             matchIsLive = false;
         }
-        if (lastMatchState.getMatchEvent().equals(MatchEventEnum.HALF_TIME)) {
+        if (lastMatchState.getMatchEvent().equals(MatchStateEnum.HALF_TIME)) {
             halfTime = true;
         }
     }*/

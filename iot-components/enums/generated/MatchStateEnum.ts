@@ -1,9 +1,9 @@
 /**
- * Generated from: MatchEventEnum.java
- * Generated on: 2026-01-15 14:53:23
+ * Generated from: MatchStateEnum.java
+ * Generated on: 2026-02-01 20:53:41
  */
 
-export enum MatchEventEnum {
+export enum MatchStateEnum {
   SCORE_UPDATE = 'SCORE_UPDATE',
   KICK_OFF = 'KICK_OFF',
   HALF_TIME = 'HALF_TIME',

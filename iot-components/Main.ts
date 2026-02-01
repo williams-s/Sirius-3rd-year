@@ -5,6 +5,7 @@ import {PositionEnum} from "./enums/generated/PositionEnum";
 import {FIELD_HEIGHT, FIELD_WIDTH, TeamSimulate} from "./Constants.js";
 import {SimulateMatch} from "./SimulateMatch.js";
 import {BallEvent} from "./types/generated/BallEvent.js";
+import {TeamScore} from "./types/generated/TeamScore";
 
 
 const args = process.argv.slice(2);
@@ -17,15 +18,20 @@ console.log("Connecting to MQTT broker...");
 
 
 const teamA : TeamSimulate = {
-    teamId : null,
+    teamId : 1,
     players : [],
-    side : "LEFT"
+    side : "LEFT",
+    name: "PSG"
 }
 const teamB : TeamSimulate = {
-    teamId : null,
+    teamId : 2,
     players : [],
-    side : "RIGHT"
+    side : "RIGHT",
+    name: "OM"
 }
+
+
+
 
 
 const initPlayers = (teamId : number, count : number, idStart : number, side : string) => {
@@ -51,7 +57,7 @@ initPlayers(2, 11, 12, "RIGHT");
 
 const ball : BallEvent = {
     matchId,
-    ball_coordinates: {x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, z: 0 },
+    ballCoordinates: {x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, z: 0 },
     speed: 0
 }
 

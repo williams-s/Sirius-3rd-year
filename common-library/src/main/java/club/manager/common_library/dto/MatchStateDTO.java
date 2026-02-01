@@ -1,10 +1,7 @@
 package club.manager.common_library.dto;
 
-import club.manager.common_library.enums.MatchEventEnum;
-import club.manager.common_library.parentDTO.GenericDTO;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import club.manager.common_library.enums.MatchStateEnum;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Data
 @Builder
@@ -14,13 +11,9 @@ public class MatchStateDTO {
 
     private Long matchId;
 
-    private Long teamId;
-
-    private MatchEventEnum matchEvent;
+    private MatchStateEnum matchStateEnum;
 
     private Double matchTime;
-
-    private String team;
 
     private Score score;
 

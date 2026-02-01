@@ -48,7 +48,8 @@ export const FIELD_HEIGHT = 68;
 export interface TeamSimulate {
     players : Player[],
     side : string,
-    teamId : number
+    teamId : number,
+    name : string
 }
 
 export const getOptionsForPosition = (position: PositionEnum)=> {
