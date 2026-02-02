@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @RequiredArgsConstructor
@@ -19,27 +20,38 @@ import java.util.List;
 public class PlayersPositionsBridge {
     private final WebSocketService webSocketService;
     private final ExtractPayload extractPayload = new ExtractPayload();
-    private List<PlayerPositionDTO> lastPlayerPositions = new ArrayList<>();
+    private final ConcurrentHashMap<Long, List<PlayerPositionDTO>> playersPositions = new ConcurrentHashMap<>();
     private final LiveMatchStateService liveMatchStateService;
     @KafkaListener(topics = "players-position", groupId = "entrance-cockpit")
     public void consumePlayersPosition(String message) {
         //log.debug("Received message: {}", message);
-        List<PlayerPositionDTO> playerPositions = extractPayload.extractPlayersPositions(message);
-        if (playerPositions != null && !playerPositions.isEmpty()) {
+        List<PlayerPositionDTO> playerPositionsDTO = extractPayload.extractPlayersPositions(message);
+        if (playerPositionsDTO != null && !playerPositionsDTO.isEmpty()) {
             //log.debug("Extracted player positions: {}", playerPositions);
-            lastPlayerPositions = playerPositions;
+            Long matchId = playerPositionsDTO.getFirst().getMatchId();
+            playersPositions.put(matchId,playerPositionsDTO);
         }
     }
 
     @Scheduled(fixedRate = 33)
     public void sendPlayersPositions() {
-        if (!lastPlayerPositions.isEmpty()) {
-            Long matchId = lastPlayerPositions.getFirst().getMatchId();
+        playersPositions.forEach((matchId, playersPositionList) -> {
             if (liveMatchStateService.isMatchNotRunning(matchId)) {
                 return;
             }
-            //log.debug("Sending players positions: {}", lastPlayerPositions);
-            webSocketService.sendPlayersPositionsToTopic(lastPlayerPositions, "live-match/" + matchId + "/players-position");        }
+            webSocketService.sendPlayersPositionsToTopic(playersPositionList, "live-match/" + matchId + "/players-position");
+        });
+    }
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void cleanupFinishedMatches() {
+        List<Long> matchesToRemove = new ArrayList<>();
+        playersPositions.forEach((matchId, playersPositionsList) -> {
+            if (liveMatchStateService.isMatchFinished(matchId)){
+                matchesToRemove.add(matchId);
+            }
+        });
+        matchesToRemove.forEach(playersPositions::remove);
     }
 
 }

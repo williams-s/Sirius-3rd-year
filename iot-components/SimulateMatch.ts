@@ -1,6 +1,6 @@
 import {Player} from "./classes/Player";
 import {BallEvent} from "./types/generated/BallEvent";
-import {FIELD_HEIGHT, FIELD_WIDTH, getOptionsForPosition, SUCCESS_RATES, TeamSimulate} from "./Constants";
+import {FIELD_HEIGHT, FIELD_WIDTH, getOptionsForPosition, GOAL_WIDTH, SUCCESS_RATES, TeamSimulate} from "./Constants";
 import {PositionEnum} from "./enums/generated/PositionEnum";
 import {MqttPublish} from "./classes/MqttPublish";
 import {EventTypeEnum} from "./enums/generated/EventTypeEnum";
@@ -19,7 +19,7 @@ const TEAM_A_ID = 1;
 const TEAM_B_ID = 2;
 
 
-export class SimulateMatch {
+class SimulateMatch {
     public teamA : TeamSimulate;
     public teamB : TeamSimulate;
     private ball : BallEvent;
@@ -138,8 +138,13 @@ export class SimulateMatch {
     }*/
 
 
+    getOpponentGoalCoords(player: Player){
+        const team = this.getTeamFromPlayer(player);
+        return team.side === "LEFT" ? {x: FIELD_WIDTH, y: FIELD_HEIGHT/2} : {x: 0, y: FIELD_HEIGHT/2};
+    }
+
     getShotProbabilityByPosition(player: Player) {
-        const opponentGoalX = player.getPlayerId() === this.teamA.teamId ? FIELD_WIDTH : 0;
+        const opponentGoalX = this.getOpponentGoalCoords(player).x;
         const distanceToGoal = Math.abs(player.getPlayerPosition().playerCoordinates.x - opponentGoalX);
 
         let shotProba : number = 0;
@@ -163,7 +168,7 @@ export class SimulateMatch {
         const shotProba = this.getShotProbabilityByPosition(player);
         options.push({action: "shot", probability: shotProba});
 
-        const [_, minDist] = this.findClosestOpponent(player);
+        const minDist = this.findClosestOpponent(player).distance;
 
         if (minDist <= 2) {
             options = options.filter(opt => opt.action !== "carry");
@@ -193,7 +198,7 @@ export class SimulateMatch {
 
     findClosestOpponent(player : Player) {
         const opponentTeam = player.getTeamId() === this.teamA.teamId ? this.teamB.players : this.teamA.players;
-        let closest = null;
+        let closest : Player = null;
         let minDist = Infinity;
         const playerCoords = player.getPlayerPosition().playerCoordinates;
         for (let opponent of opponentTeam) {
@@ -204,8 +209,11 @@ export class SimulateMatch {
                 closest = opponent;
             }
         }
-
-        return [closest, minDist];
+        return {
+            opponent: closest,
+            distance: minDist
+        }
+        //return [closest, minDist];
     }
 
     findTeammateByPosition(player : Player, targetPosition : string) {
@@ -247,7 +255,7 @@ export class SimulateMatch {
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.PASS_SUCCESS, this.matchId, true);
                 this.lastPasser = player;
             } else {
-                const [opponent, _] = this.findClosestOpponent(player);
+                const opponent = this.findClosestOpponent(player).opponent;
                 this.ballOwner = opponent;
                 //result.intercepted_by = opponent;
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.PASS_FAILED, this.matchId, false);
@@ -282,19 +290,20 @@ export class SimulateMatch {
             } else {
                 this.currentCarryStreak = 0;
 
-                const direction = player.getTeamId() === this.teamA.teamId ? 1 : -1;
-                this.ball.ballCoordinates.x = player.getPlayerPosition().playerCoordinates.x + direction * 3;
-                this.ball.ballCoordinates.y = Math.random() < 0.5 ? 0 : FIELD_HEIGHT;
+                //const direction = player.getTeamId() === this.teamA.teamId ? 1 : -1;
+                //this.ball.ballCoordinates.x = player.getPlayerPosition().playerCoordinates.x + direction * 3;
+                //this.ball.ballCoordinates.y = Math.random() < 0.5 ? 0 : FIELD_HEIGHT;
 
-                const [opponent, _] = this.findClosestOpponent(player);
+                const opponent = this.findClosestOpponent(player).opponent;
                 this.ballOwner = opponent;
-
+                this.ball.ballCoordinates.x = opponent.getPlayerPosition().playerCoordinates.x;
+                this.ball.ballCoordinates.y = opponent.getPlayerPosition().playerCoordinates.y;
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.CARRY_FAILED, this.matchId, false);
                 this.lastPasser = null;
             }
         } else if (actionType === "dribble") {
             this.currentCarryStreak = 0;
-            const [opponent, _] = this.findClosestOpponent(player);
+            const opponent = this.findClosestOpponent(player).opponent;
             if (success) {
                 const playerCoords = player.getPlayerPosition().playerCoordinates;
                 const direction = this.getTeamFromPlayer(player).side === "LEFT" ? 1 : -1;
@@ -313,17 +322,29 @@ export class SimulateMatch {
             }
         } else if (actionType === "shot") {
             this.currentCarryStreak = 0;
-
+            const opponentGoalCoords = this.getOpponentGoalCoords(player);
             const opponentTeam = player.getTeamId() === this.teamA.teamId ? this.teamB.players : this.teamA.players;
             const goalkeeper = opponentTeam.find(p => p.getPlayerPosition().position === PositionEnum.GOALKEEPER);
 
             const shotOnTarget = Math.random() < 0.7;
 
             if (!shotOnTarget) {
+                this.ball.ballCoordinates.x = opponentGoalCoords.x;
+                const GOAL_START_Y = (FIELD_HEIGHT - GOAL_WIDTH) / 2;
+                const GOAL_END_Y = GOAL_START_Y + GOAL_WIDTH;
+                const topZoneHeight = GOAL_START_Y;
+                const bottomZoneHeight = FIELD_HEIGHT - GOAL_END_Y;
+                if (Math.random() < 0.5) {
+                    this.ball.ballCoordinates.y = Math.random() * topZoneHeight;
+                } else {
+                    this.ball.ballCoordinates.y = GOAL_END_Y + Math.random() * bottomZoneHeight;
+                }
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.SHOT_MISS, this.matchId, false);
                 this.ballOwner = goalkeeper;
                 this.lastPasser = null;
             } else {
+                this.ball.ballCoordinates.x = opponentGoalCoords.x;
+                this.ball.ballCoordinates.y = opponentGoalCoords.y;
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.SHOT_ON_TARGET, this.matchId, false);
                 if (success && goalkeeper) {
                     //this.getTeamFromPlayer(player).score++;
@@ -344,6 +365,8 @@ export class SimulateMatch {
     getTeamFromPlayer(player : Player) {
         return this.teamA.players.includes(player) ? this.teamA : this.teamB;
     }
+
+
 
     /*getScore () {
         const homeTeam = {
@@ -555,6 +578,8 @@ export class SimulateMatch {
         });
     }*/
 }
+
+export default SimulateMatch
 
 /*const simulator = new SimulateMatch();
 simulator.connect().then((connected) => {

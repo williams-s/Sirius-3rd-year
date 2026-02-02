@@ -3,7 +3,7 @@ import {Player} from "./classes/Player.js";
 import {getPositionsWithPlacement} from "./Positions.js";
 import {PositionEnum} from "./enums/generated/PositionEnum";
 import {FIELD_HEIGHT, FIELD_WIDTH, TeamSimulate} from "./Constants.js";
-import {SimulateMatch} from "./SimulateMatch.js";
+import SimulateMatch from "./SimulateMatch.js";
 import {BallEvent} from "./types/generated/BallEvent.js";
 import {TeamScore} from "./types/generated/TeamScore";
 

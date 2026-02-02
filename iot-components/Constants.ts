@@ -43,7 +43,7 @@ export const SUCCESS_RATES = {
 
 export const FIELD_WIDTH = 105;
 export const FIELD_HEIGHT = 68;
-
+export const GOAL_WIDTH = 7.32;
 
 export interface TeamSimulate {
     players : Player[],

@@ -11,6 +11,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Component
@@ -20,36 +23,39 @@ public class MatchStateBridge {
 
     private final WebSocketService webSocketService;
     private final LiveMatchStateService liveMatchStateService;
-    private final AtomicReference<MatchStateDTO> lastMatchState = new AtomicReference<>();
+    private final ConcurrentHashMap<Long,MatchStateDTO> matchStates = new ConcurrentHashMap<>();
     private final ExtractPayload extractPayload = new ExtractPayload();
     @KafkaListener(topics = "match-state", groupId = "entrance-cockpit")
     public void consumeMatchState(String message) {
         MatchStateDTO matchStateDTO = extractPayload.extractMatchState(message);
         if (matchStateDTO != null) {
-            lastMatchState.set(matchStateDTO);
+            Long matchId = matchStateDTO.getMatchId();
+            matchStates.put(matchId, matchStateDTO);
             if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.KICK_OFF)) {
-                liveMatchStateService.setMatchLive(matchStateDTO.getMatchId(), true);
+                liveMatchStateService.setMatchLive(matchId, true);
             }
             if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.SECOND_HALF_KICK_OFF)) {
-                liveMatchStateService.setHalfTime(matchStateDTO.getMatchId(), false);
+                liveMatchStateService.setHalfTime(matchId, false);
             }
         }
     }
 
     @Scheduled(fixedRate = 2000)
     public void sendMatchState(){
-        MatchStateDTO currentState = lastMatchState.get();
-        if (currentState != null){
-            log.debug(currentState.toString());
-            Long matchId = currentState.getMatchId();
-            if (liveMatchStateService.isMatchNotRunning(matchId)){
+        List<Long> matchesToRemove = new ArrayList<>();
+        matchStates.forEach((matchId, matchState) -> {
+            if (liveMatchStateService.isMatchNotRunning(matchId)) {
                 return;
             }
-            webSocketService.sendObjectToTopic(currentState,String.format("live-match/%d/match-state",matchId));
-            if (currentState.getMatchStateEnum().equals(MatchStateEnum.HALF_TIME))
+            webSocketService.sendObjectToTopic(matchState,String.format("live-match/%d/match-state",matchId));
+            if (matchState.getMatchStateEnum().equals(MatchStateEnum.HALF_TIME))
                 liveMatchStateService.setHalfTime(matchId,true);
-            if (currentState.getMatchStateEnum().equals(MatchStateEnum.FULL_TIME))
+            if (matchState.getMatchStateEnum().equals(MatchStateEnum.FULL_TIME)){
                 liveMatchStateService.setMatchLive(matchId,false);
-        }
+                liveMatchStateService.clearMatchState(matchId);
+                matchesToRemove.add(matchId);
+            }
+        });
+        matchesToRemove.forEach(matchStates::remove);
     }
 }

@@ -30,6 +30,10 @@ public class LiveMatchStateService {
         matchStates.remove(matchId);
     }
 
+    public boolean isMatchFinished(Long matchId){
+        return  !matchStates.containsKey(matchId);
+    }
+
     public boolean isMatchNotRunning(Long matchId) {
         return !isMatchLive(matchId) || isHalfTime(matchId);
     }
