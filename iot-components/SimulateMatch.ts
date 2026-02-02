@@ -443,15 +443,11 @@ class SimulateMatch {
             const speed = 3;
             for (let mate of teamMates){
                 const side = this.getTeamFromPlayer(mate).side;
-                const direction = side === "LEFT" ? 1 : -1;   //this.ball.ballCoordinates.x > FIELD_WIDTH / 2 ? 1 : -1;
-                moveX = speed * dt * direction;
-                this.updateCoords(mate, moveX, moveY)
+                this.moveDynamically(mate, side, true, moveX, moveY, speed, dt);
             }
             for (let opponent of opponents){
                 const side = this.getTeamFromPlayer(opponent).side;
-                const direction = side === "LEFT" ? -1 : 1;
-                moveX = speed * dt * direction;
-                this.updateCoords(opponent, moveX, moveY)
+                this.moveDynamically(opponent, side, false, moveX, moveY, speed, dt);
             }
         }
         else{
@@ -459,6 +455,33 @@ class SimulateMatch {
                 this.moveTowardsTheBall(player,dt,moveX,moveY);
             }
         }
+    }
+
+    moveDynamically(player: Player, side : string, teamHasBall: boolean, moveX : number, moveY : number,  speed: number, dt: number){
+        const ballIsInLeftSide = this.ball.ballCoordinates.x < FIELD_WIDTH / 2
+        let direction = 1;
+        if (side === "LEFT") {
+            if (teamHasBall)
+                direction = 1;
+            else {
+                if (ballIsInLeftSide)
+                    direction = -1;
+                else
+                    direction = 1;
+            }
+        } else {
+            if (teamHasBall)
+                direction = -1;
+            else {
+                if (ballIsInLeftSide)
+                    direction = -1;
+                else
+                    direction = 1;
+            }
+        }
+        moveX = speed * dt * direction;
+        this.updateCoords(player, moveX, moveY)
+
     }
 
     moveTowardsTheBall(player: Player, dt: number, moveX = 0, moveY = 0){
@@ -485,9 +508,17 @@ class SimulateMatch {
 
     updateCoords(player: Player, moveX: number, moveY: number){
         const pos = player.getPlayerPosition();
-        pos.playerCoordinates.x = Math.max(3, Math.min(FIELD_WIDTH-3, pos.playerCoordinates.x + moveX));
-        pos.playerCoordinates.y = Math.max(0, Math.min(FIELD_HEIGHT, pos.playerCoordinates.y + moveY));
-
+        const side = this.getTeamFromPlayer(player).side;
+        if (pos.position === PositionEnum.GOALKEEPER){
+            if (side === "LEFT")
+                pos.playerCoordinates.x = Math.max(3, Math.min(FIELD_WIDTH / 6, pos.playerCoordinates.x + moveX))
+            else
+                pos.playerCoordinates.x = Math.max(FIELD_WIDTH * 5/6, Math.min(FIELD_WIDTH - 3, pos.playerCoordinates.x + moveX))
+        }
+        else {
+            pos.playerCoordinates.x = Math.max(3, Math.min(FIELD_WIDTH-3, pos.playerCoordinates.x + moveX));
+            pos.playerCoordinates.y = Math.max(0, Math.min(FIELD_HEIGHT, pos.playerCoordinates.y + moveY));
+        }
         pos.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
     }
 
@@ -615,6 +646,8 @@ class SimulateMatch {
                 await new Promise(resolve => setTimeout(resolve, 30000));
                 this.secondHalfStart();
             }
+           // await new Promise(resolve => setTimeout(resolve, 1000));
+           // this.simulateStep();
 
             for (let i = 0; i < actionsPerSecond; i++) {
                 this.simulateStep();

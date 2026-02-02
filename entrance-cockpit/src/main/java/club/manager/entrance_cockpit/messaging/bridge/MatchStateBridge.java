@@ -23,39 +23,35 @@ public class MatchStateBridge {
 
     private final WebSocketService webSocketService;
     private final LiveMatchStateService liveMatchStateService;
-    private final ConcurrentHashMap<Long,MatchStateDTO> matchStates = new ConcurrentHashMap<>();
+    //private final ConcurrentHashMap<Long,MatchStateDTO> matchStates = new ConcurrentHashMap<>();
     private final ExtractPayload extractPayload = new ExtractPayload();
     @KafkaListener(topics = "match-state", groupId = "entrance-cockpit-match-state")
     public void consumeMatchState(String message) {
         MatchStateDTO matchStateDTO = extractPayload.extractMatchState(message);
         if (matchStateDTO != null) {
             Long matchId = matchStateDTO.getMatchId();
-            matchStates.put(matchId, matchStateDTO);
+            //matchStates.put(matchId, matchStateDTO);
             if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.KICK_OFF)) {
                 liveMatchStateService.setMatchLive(matchId, true);
             }
             if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.SECOND_HALF_KICK_OFF)) {
                 liveMatchStateService.setHalfTime(matchId, false);
             }
+            sendMatchState(matchStateDTO);
         }
     }
 
-    @Scheduled(fixedRate = 2000)
-    public void sendMatchState(){
-        List<Long> matchesToRemove = new ArrayList<>();
-        matchStates.forEach((matchId, matchState) -> {
-            if (liveMatchStateService.isMatchNotRunning(matchId)) {
-                return;
-            }
-            webSocketService.sendObjectToTopic(matchState,String.format("live-match/%d/match-state",matchId));
-            if (matchState.getMatchStateEnum().equals(MatchStateEnum.HALF_TIME))
-                liveMatchStateService.setHalfTime(matchId,true);
-            if (matchState.getMatchStateEnum().equals(MatchStateEnum.FULL_TIME)){
-                liveMatchStateService.setMatchLive(matchId,false);
-                liveMatchStateService.clearMatchState(matchId);
-                matchesToRemove.add(matchId);
-            }
-        });
-        matchesToRemove.forEach(matchStates::remove);
+    private void sendMatchState(MatchStateDTO matchState){
+        Long matchId = matchState.getMatchId();
+        if (liveMatchStateService.isMatchNotRunning(matchId)) {
+            return;
+        }
+        webSocketService.sendObjectToTopic(matchState,String.format("live-match/%d/match-state",matchId));
+        if (matchState.getMatchStateEnum().equals(MatchStateEnum.HALF_TIME))
+            liveMatchStateService.setHalfTime(matchId,true);
+        if (matchState.getMatchStateEnum().equals(MatchStateEnum.FULL_TIME)){
+            liveMatchStateService.setMatchLive(matchId,false);
+            liveMatchStateService.clearMatchState(matchId);
+        }
     }
 }
