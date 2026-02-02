@@ -15,7 +15,7 @@ export const BallCircle = ({
     const ballCoordinates = ball.ballCoordinates;
     const normalizedCoords = {
         y: ballCoordinates.x * fieldDimensions.bot / FIELD_WIDTH,
-        x: ballCoordinates.y * (fieldDimensions.right + 50) / FIELD_HEIGHT
+        x: ballCoordinates.y * (fieldDimensions.right) / FIELD_HEIGHT
     }
     return (
         <Circle x={normalizedCoords.x} y={normalizedCoords.y} fill={"white"} radius={8}/>

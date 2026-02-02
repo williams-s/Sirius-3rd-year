@@ -82,9 +82,11 @@ mqttPublish.connect().then((connected) => {
                 }
 
                 // Mettre à jour les positions des joueurs
-                for (let p of [...match.teamA.players, ...match.teamB.players]) {
-                    match.updatePlayerPosition(p, deltaTimeMs);
-                }
+                //for (let p of [...match.teamA.players, ...match.teamB.players]) {
+                //    match.updatePlayerPosition(p, deltaTimeMs);
+                //}
+
+                match.updatePlayersPositions([...match.teamA.players, ...match.teamB.players],deltaTimeMs);
 
                 // Publier les positions
                 mqttPublish.publishPlayersPosition([...match.teamA.players, ...match.teamB.players], matchId);

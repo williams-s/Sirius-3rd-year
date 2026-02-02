@@ -23,7 +23,7 @@ export const PlayerCircle = (
     const coords: Coordinates2D = player.playerCoordinates;
     const normalizedCoords = {
         y: coords.x * fieldDimensions.bot / FIELD_WIDTH,
-        x: coords.y * (fieldDimensions.right + 50) / FIELD_HEIGHT
+        x: coords.y * (fieldDimensions.right ) / FIELD_HEIGHT
     }
     return (
         <Circle x={normalizedCoords.x} y={normalizedCoords.y} fill={player.teamId === teamIds.firstTeamId ? "blue" : "red"} radius={20}/>

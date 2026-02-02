@@ -176,7 +176,7 @@ class SimulateMatch {
         const shotProba = this.getShotProbabilityByPosition(player);
         options.push({action: "shot", probability: shotProba});
 
-        const minDist = this.findClosestOpponent(player).distance;
+        const minDist = this.findClosestPlayer(player).distance;
 
         if (minDist <= 2) {
             options = options.filter(opt => opt.action !== "carry");
@@ -204,21 +204,25 @@ class SimulateMatch {
         return options[0];
     }
 
-    findClosestOpponent(player : Player) {
-        const opponentTeam = player.getTeamId() === this.teamA.teamId ? this.teamB.players : this.teamA.players;
+    findClosestPlayer(player : Player, findOpponent = true) {
+        let team : Player[];
+        if (findOpponent)
+            team  = player.getTeamId() === this.teamA.teamId ? this.teamB.players : this.teamA.players;
+        else
+            team = player.getTeamId() === this.teamA.teamId ? this.teamA.players.filter(p => p.getPlayerId() !== player.getPlayerId()) : this.teamB.players;
         let closest : Player = null;
         let minDist = Infinity;
         const playerCoords = player.getPlayerPosition().playerCoordinates;
-        for (let opponent of opponentTeam) {
-            const opponentCoords = opponent.getPlayerPosition().playerCoordinates;
-            const dist = Math.sqrt((playerCoords.x - opponentCoords.x) ** 2 + (playerCoords.y - opponentCoords.y) ** 2);
+        for (let playerOfTeam of team) {
+            const playerOfTeamCoords = playerOfTeam.getPlayerPosition().playerCoordinates;
+            const dist = Math.sqrt((playerCoords.x - playerOfTeamCoords.x) ** 2 + (playerCoords.y - playerOfTeamCoords.y) ** 2);
             if (dist < minDist) {
                 minDist = dist;
-                closest = opponent;
+                closest = playerOfTeam;
             }
         }
         return {
-            opponent: closest,
+            player: closest,
             distance: minDist
         }
         //return [closest, minDist];
@@ -263,7 +267,7 @@ class SimulateMatch {
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.PASS_SUCCESS, this.matchId, true);
                 this.lastPasser = player;
             } else {
-                const opponent = this.findClosestOpponent(player).opponent;
+                const opponent = this.findClosestPlayer(player).player;
                 this.ballOwner = opponent;
                 //result.intercepted_by = opponent;
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.PASS_FAILED, this.matchId, false);
@@ -302,7 +306,7 @@ class SimulateMatch {
                 //this.ball.ballCoordinates.x = player.getPlayerPosition().playerCoordinates.x + direction * 3;
                 //this.ball.ballCoordinates.y = Math.random() < 0.5 ? 0 : FIELD_HEIGHT;
 
-                const opponent = this.findClosestOpponent(player).opponent;
+                const opponent = this.findClosestPlayer(player).player;
                 this.ballOwner = opponent;
                 this.ball.ballCoordinates.x = opponent.getPlayerPosition().playerCoordinates.x;
                 this.ball.ballCoordinates.y = opponent.getPlayerPosition().playerCoordinates.y;
@@ -311,7 +315,7 @@ class SimulateMatch {
             }
         } else if (actionType === "dribble") {
             this.currentCarryStreak = 0;
-            const opponent = this.findClosestOpponent(player).opponent;
+            const opponent = this.findClosestPlayer(player).player;
             if (success) {
                 const playerCoords = player.getPlayerPosition().playerCoordinates;
                 const direction = this.getTeamFromPlayer(player).side === "LEFT" ? 1 : -1;
@@ -424,6 +428,69 @@ class SimulateMatch {
 
         pos.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
     }
+
+    updatePlayersPositions(players: Player[], deltaTimeMs: number){
+        const dt = deltaTimeMs / 1000;
+        let moveX = 0;
+        let moveY = 0;
+        if (this.ballOwner){
+            let closestMate = this.findClosestPlayer(this.ballOwner,false);
+            let closestOpponent = this.findClosestPlayer(this.ballOwner);
+            this.moveTowardsTheBall(closestMate.player,dt,moveX,moveY);
+            this.moveTowardsTheBall(closestOpponent.player,dt,moveX,moveY);
+            const teamMates = players.filter(p => p.getTeamId() === this.ballOwner.getTeamId() && p.getPlayerId() !== closestMate.player.getPlayerId() && p.getPlayerId() !== this.ballOwner.getPlayerId());
+            const opponents = players.filter(p => p.getTeamId() !== this.ballOwner.getTeamId() && p.getPlayerId() !== closestOpponent.player.getPlayerId() && p.getPlayerId() !== this.ballOwner.getPlayerId());
+            const speed = 3;
+            for (let mate of teamMates){
+                const side = this.getTeamFromPlayer(mate).side;
+                const direction = side === "LEFT" ? 1 : -1;   //this.ball.ballCoordinates.x > FIELD_WIDTH / 2 ? 1 : -1;
+                moveX = speed * dt * direction;
+                this.updateCoords(mate, moveX, moveY)
+            }
+            for (let opponent of opponents){
+                const side = this.getTeamFromPlayer(opponent).side;
+                const direction = side === "LEFT" ? -1 : 1;
+                moveX = speed * dt * direction;
+                this.updateCoords(opponent, moveX, moveY)
+            }
+        }
+        else{
+            for (let player of players){
+                this.moveTowardsTheBall(player,dt,moveX,moveY);
+            }
+        }
+    }
+
+    moveTowardsTheBall(player: Player, dt: number, moveX = 0, moveY = 0){
+        let pos = player.getPlayerPosition();
+        if (pos.position === PositionEnum.GOALKEEPER) {
+            const speed = 3;
+            const direction = this.ball.ballCoordinates.x > FIELD_WIDTH / 2 ? 1 : -1;
+            moveX = speed * dt * direction;
+        } else {
+            const dx = this.ball.ballCoordinates.x - pos.playerCoordinates.x;
+            const dy = this.ball.ballCoordinates.y - pos.playerCoordinates.y;
+            const distance = Math.sqrt(dx ** 2 + dy ** 2);
+
+            if (distance > 0.01) {
+                const speed = 5;
+                const rand = Math.random() * 0.5 + 0.75;
+
+                moveX = (dx / distance) * speed * rand * dt;
+                moveY = (dy / distance) * speed * rand * dt;
+            }
+        }
+        this.updateCoords(player, moveX, moveY)
+    }
+
+    updateCoords(player: Player, moveX: number, moveY: number){
+        const pos = player.getPlayerPosition();
+        pos.playerCoordinates.x = Math.max(3, Math.min(FIELD_WIDTH-3, pos.playerCoordinates.x + moveX));
+        pos.playerCoordinates.y = Math.max(0, Math.min(FIELD_HEIGHT, pos.playerCoordinates.y + moveY));
+
+        pos.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
+    }
+
 
     updatePlayerHealth(player : Player) {
         const playerPosition = player.getPlayerPosition();
