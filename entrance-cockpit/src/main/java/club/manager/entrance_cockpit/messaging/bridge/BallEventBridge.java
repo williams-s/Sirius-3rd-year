@@ -25,7 +25,7 @@ public class BallEventBridge {
     private final ExtractPayload extractPayload = new ExtractPayload();
     private final LiveMatchStateService liveMatchStateService;
 
-    @KafkaListener(topics = "ball-events", groupId = "entrance-cockpit")
+    @KafkaListener(topics = "ball-events", groupId = "entrance-cockpit-ball-events")
     public void consumeBallEvent(String message) {
         //log.debug("Received message: {}", message);
         BallEventDTO ballEventDTO = extractPayload.extractBallEvent(message);

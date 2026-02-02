@@ -22,7 +22,7 @@ public class PlayersPositionsBridge {
     private final ExtractPayload extractPayload = new ExtractPayload();
     private final ConcurrentHashMap<Long, List<PlayerPositionDTO>> playersPositions = new ConcurrentHashMap<>();
     private final LiveMatchStateService liveMatchStateService;
-    @KafkaListener(topics = "players-position", groupId = "entrance-cockpit")
+    @KafkaListener(topics = "players-position", groupId = "entrance-cockpit-players-position")
     public void consumePlayersPosition(String message) {
         //log.debug("Received message: {}", message);
         List<PlayerPositionDTO> playerPositionsDTO = extractPayload.extractPlayersPositions(message);

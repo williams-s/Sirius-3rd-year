@@ -1,6 +1,7 @@
 import type {Coordinates2D} from "../types/generated/Coordinates2D.ts";
 import {Circle} from "react-konva";
 import type {PlayerPosition} from "../types/generated/PlayerPosition.ts";
+import {FIELD_HEIGHT, FIELD_WIDTH} from "../constants/FieldConstants.ts";
 
 interface FieldDimensions {
     bot : number;
@@ -21,8 +22,8 @@ export const PlayerCircle = (
 ) => {
     const coords: Coordinates2D = player.playerCoordinates;
     const normalizedCoords = {
-        y: coords.x * fieldDimensions.bot / 105,
-        x: coords.y * fieldDimensions.right / 68
+        y: coords.x * fieldDimensions.bot / FIELD_WIDTH,
+        x: coords.y * (fieldDimensions.right + 50) / FIELD_HEIGHT
     }
     return (
         <Circle x={normalizedCoords.x} y={normalizedCoords.y} fill={player.teamId === teamIds.firstTeamId ? "blue" : "red"} radius={20}/>

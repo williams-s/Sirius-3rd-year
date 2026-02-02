@@ -25,7 +25,7 @@ public class MatchStateBridge {
     private final LiveMatchStateService liveMatchStateService;
     private final ConcurrentHashMap<Long,MatchStateDTO> matchStates = new ConcurrentHashMap<>();
     private final ExtractPayload extractPayload = new ExtractPayload();
-    @KafkaListener(topics = "match-state", groupId = "entrance-cockpit")
+    @KafkaListener(topics = "match-state", groupId = "entrance-cockpit-match-state")
     public void consumeMatchState(String message) {
         MatchStateDTO matchStateDTO = extractPayload.extractMatchState(message);
         if (matchStateDTO != null) {

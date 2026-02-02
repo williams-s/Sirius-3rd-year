@@ -1,6 +1,14 @@
 import {Player} from "./classes/Player";
 import {BallEvent} from "./types/generated/BallEvent";
-import {FIELD_HEIGHT, FIELD_WIDTH, getOptionsForPosition, GOAL_WIDTH, SUCCESS_RATES, TeamSimulate} from "./Constants";
+import {
+    FIELD_HEIGHT,
+    FIELD_WIDTH,
+    getOptionsForPosition,
+    GOAL_END_Y,
+    GOAL_START_Y,
+    SUCCESS_RATES,
+    TeamSimulate
+} from "./Constants";
 import {PositionEnum} from "./enums/generated/PositionEnum";
 import {MqttPublish} from "./classes/MqttPublish";
 import {EventTypeEnum} from "./enums/generated/EventTypeEnum";
@@ -330,14 +338,11 @@ class SimulateMatch {
 
             if (!shotOnTarget) {
                 this.ball.ballCoordinates.x = opponentGoalCoords.x;
-                const GOAL_START_Y = (FIELD_HEIGHT - GOAL_WIDTH) / 2;
-                const GOAL_END_Y = GOAL_START_Y + GOAL_WIDTH;
-                const topZoneHeight = GOAL_START_Y;
-                const bottomZoneHeight = FIELD_HEIGHT - GOAL_END_Y;
-                if (Math.random() < 0.5) {
-                    this.ball.ballCoordinates.y = Math.random() * topZoneHeight;
+                const useTopZone = Math.random() < 0.5;
+                if (useTopZone) {
+                    this.ball.ballCoordinates.y = Math.random() * GOAL_START_Y;
                 } else {
-                    this.ball.ballCoordinates.y = GOAL_END_Y + Math.random() * bottomZoneHeight;
+                    this.ball.ballCoordinates.y = GOAL_END_Y + Math.random() * (FIELD_HEIGHT - GOAL_END_Y);
                 }
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.SHOT_MISS, this.matchId, false);
                 this.ballOwner = goalkeeper;
@@ -414,7 +419,7 @@ class SimulateMatch {
             }
         }
 
-        pos.playerCoordinates.x = Math.max(0, Math.min(FIELD_WIDTH, pos.playerCoordinates.x + moveX));
+        pos.playerCoordinates.x = Math.max(3, Math.min(FIELD_WIDTH-3, pos.playerCoordinates.x + moveX));
         pos.playerCoordinates.y = Math.max(0, Math.min(FIELD_HEIGHT, pos.playerCoordinates.y + moveY));
 
         pos.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
