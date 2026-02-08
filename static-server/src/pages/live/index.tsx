@@ -1,12 +1,12 @@
 import React,{useState, useEffect} from "react";
 import {ConnectToWebSocketSTOMP} from "../../utils/websocketConnection.ts";
-import {FootballField} from "../../components/FootballField.tsx";
 import {useParams} from "react-router-dom";
 import type {PlayerPosition} from "../../types/generated/PlayerPosition.ts";
 import type {BallEvent} from "../../types/generated/BallEvent.ts";
 import {liveMatchTopic} from "../../utils/topics.ts";
 import type {MatchState} from "../../types/generated/MatchState.ts";
 import {Scoreboard} from "../../components/Scoreboard.tsx";
+import {LiveMatchField} from "../../components/LiveMatchField.tsx";
 
 export const LiveMatchPage : React.FC = () => {
     const [playersPosition,setPlayersPosition] = useState<PlayerPosition[]>();
@@ -63,7 +63,7 @@ export const LiveMatchPage : React.FC = () => {
     return (
         <div className="flex w-screen h-screen bg-slate-900">
             <div className="pt-4">
-                <FootballField playerPositions={playersPosition} ballEvent={ballEvent}/>
+                <LiveMatchField playerPositions={playersPosition} ballEvent={ballEvent}/>
             </div>
             {
                 matchState && <Scoreboard matchState={matchState}/>

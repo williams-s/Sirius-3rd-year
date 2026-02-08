@@ -20,7 +20,6 @@ public class HeatMapPositionBridge {
     private final WebSocketService webSocketService;
     private final AtomicReference<List<HeatMapPlayerDTO>> currentHeatMapPlayerDTOs = new AtomicReference<>();
     private final ObjectMapper mapper = new ObjectMapper();
-
     @KafkaListener(topics = "heat-map-player-position", groupId = "entrance-cockpit-heat-map-player-position")
     public void consumeHeatMapEvents(String message) {
         PayloadDTO payloadDTO = mapper.readValue(message, PayloadDTO.class);
@@ -35,6 +34,6 @@ public class HeatMapPositionBridge {
         log.debug("Sending heat map information");
         currentHeatMapPlayerDTOs.get().
                 forEach(elem ->
-                        webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-position" + elem.playerId()));
+                        webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-position/" + elem.playerId()));
     }
 }
