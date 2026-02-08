@@ -7,11 +7,15 @@ import {liveMatchTopic} from "../../utils/topics.ts";
 import type {MatchState} from "../../types/generated/MatchState.ts";
 import {Scoreboard} from "../../components/Scoreboard.tsx";
 import {LiveMatchField} from "../../components/LiveMatchField.tsx";
+import {getCurrentLiveMatchDetails} from "../../api/liveMatchApi.ts";
+import axios from "axios";
+
 
 export const LiveMatchPage : React.FC = () => {
     const [playersPosition,setPlayersPosition] = useState<PlayerPosition[]>();
     const [ballEvent,setBallEvent] = useState<BallEvent>();
     const [matchState,setMatchState] = useState<MatchState>();
+    const [isLoading, setIsLoading] = useState(true);
     const matchId = useParams().matchId;
     useEffect(() => {
         //console.log("Live match page")
@@ -19,8 +23,29 @@ export const LiveMatchPage : React.FC = () => {
         if (!matchId) {
             return;
         }
-        client.onConnect = () => {
+        client.onConnect = async () => {
             console.log("STOMP connecté");
+            try {
+                const data = await getCurrentLiveMatchDetails(Number(matchId));
+                if (data) {
+                    setBallEvent(data.ballEvent);
+                    setMatchState(data.matchState);
+                    setPlayersPosition(data.playersPositions);
+                }
+            } catch (error) {
+                if (axios.isAxiosError(error)){
+                    if (error.response?.status === 404){
+
+                    }
+                    else {
+                        console.error(error)
+                    }
+                }else {
+                    console.error(error)
+                }
+            } finally {
+                setIsLoading(false);
+            }
             client.subscribe(liveMatchTopic(matchId,"players-position"), (message) => {
                 try {
                     const playerPositionsData: PlayerPosition[] = JSON.parse(message.body);
@@ -56,7 +81,8 @@ export const LiveMatchPage : React.FC = () => {
         };
     }, []);
 
-    if (!playersPosition || !ballEvent) {
+
+    if (isLoading || !playersPosition || !ballEvent) {
         return <div>Loading match data...</div>;
     }
 

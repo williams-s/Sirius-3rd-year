@@ -1,14 +1,14 @@
 /**
  * Generated from: LiveMatchDTO.java
- * Generated on: 2026-01-10 16:32:04
+ * Generated on: 2026-02-08 15:30:27
  */
 
 import type { BallEvent } from './BallEvent';
 import type { MatchState } from './MatchState';
-import type { PlayerLiveMatchDetail } from './PlayerLiveMatchDetail';
+import type { PlayerPosition } from './PlayerPosition';
 
 export interface LiveMatch {
   ballEvent: BallEvent;
-  allPlayers: PlayerLiveMatchDetail[];
+  playersPositions: PlayerPosition[];
   matchState: MatchState;
 }

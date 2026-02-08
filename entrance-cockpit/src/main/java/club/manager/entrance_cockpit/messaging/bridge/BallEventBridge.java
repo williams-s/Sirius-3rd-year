@@ -55,4 +55,9 @@ public class BallEventBridge {
         });
         matchesToRemove.forEach(ballEvents::remove);
     }
+
+    public BallEventDTO getCurrentBallEvent(Long matchId) {
+        return ballEvents.getOrDefault(matchId,null);
+    }
+
 }

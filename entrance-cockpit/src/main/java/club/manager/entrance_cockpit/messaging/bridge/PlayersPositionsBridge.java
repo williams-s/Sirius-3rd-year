@@ -54,4 +54,8 @@ public class PlayersPositionsBridge {
         matchesToRemove.forEach(playersPositions::remove);
     }
 
+    public List<PlayerPositionDTO> getCurrentPositions(Long matchId){
+        return playersPositions.getOrDefault(matchId, null);
+    }
+
 }

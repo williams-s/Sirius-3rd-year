@@ -1,16 +1,14 @@
-package club.manager.entrance_cockpit.application.dto;
+package club.manager.common_library.dto;
 
-import club.manager.entrance_cockpit.domain.enums.MatchStatus;
+import club.manager.common_library.enums.MatchStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Data
-@Component
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +19,6 @@ public class MatchResponseDto {
     private Short homeScore;
     private Short awayScore;
     private LocalDateTime date;
-    private MatchStatus status;
+    private MatchStatusEnum status;
     private String competition;
 }

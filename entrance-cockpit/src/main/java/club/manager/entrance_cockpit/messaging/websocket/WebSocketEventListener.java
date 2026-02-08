@@ -1,10 +1,13 @@
 package club.manager.entrance_cockpit.messaging.websocket;
 
-import club.manager.entrance_cockpit.application.dto.MatchResponseDto;
-import club.manager.entrance_cockpit.domain.enums.MatchStatus;
+import club.manager.common_library.dto.MatchResponseDto;
+import club.manager.entrance_cockpit.messaging.bridge.BallEventBridge;
+import club.manager.entrance_cockpit.messaging.bridge.MatchStateBridge;
+import club.manager.entrance_cockpit.messaging.bridge.PlayersPositionsBridge;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
@@ -19,19 +22,17 @@ public class WebSocketEventListener {
 
     private final WebSocketService webSocketService;
     //private final MatchService matchService;
+    private final PlayersPositionsBridge playersPositionsBridge;
+    private final MatchStateBridge matchStateBridge;
+    private final BallEventBridge ballEventBridge;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @EventListener
     public void handleSubscribe(SessionSubscribeEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = accessor.getSessionId();
-        log.debug("Nouvelle connexion STOMP : {}", sessionId);
-        //if ("/user/queue/matchHistory".equals(accessor.getDestination())){
-            //log.debug("Sending match history to session: {}", sessionId);
-            //List<MatchResponseDto> matches = matchService.getMatches();
-            //List<MatchResponseDto> matches = randomMatches();
-            //webSocketService.sendMatchHistoryToSession(sessionId, matches);
-            //webSocketService.sendMatchHistoryToTopic(matches, "matchHistory");
-        //}
+        String destination = accessor.getDestination();
+        log.debug("Sub to topic : {}", destination);
     }
 
     private List<MatchResponseDto> randomMatches() {
@@ -44,7 +45,7 @@ public class WebSocketEventListener {
                         .homeScore((short) 2)
                         .awayScore((short) 1)
                         .date(LocalDateTime.now().minusMinutes(15))
-                        .status(MatchStatus.LIVE)
+                        .status(club.manager.common_library.enums.MatchStatusEnum.LIVE)
                         .competition("Ligue 1")
                         .build(),
 
@@ -55,7 +56,7 @@ public class WebSocketEventListener {
                         .homeScore((short) 3)
                         .awayScore((short) 2)
                         .date(LocalDateTime.now().minusHours(2))
-                        .status(MatchStatus.FINISHED)
+                        .status(club.manager.common_library.enums.MatchStatusEnum.FINISHED)
                         .competition("La Liga")
                         .build(),
 
@@ -66,7 +67,7 @@ public class WebSocketEventListener {
                         .homeScore((short) 1)
                         .awayScore((short) 1)
                         .date(LocalDateTime.now().minusMinutes(5))
-                        .status(MatchStatus.LIVE)
+                        .status(club.manager.common_library.enums.MatchStatusEnum.LIVE)
                         .competition("Premier League")
                         .build(),
 
@@ -77,7 +78,7 @@ public class WebSocketEventListener {
                         .homeScore((short) 4)
                         .awayScore((short) 0)
                         .date(LocalDateTime.now().minusDays(1))
-                        .status(MatchStatus.FINISHED)
+                        .status(club.manager.common_library.enums.MatchStatusEnum.FINISHED)
                         .competition("Champions League")
                         .build(),
 
@@ -88,7 +89,7 @@ public class WebSocketEventListener {
                         .homeScore((short) 0)
                         .awayScore((short) 0)
                         .date(LocalDateTime.now().plusHours(1))
-                        .status(MatchStatus.FINISHED)
+                        .status(club.manager.common_library.enums.MatchStatusEnum.FINISHED)
                         .competition("Europa League")
                         .build()
         );

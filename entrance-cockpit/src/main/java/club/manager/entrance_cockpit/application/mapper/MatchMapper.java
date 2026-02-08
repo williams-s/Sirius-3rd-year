@@ -1,6 +1,6 @@
 package club.manager.entrance_cockpit.application.mapper;
 
-import club.manager.entrance_cockpit.application.dto.MatchResponseDto;
+import club.manager.common_library.dto.MatchResponseDto;
 import club.manager.entrance_cockpit.domain.entity.Match;
 import org.springframework.stereotype.Component;
 

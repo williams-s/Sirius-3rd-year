@@ -1,6 +1,5 @@
 package club.manager.entrance_cockpit.domain.entity;
 
-import club.manager.entrance_cockpit.domain.enums.MatchStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,7 @@ public class Match {
     private Short homeScore;
     private Short awayScore;
     private LocalDateTime date;
-    private MatchStatus status;
+    private club.manager.common_library.enums.MatchStatusEnum status;
     private String competition;
 
 }
