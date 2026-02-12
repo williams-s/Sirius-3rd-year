@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "faker": "^6.6.6",
+    "lodash": "^4.17.21",
+    "pg": "^8.13.1",
+    "transliteration": "^2.3.5"
+  }
+}

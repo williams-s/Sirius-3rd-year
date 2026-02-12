@@ -1,0 +1,52 @@
+const {simulateMatch} = require("./functions/simulateMatch.js");
+const {sortPlayersByTeam} = require("./functions/sortPlayers.js");
+const {GET_ID_ALL_MATCHES, GET_ALL_PLAYERS_FROM_MATCH, updateQuery, IS_MATCH_ALREADY_PLAYED} = require("../sqlQueries.js");
+const {registerOnMatch} = require("../players/matchSheet");
+const {executeQuery} = require("../sqlQueries");
+async function main(matchIdTab = []) {
+    try {
+        for (const matchId of matchIdTab) {
+            if (await IS_MATCH_ALREADY_PLAYED(matchId)) {
+                console.log(`Le match ${matchId} a deja ete joué`);
+                continue;
+            }
+            await registerOnMatch(matchId);
+            const playersRes = await GET_ALL_PLAYERS_FROM_MATCH(matchId);
+            const players = playersRes.rows;
+
+            //On trie les joueurs par equipe
+            let [firstTeam, secondTeam] = sortPlayersByTeam(players);
+
+            //console.log(firstTeam.players.length, secondTeam.players.length);
+
+            //On simule le match
+            const resultOfMatch = await simulateMatch(firstTeam, secondTeam);
+
+
+            //On met a jour le score du match
+            let firstTeamScore = resultOfMatch.firstTeam.score;
+            let secondTeamScore = resultOfMatch.secondTeam.score;
+            await updateQuery("match", [{score_home: firstTeamScore, score_away: secondTeamScore}], [{id_match: matchId}]);
+        }
+        process.exit();
+    } catch (error) {
+        console.error("Pas reussi a se connecter:", error.message);
+    }
+}
+
+async function getAllMatchsBeforeToday() {
+    try {
+        const sql = `
+            SELECT id_match FROM match where match.date_time < CURRENT_TIMESTAMP`;
+        const res = await executeQuery(sql);
+        //console.log(res.rows);
+        await main((res.rows).map(match => match.id_match));
+    }catch (error) {
+        console.error("Bug :", error.message);
+    }
+}
+const args = process.argv.slice(3);
+const matchIdTab = JSON.parse(args[0]);
+
+getAllMatchsBeforeToday();
+//main(matchIdTab);

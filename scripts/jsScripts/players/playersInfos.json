@@ -1,0 +1,46 @@
+{
+  "nationality": {
+    "BRESIL": { "proba": 3, "locale": "pt_BR" },
+    "ALLEMAGNE": { "proba": 3, "locale": "de_DE" },
+    "ARGENTINE": { "proba": 3, "locale": "es_AR" },
+    "FRANCE": { "proba": 120, "locale": "fr_FR" },
+    "ITALIE": { "proba": 3, "locale": "it_IT" },
+    "ESPAGNE": { "proba": 3, "locale": "es_ES" },
+    "ANGLETERRE": { "proba": 2, "locale": "en_GB" },
+    "PORTUGAL": { "proba": 3, "locale": "pt_PT" },
+    "PAYS_BAS": { "proba": 2, "locale": "nl_NL" },
+    "BELGIQUE": { "proba": 3, "locale": "nl_BE" },
+    "URUGUAY": { "proba": 1, "locale": "es_UY" },
+    "CROATIE": { "proba": 1, "locale": "hr_HR" },
+    "RUSSIE": { "proba": 1, "locale": "ru_RU" },
+    "POLOGNE": { "proba": 1, "locale": "pl_PL" },
+    "NORVEGE": { "proba": 1, "locale": "nb_NO" },
+    "ALGERIE": { "proba": 3, "locale": "ar_SA" },
+    "MAROC": { "proba": 3, "locale": "ar_SA" },
+    "TUNISIE": { "proba": 3, "locale": "ar_SA" },
+    "SUEDE": { "proba": 1, "locale": "sv_SE" },
+    "DANEMARK": { "proba": 1, "locale": "da_DK" },
+    "SUISSE": { "proba": 3, "locale": "fr_CH" },
+    "JAPON": { "proba": 1, "locale": "ja_JP" },
+    "COREE_DU_SUD": { "proba": 1, "locale": "ko_KR" }
+  },
+  "positions": {
+    "GARDIEN": 4,
+    "DEFENSEUR_DROIT": 8,
+    "DEFENSEUR_CENTRAL": 9,
+    "DEFENSEUR_GAUCHE": 8,
+    "MILIEU_DEFENSIF": 7,
+    "MILIEU_DROIT": 6,
+    "MILIEU_CENTRAL": 10,
+    "MILIEU_GAUCHE": 6,
+    "MILIEU_OFFENSIF": 7,
+    "ATTAQUANT_DROIT": 5,
+    "ATTAQUANT_GAUCHE": 5,
+    "ATTAQUANT_CENTRAL": 9
+  },
+  "footOptions": {
+    "GAUCHER": 3,
+    "DROITIER": 6,
+    "AMBIDEXTRE": 2
+  }
+}
