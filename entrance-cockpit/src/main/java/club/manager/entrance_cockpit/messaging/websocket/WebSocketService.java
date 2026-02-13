@@ -1,8 +1,8 @@
 package club.manager.entrance_cockpit.messaging.websocket;
 
+import club.manager.common_library.dto.MatchResponseDTO;
 import club.manager.common_library.dto.PlayerPositionDTO;
 import club.manager.common_library.parentDTO.GenericDTO;
-import club.manager.common_library.dto.MatchResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -18,9 +18,9 @@ public class WebSocketService {
     private final SimpMessagingTemplate messagingTemplate;
 
 
-    public void sendMatchHistoryToSession(String sessionId, List<MatchResponseDto> matchs) {
+    public void sendMatchHistoryToSession(String sessionId, List<MatchResponseDTO> matchs) {
         //log.debug("Sending match history to session: {}", sessionId);
-        //log.debug("Match history: {}", matchs.stream().map(MatchResponseDto::toString).toList());
+        //log.debug("Match history: {}", matchs.stream().map(MatchResponseDTO::toString).toList());
         log.debug("Sending to sessionId={} matches={}", sessionId, matchs.size());
         messagingTemplate.convertAndSendToUser(
                 sessionId,
@@ -38,7 +38,7 @@ public class WebSocketService {
     }
 
 
-    public void sendMatchHistoryToTopic(List<MatchResponseDto> jsonObject, String topic) {
+    public void sendMatchHistoryToTopic(List<MatchResponseDTO> jsonObject, String topic) {
         messagingTemplate.convertAndSend("/topic/" + topic, jsonObject);
     }
 

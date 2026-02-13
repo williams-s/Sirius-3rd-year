@@ -9,13 +9,20 @@ import {Scoreboard} from "../../components/Scoreboard.tsx";
 import {LiveMatchField} from "../../components/LiveMatchField.tsx";
 import {getCurrentLiveMatchDetails} from "../../api/liveMatchApi.ts";
 import axios from "axios";
+import {getMatch} from "../../api/matchApi.ts";
+import type {MatchResponse} from "../../types/generated/MatchResponse.ts";
+import {MatchCard} from "../../components/MatchDetailsComponent.tsx";
+import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
+import {PlayerCard} from "../../components/PlayerCard.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
     const [playersPosition,setPlayersPosition] = useState<PlayerPosition[]>();
     const [ballEvent,setBallEvent] = useState<BallEvent>();
     const [matchState,setMatchState] = useState<MatchState>();
+    const [matchDetails, setMatchDetails] = useState<MatchResponse>();
     const [isLoading, setIsLoading] = useState(true);
+    const [players, setPlayers] = useState<PlayerResponse[]>();
     const matchId = useParams().matchId;
     useEffect(() => {
         //console.log("Live match page")
@@ -31,11 +38,19 @@ export const LiveMatchPage : React.FC = () => {
                     setBallEvent(data.ballEvent);
                     setMatchState(data.matchState);
                     setPlayersPosition(data.playersPositions);
+                    setPlayers(data.matchSheet)
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)){
                     if (error.response?.status === 404){
-
+                        try {
+                            const data = await getMatch(Number(matchId));
+                            if (data){
+                                setMatchDetails(data);
+                            }
+                        } catch (e) {
+                            console.error(e);
+                        }
                     }
                     else {
                         console.error(error)
@@ -72,7 +87,16 @@ export const LiveMatchPage : React.FC = () => {
                 } catch (error) {
                     console.error("Erreur de parsing du message:", error);
                 }
-            })
+            });
+            client.subscribe(liveMatchTopic(matchId,"match-sheet"), (message) => {
+               try {
+                   const playersData: PlayerResponse[] = JSON.parse(message.body);
+                   console.log(playersData);
+                   setPlayers(playersData);
+               } catch (error){
+                   console.error("Erreur ",error);
+               }
+            });
         }
         client.activate();
 
@@ -82,18 +106,42 @@ export const LiveMatchPage : React.FC = () => {
     }, []);
 
 
-    if (isLoading || !playersPosition || !ballEvent) {
+    if (isLoading) {
         return <div>Loading match data...</div>;
     }
 
+    if (matchDetails && (!playersPosition && !ballEvent)){
+        return (
+            <div className="flex w-screen h-screen bg-slate-400 flex-col justify-center items-center">
+                <MatchCard match={matchDetails}/>
+            </div>
+        )
+    }
+
+    if (!playersPosition || !ballEvent){
+        return (
+            <div>Not working</div>
+        )
+    }
     return (
-        <div className="flex w-screen h-screen bg-slate-900">
+        <div className="flex w-screen h-screen bg-slate-400">
             <div className="pt-4">
                 <LiveMatchField playerPositions={playersPosition} ballEvent={ballEvent}/>
             </div>
-            {
-                matchState && <Scoreboard matchState={matchState}/>
-            }
+            <div className="flex flex-col">
+                {
+                    matchState && <Scoreboard matchState={matchState}/>
+                }
+                {
+                    players && (
+                        <>
+                            {players.map(p => (
+                                <PlayerCard key={p.playerId} player={p} />
+                            ))}
+                        </>
+                    )
+                }
+            </div>
         </div>
     )
 

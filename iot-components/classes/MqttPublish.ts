@@ -86,6 +86,11 @@ export class MqttPublish {
         this.client.publish("players/health", JSON.stringify({playersHealth}));
     }
 
+
+    publishMatchSheet(playersIds : number[], matchId: number){
+        this.client.publish("match/sheet", JSON.stringify({matchId, playersIds}))
+    }
+
     publishPlayersPosition(allPlayers : Player[], matchId : number) {
         //const allPlayers = [...this.teamA.players, ...this.teamB.players];
         const playersPosition : PlayerPosition[] = allPlayers.map((player)=>{

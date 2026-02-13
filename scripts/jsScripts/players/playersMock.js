@@ -10,7 +10,7 @@ const args = process.argv.slice(2);
 
 // Récupération des chemins des fichiers JSON
 const playerJson = args[1] || 'jsScripts/players/playersInfos.json';
-const NUMBER_INSERT_PLAYERS = args[2] || 50;
+const NUMBER_INSERT_PLAYERS = args[2] || 1000;
 
 // Constantes pour les tailles des gardiens
 const goalkeeperMinHeight = 185;
@@ -99,7 +99,7 @@ const generatePlayer = async () => {
         name: transliterate(myFaker.person.lastName('male')),
         nationality: nationality,
         position: position,
-        foot: randomElemInArray(footOptions),
+        strong_foot: randomElemInArray(footOptions),
         height: myFaker.number.int({min: minHeight, max: maxHeight}),
         weight: myFaker.number.int({min: 70, max: 98}),
         birth_date: myFaker.date.between({from: '1985-01-01', to: '2008-12-31'}),

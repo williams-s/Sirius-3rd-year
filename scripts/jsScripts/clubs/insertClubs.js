@@ -62,9 +62,13 @@ const main = async () => {
         "La_Berrichonne_de_Châteauroux"
     ];
 
-    async function getClubAndPresident(clubs,leagueName) {
+    async function getClubAndPresident(clubs, leagueName) {
         for (const club of clubs) {
             let res = await getPresidentFromWikipedia(club);
+            if (!res) {
+                console.warn(`Skipping ${club} — données introuvables`);
+                continue;
+            }
             res.team.league = leagueName;
             clubAndTeam.push(res);
         }
@@ -136,7 +140,6 @@ const main = async () => {
     for (const team of clubAndTeam) {
         const res = await insertQuery("club", team.club, true);
         team.team.id_club = res.id_club;
-        team.team.category = "PRO";
         console.log(team);
         const id_team = await insertQuery("team", team.team, true);
     }

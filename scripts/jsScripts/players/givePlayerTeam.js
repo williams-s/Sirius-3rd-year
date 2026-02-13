@@ -4,7 +4,8 @@ const {pl} = require("@faker-js/faker");
 
 
 const getAllTeams = async () => {
-    return (await executeQuery("SELECT id_team FROM team")).rows;
+    const rows = (await executeQuery("SELECT id_team FROM team")).rows;
+    return rows.map(row => ({ id_team: parseInt(row.id_team) }));
 }
 
 
@@ -71,29 +72,20 @@ async function insertPlayersForAllTeams (position, numberOfPlayersAtThisPosition
 }
 
 async function main () {
-    await insertPlayersForAllTeams("GARDIEN", 1);
-    await insertPlayersForAllTeams("DEFENSEUR_CENTRAL", 2);
-    await insertPlayersForAllTeams("DEFENSEUR_DROIT", 1);
-    await insertPlayersForAllTeams("DEFENSEUR_GAUCHE", 1);
-    await insertPlayersForAllTeams("MILIEU_DROIT", 1);
-    await insertPlayersForAllTeams("MILIEU_CENTRAL", 2);
-    await insertPlayersForAllTeams("MILIEU_GAUCHE", 1);
-    await insertPlayersForAllTeams("ATTAQUANT_CENTRAL", 2);
-    await insertPlayersForAllTeams("ATTAQUANT_GAUCHE", 2);
-    await insertPlayersForAllTeams("ATTAQUANT_DROIT", 2);
-
-    await insertPlayersForAllTeams("MILIEU_OFFENSIF", 2);
-    await insertPlayersForAllTeams("MILIEU_DEFENSIF", 2);
-    //await insertPlayersForAllTeams("GARDIEN", 1);
-    await insertPlayersForAllTeams("DEFENSEUR_CENTRAL", 2);
-    //await insertPlayersForAllTeams("DEFENSEUR_DROIT", 1);
-    //await insertPlayersForAllTeams("DEFENSEUR_GAUCHE", 1);
-    //await insertPlayersForAllTeams("DEFENSEUR_DROIT", 1);
-    await insertPlayersForAllTeams("MILIEU_CENTRAL", 2);
-    //await insertPlayersForAllTeams("MILIEU_GAUCHE", 1);
-    //await insertPlayersForAllTeams("MILIEU_DROIT", 1);
-    //await insertPlayersForAllTeams("ATTAQUANT_CENTRAL", 1);
-
+    await insertPlayersForAllTeams("GOALKEEPER", 1);
+    await insertPlayersForAllTeams("CENTER_BACK", 2);
+    await insertPlayersForAllTeams("RIGHT_BACK", 1);
+    await insertPlayersForAllTeams("LEFT_BACK", 1);
+    await insertPlayersForAllTeams("RIGHT_MIDFIELDER", 1);
+    await insertPlayersForAllTeams("CENTER_MIDFIELDER", 2);
+    await insertPlayersForAllTeams("LEFT_MIDFIELDER", 1);
+    await insertPlayersForAllTeams("STRIKER", 2);
+    await insertPlayersForAllTeams("LEFT_WINGER", 2);
+    await insertPlayersForAllTeams("RIGHT_WINGER", 2);
+    await insertPlayersForAllTeams("CENTER_ATTACKING_MIDFIELDER", 2);
+    await insertPlayersForAllTeams("CENTER_DEFENSIVE_MIDFIELDER", 2);
+    await insertPlayersForAllTeams("CENTER_BACK", 2);
+    await insertPlayersForAllTeams("CENTER_MIDFIELDER", 2);
 }
 
 main().then(_ => process.exit(0));

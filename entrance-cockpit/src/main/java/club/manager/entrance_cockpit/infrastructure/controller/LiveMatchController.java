@@ -1,10 +1,9 @@
 package club.manager.entrance_cockpit.infrastructure.controller;
 
-import club.manager.common_library.dto.BallEventDTO;
-import club.manager.common_library.dto.LiveMatchDTO;
-import club.manager.common_library.dto.MatchStateDTO;
-import club.manager.common_library.dto.PlayerPositionDTO;
+import club.manager.common_library.dto.*;
+import club.manager.entrance_cockpit.application.service.LiveMatchStateService;
 import club.manager.entrance_cockpit.messaging.bridge.BallEventBridge;
+import club.manager.entrance_cockpit.messaging.bridge.MatchSheetBridge;
 import club.manager.entrance_cockpit.messaging.bridge.MatchStateBridge;
 import club.manager.entrance_cockpit.messaging.bridge.PlayersPositionsBridge;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +25,19 @@ public class LiveMatchController {
     private final PlayersPositionsBridge playersPositionsBridge;
     private final MatchStateBridge matchStateBridge;
     private final BallEventBridge ballEventBridge;
+    private final MatchSheetBridge matchSheetBridge;
+    private final LiveMatchStateService liveMatchStateService;
 
     @GetMapping("/{matchId}")
     public ResponseEntity<LiveMatchDTO> getLiveMatch(@PathVariable Long matchId) {
+        if (liveMatchStateService.isMatchFinished(matchId))
+            return ResponseEntity.notFound().build();
+
         List<PlayerPositionDTO> currentPositions = playersPositionsBridge.getCurrentPositions(matchId);
         MatchStateDTO currentMatchState = matchStateBridge.getCurrentMatchState(matchId);
         BallEventDTO currentBallEvent = ballEventBridge.getCurrentBallEvent(matchId);
-
-        if (currentBallEvent == null || currentPositions == null || currentMatchState == null) {
+        List<PlayerResponseDTO> matchSheet = matchSheetBridge.getMatchSheet(matchId);
+        if (matchSheet == null || currentBallEvent == null || currentPositions == null || currentMatchState == null) {
             return ResponseEntity.notFound().build();
         }
 
@@ -41,6 +45,7 @@ public class LiveMatchController {
                 .matchState(currentMatchState)
                 .ballEvent(currentBallEvent)
                 .playersPositions(currentPositions)
+                .matchSheet(matchSheet)
                 .build();
 
         log.debug("Sending live match infos for matchId {}",matchId);

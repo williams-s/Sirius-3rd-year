@@ -10,6 +10,6 @@ export const ConnectToWebSocketSTOMP = (): Client => {
     return new Client({
         webSocketFactory: () => new SockJS(WEBSOCKET_URL),
         reconnectDelay: 5000,
-        debug: str => console.log(str)
+        //debug: str => console.log(str)
     })
 }

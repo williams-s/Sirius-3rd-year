@@ -13,5 +13,6 @@ public class PlayerResponseDTO {
     private Long playerId;
     private String name;
     private String firstName;
+    private Long teamId;
     private Short shirtNumber;
 }

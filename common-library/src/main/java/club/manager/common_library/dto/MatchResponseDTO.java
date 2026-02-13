@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatchResponseDto {
+public class MatchResponseDTO {
     private Long idMatch;
-    private String homeTeam;
-    private String awayTeam;
+    private TeamResponseDTO homeTeam;
+    private TeamResponseDTO awayTeam;
     private Short homeScore;
     private Short awayScore;
     private LocalDateTime date;

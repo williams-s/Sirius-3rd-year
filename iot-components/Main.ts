@@ -68,6 +68,9 @@ let updateInterval: NodeJS.Timeout | null = null;
 mqttPublish.connect().then((connected) => {
     if (connected) {
         try {
+            const players = [...match.teamA.players, ...match.teamB.players].map(p => p.getPlayerId());
+            console.log(players);
+            mqttPublish.publishMatchSheet(players, matchId);
             match.running = true;
             match.startSimulation();
 
