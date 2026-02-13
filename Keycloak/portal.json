@@ -54,13 +54,26 @@
     "tls.client.certificate.bound.access.tokens": "false",
     "acr.loa.map": "{}",
     "display.on.consent.screen": "true",
-    "token.response.type.bearer.lower-case": "false",
-    "consent.screen.text": "",
-    "frontchannel.logout.url": ""
+    "token.response.type.bearer.lower-case": "false"
   },
   "authenticationFlowBindingOverrides": {},
   "fullScopeAllowed": true,
   "nodeReRegistrationTimeout": -1,
+  "protocolMappers": [
+    {
+      "name": "audience-portal",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-audience-mapper",
+      "consentRequired": false,
+      "config": {
+        "included.client.audience": "portal",
+        "id.token.claim": "false",
+        "lightweight.claim": "false",
+        "access.token.claim": "true",
+        "introspection.token.claim": "true"
+      }
+    }
+  ],
   "defaultClientScopes": [
     "web-origins",
     "service_account",
