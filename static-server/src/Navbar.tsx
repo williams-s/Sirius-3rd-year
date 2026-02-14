@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const NAV_ITEMS = [
     { label: "Club", path: "/club" },
@@ -8,7 +10,14 @@ const NAV_ITEMS = [
 ];
 
 export const Navbar = () => {
-    const isAuthenticated = document.cookie.includes("_oauth2_proxy");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+    useEffect(() => {
+        axios.get("/oauth2/userinfo")
+            .then(() => setIsAuthenticated(true))
+            .catch(() => setIsAuthenticated(false));
+    }, []);
 
     const LogInOut = () => {
         window.location.href = isAuthenticated ? "/oauth2/sign_out" : "/oauth2/start";
