@@ -6,7 +6,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - KAFKA_BOOTSTRAP_SERVERS=192.68.0.50:9092
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
       - POSTGRES_SERVER=192.168.0.33:5432
     restart: unless-stopped
 
