@@ -1,13 +1,13 @@
-version: "3.8"
-
 services:
   nginx:
     image: nginx:latest
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./snippets:/etc/nginx/snippets
+      - ./ssl:/etc/nginx/ssl
     depends_on:
       - oauth2-proxy
     networks:
@@ -25,7 +25,7 @@ services:
       - OAUTH2_PROXY_EMAIL_DOMAINS=*
       - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
 
-      - OAUTH2_PROXY_REDIRECT_URL=http://172.31.249.162/oauth2/callback
+      - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
       - OAUTH2_PROXY_LOGIN_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/auth
 
       - OAUTH2_PROXY_OIDC_ISSUER_URL=http://192.168.0.65:8180/realms/cm-realm
@@ -42,12 +42,14 @@ services:
       - OAUTH2_PROXY_COOKIE_NAME=_oauth2_proxy
       - OAUTH2_PROXY_CSRF_COOKIE_NAME=_oauth2_proxy_csrf
       - OAUTH2_PROXY_COOKIE_SAMESITE=lax
-      - OAUTH2_PROXY_COOKIE_SECURE=false
+      - OAUTH2_PROXY_COOKIE_SECURE=true
 
       - OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY=true
       - OAUTH2_PROXY_CODE_CHALLENGE_METHOD=S256
       - OAUTH2_PROXY_PROXY_PREFIX=/oauth2
       - OAUTH2_PROXY_REVERSE_PROXY=true
+
+      - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
 
 networks:
   app-network:
