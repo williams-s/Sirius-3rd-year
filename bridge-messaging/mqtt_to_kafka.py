@@ -3,10 +3,10 @@ import paho.mqtt.client as mqtt
 import confluent_kafka as kafka
 import os
 
-MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
+MQTT_BROKER = os.getenv("MQTT_BROKER", "172.31.249.162")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 
-KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP")
+KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "172.31.125.112:9092")
 
 
 producer = kafka.Producer({
