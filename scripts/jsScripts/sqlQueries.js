@@ -134,6 +134,7 @@ const insertQuery = async (table,values,isReturningId=false) => {
     return res.rows[0];
 }
 
+
 module.exports = {GET_ID_ALL_MATCHES, GET_ALL_PLAYERS_FROM_MATCH,
     updateQuery, GET_ALL_LEAGUES, insertQuery, executeQuery, GET_ALL_TEAMS,
     GET_ALL_TEAMS_FROM_LEAGUE,

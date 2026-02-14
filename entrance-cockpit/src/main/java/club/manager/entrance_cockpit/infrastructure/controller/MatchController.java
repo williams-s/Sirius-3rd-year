@@ -4,6 +4,7 @@ import club.manager.common_library.dto.ClubResponseDTO;
 import club.manager.common_library.dto.MatchResponseDTO;
 import club.manager.common_library.dto.TeamResponseDTO;
 import club.manager.common_library.enums.MatchStatusEnum;
+import club.manager.entrance_cockpit.application.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +22,22 @@ import java.util.List;
 @Slf4j
 public class MatchController {
 
+    private final MatchService matchService;
+
     @GetMapping("/{matchId}")
     public ResponseEntity<MatchResponseDTO> getMatch(@PathVariable Long matchId){
-        var teams = randomTeams();
-        MatchResponseDTO matchResponseDTO =  MatchResponseDTO.builder()
-                .idMatch(matchId)
-                .homeTeam(teams.getFirst())
-                .awayTeam(teams.getLast())
-                .homeScore((short) 0)
-                .awayScore((short) 0)
-                .date(LocalDateTime.now())
-                .status(MatchStatusEnum.SCHEDULED)
-                .competition("Ligue1")
-            .build();
+        MatchResponseDTO matchResponseDTO = matchService.getMatch(matchId);
+        if (matchResponseDTO == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(matchResponseDTO);
+    }
+
+    @GetMapping("/{matchId}/teams")
+    public ResponseEntity<List<TeamResponseDTO>> getTeams(@PathVariable Long matchId){
+        List<TeamResponseDTO> teamResponseDTOs = matchService.getTeamsFromMatch(matchId);
+        if (teamResponseDTOs == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(teamResponseDTOs);
     }
 
     private List<TeamResponseDTO> randomTeams(){

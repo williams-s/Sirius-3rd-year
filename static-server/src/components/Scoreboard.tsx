@@ -13,10 +13,9 @@ export const Scoreboard = ({matchState}:{matchState:MatchState}) => {
     const seconds = matchTime.seconds;
 
     const matchStateEnum = matchState.matchStateEnum;
-    console.log(matchStateEnum);
     return (
-        <div className="min-h-screen w-screen flex flex-col p-8">
-            <div className="w-[80%] mx-auto">
+        <div className="flex flex-col p-4">
+            <div className="w-full">
                 <div className="bg-white rounded-lg shadow mb-4">
                     <div className="bg-gray-800 text-white py-3 px-6 rounded-t-lg flex items-center justify-between">
                         <div className="flex items-center gap-2">

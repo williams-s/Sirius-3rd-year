@@ -12,7 +12,7 @@ async function getAllTeamsFromLeague(league) {
 async function createMatch (id_team_home, id_team_away, competition, match_day, date_time, season) {
     const client = await pool.connect();
     try {
-        const insertQuery = `INSERT INTO match (id_team_home, id_team_away, competition, match_day, date_time, season) VALUES ($1, $2, $3, $4, $5, $6)`;
+        const insertQuery = `INSERT INTO match (id_team_home, id_team_away, competition, match_day, date_time, season, score_away, score_home, status) VALUES ($1, $2, $3, $4, $5, $6, 0, 0, 'SCHEDULED')`;
         await client.query(insertQuery, [id_team_home, id_team_away, competition, match_day, date_time, season]);
         return true;
     } catch (error) {
@@ -156,12 +156,12 @@ async function main(league,yearArg) {
 
 
 
-const args = process.argv.slice(3);
-main(args[0], args[1]).then(r => {
-    console.log(r);
-    process.exit(0)}
-);
+//const args = process.argv.slice(3);
+//main(args[0], args[1]).then(r => {
+  //  console.log(r);
+  //  process.exit(0)}
+//);
 //console.log(args);
-//main("LIGUE_1", 2025).then(_ => process.exit(0));
+main("LIGUE_1", 2026).then(_ => process.exit(0));
 
 //main("LIGUE_1").then(main("LIGUE_2")).then(main("NATIONAL"));

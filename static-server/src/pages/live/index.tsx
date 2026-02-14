@@ -38,7 +38,8 @@ export const LiveMatchPage : React.FC = () => {
                     setBallEvent(data.ballEvent);
                     setMatchState(data.matchState);
                     setPlayersPosition(data.playersPositions);
-                    setPlayers(data.matchSheet)
+                    setPlayers(data.matchSheet);
+                    console.log(data.matchSheet);
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)){
@@ -53,10 +54,10 @@ export const LiveMatchPage : React.FC = () => {
                         }
                     }
                     else {
-                        console.error(error)
+                        console.error(error);
                     }
                 }else {
-                    console.error(error)
+                    console.error(error);
                 }
             } finally {
                 setIsLoading(false);
@@ -82,7 +83,7 @@ export const LiveMatchPage : React.FC = () => {
             client.subscribe(liveMatchTopic(matchId,"match-state"), (message) => {
                 try {
                     const matchStateData: MatchState = JSON.parse(message.body);
-                    console.log(matchStateData);
+                    //console.log(matchStateData);
                     setMatchState(matchStateData)
                 } catch (error) {
                     console.error("Erreur de parsing du message:", error);
@@ -90,9 +91,9 @@ export const LiveMatchPage : React.FC = () => {
             });
             client.subscribe(liveMatchTopic(matchId,"match-sheet"), (message) => {
                try {
-                   const playersData: PlayerResponse[] = JSON.parse(message.body);
-                   console.log(playersData);
-                   setPlayers(playersData);
+                   const matchSheetData: PlayerResponse[] = JSON.parse(message.body);
+                   console.log(matchSheetData);
+                   setPlayers(matchSheetData);
                } catch (error){
                    console.error("Erreur ",error);
                }
@@ -123,26 +124,53 @@ export const LiveMatchPage : React.FC = () => {
             <div>Not working</div>
         )
     }
-    return (
-        <div className="flex w-screen h-screen bg-slate-400">
-            <div className="pt-4">
-                <LiveMatchField playerPositions={playersPosition} ballEvent={ballEvent}/>
-            </div>
-            <div className="flex flex-col">
-                {
-                    matchState && <Scoreboard matchState={matchState}/>
-                }
-                {
-                    players && (
-                        <>
-                            {players.map(p => (
-                                <PlayerCard key={p.playerId} player={p} />
-                            ))}
-                        </>
-                    )
-                }
-            </div>
-        </div>
-    )
+    const teamIds = players ? [...new Set(playersPosition.map(p => p.teamId))].sort() : [];
+    const teamA = players?.filter(p => p.teamId === teamIds[0]) ?? [];
+    const teamB = players?.filter(p => p.teamId === teamIds[1]) ?? [];
 
+    return (
+        <div className="flex w-screen h-screen bg-slate-400 overflow-hidden">
+
+            <div className="pt-4 flex-shrink-0">
+                <LiveMatchField
+                    playerPositions={playersPosition}
+                    ballEvent={ballEvent}
+                />
+            </div>
+
+            <div className="flex flex-col flex-1 min-w-0 ml-6 overflow-hidden">
+
+                {matchState && (
+                    <div className="flex-shrink-0 pt-4">
+                        <Scoreboard matchState={matchState}/>
+                    </div>
+                )}
+
+                <div className="flex flex-1 gap-4 mt-4 overflow-hidden">
+
+                    <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
+                        <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
+                            {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
+                        </h2>
+                        {teamA.map(p => (
+                            <PlayerCard key={p.playerId} player={p} color="blue" />
+                        ))}
+                    </div>
+
+                    <div className="w-px bg-slate-500 flex-shrink-0" />
+
+                    <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
+                        <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
+                            {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
+                        </h2>
+                        {teamB.map(p => (
+                            <PlayerCard key={p.playerId} player={p} color="red"/>
+                        ))}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    );
 }

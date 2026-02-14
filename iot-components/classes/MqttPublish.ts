@@ -15,17 +15,25 @@ const MQTT_BROKER = "172.31.249.162:1883"
 export class MqttPublish {
     private client : any;
     constructor() {
-        this.client = mqtt.connect("mqtt://" + MQTT_BROKER);
+        this.client = mqtt.connect("mqtt://" + MQTT_BROKER, {
+            reconnectPeriod: 0 // pas de reconnexion automatique
+        });
     }
 
-    connect(){
+    connect(): Promise<boolean> {
         return new Promise((resolve) => {
-            this.client.on('connect', () => {
+            if (this.client.connected) {
+                console.log('Déjà connecté au broker MQTT');
+                resolve(true);
+                return;
+            }
+
+            this.client.once('connect', () => {
                 console.log('Connecté au broker MQTT');
                 resolve(true);
             });
 
-            this.client.on('error', (err) => {
+            this.client.once('error', (err: Error) => {
                 console.error(`Erreur de connexion: ${err}`);
                 resolve(false);
             });
