@@ -13,10 +13,13 @@ export function LiveMatchField({ballEvent, playerPositions}: {
     const [firstTeamId, setFirstTeamId] = useState<number>(0);
     const [secondTeamId, setSecondTeamId] = useState<number>(0);
 
+    const NAVBAR_HEIGHT = 48;
+
     const [dimensions, setDimensions] = useState({
         width: window.innerWidth / 2,
-        height: window.innerHeight / 1.02
+        height: window.innerHeight - NAVBAR_HEIGHT
     });
+
 
     const fieldInformations = {
         x: 30,
@@ -40,7 +43,7 @@ export function LiveMatchField({ballEvent, playerPositions}: {
         const handleResize = () => {
             setDimensions({
                 width: window.innerWidth / 2,
-                height: window.innerHeight
+                height: window.innerHeight - NAVBAR_HEIGHT
             });
         };
 
