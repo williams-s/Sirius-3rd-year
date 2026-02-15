@@ -31,7 +31,7 @@ public class ExtractPayload {
         return extract(value, MatchEventDTO.class);
     }
 
-    private <T> T extract(String value, Class<T> className) {
+    public <T> T extract(String value, Class<T> className) {
         try {
             JsonNode root = objectMapper.readTree(value);
             if (root.has("payload")) {
@@ -56,6 +56,8 @@ public class ExtractPayload {
                     arrayNode = payload.get("playersPosition");
                 } else if (payload.has("playersHealth")) {
                     arrayNode = payload.get("playersHealth");
+                } else {
+                    arrayNode = payload.get("matchSheet");
                 }
                 if (arrayNode != null && arrayNode.isArray()) {
                     objectMapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);

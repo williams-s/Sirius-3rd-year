@@ -1,10 +1,10 @@
 /**
  * Generated from: TeamScoreDTO.java
- * Generated on: 2026-01-10 16:32:05
+ * Generated on: 2026-02-01 20:19:29
  */
 
 export interface TeamScore {
-  team_id: number;
+  teamId: number;
   name: string;
   score: number;
 }

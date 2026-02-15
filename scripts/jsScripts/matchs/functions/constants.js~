@@ -1,0 +1,161 @@
+const PASS_SUCCESSFUL_FOR_MIDFIELDER_RATE = {
+    value : "PASS_SUCCESSFUL_FOR_MIDFIELDER_RATE", probability : 0.8, success: "reussi"
+};
+
+const DRIBBLE_SUCCESSFUL_FOR_MIDFIELDER_RATE = {
+    value : "DRIBBLE_SUCCESSFUL_FOR_MIDFIELDER_RATE", probability : 0.6, success : "reussi"
+};
+
+const INTERCEPTION_SUCCESSFUL_FOR_MIDFIELDER_RATE = {
+    value : "INTERCEPTION_SUCCESSFUL_FOR_MIDFIELDER_RATE", probability : 0.4, success : "reussi"
+};
+
+const TACKLE_SUCCESSFUL_FOR_MIDFIELDER_RATE = {
+    value : "TACKLE_SUCCESSFUL_FOR_MIDFIELDER_RATE", probability : 0.4, success : "reussi"
+};
+
+
+const SHOT_ON_TARGET_FOR_FORWARD_RATE = {
+    value : "SHOT_ON_TARGET_FOR_FORWARD_RATE", probability : 0.7, success : "reussi"
+};
+
+const PASS_SUCCESSFUL_FOR_FORWARD_RATE = {
+    value : "PASS_SUCCESSFUL_FOR_FORWARD_RATE", probability : 0.6, success : "reussi"
+};
+
+
+const TACKLE_SUCCESSFUL_FOR_DEFENDER_RATE = {
+    value : "TACKLE_SUCCESSFUL_FOR_DEFENDER_RATE", probability : 0.7, success : "reussi"
+};
+
+const INTERCEPTION_SUCCESSFUL_FOR_DEFENDER_RATE = {
+    value : "INTERCEPTION_SUCCESSFUL_FOR_DEFENDER_RATE", probability : 0.6, success : "reussi"
+};
+
+const PASS_SUCCESSFUL_FOR_DEFENDER_RATE = {
+    value : "PASS_SUCCESSFUL_FOR_DEFENDER_RATE", probability : 0.9, success : "reussi"
+};
+
+const BALL_LOSE = {
+    value : "BALL_LOSE", probability : 0.3, success : "raté"
+};
+
+
+
+let optionsForMid = [
+    {value : "DRIBBLE_OPTION_FOR_MIDFIELDER_RATE", probability : 0.3, action: "dribble" ,ratesSuccess : [DRIBBLE_SUCCESSFUL_FOR_MIDFIELDER_RATE, BALL_LOSE]},
+    {value : "PASS_OPTION_FOR_MIDFIELDER_RATE", probability : 0.7, action: "pass" ,ratesSuccess: [PASS_SUCCESSFUL_FOR_MIDFIELDER_RATE, BALL_LOSE]}
+];
+
+let optionsForAtt = [
+    {value : "SHOT_OPTION_FOR_FORWARD_RATE", probability : 0.8, action: "shot" ,ratesSuccess: [SHOT_ON_TARGET_FOR_FORWARD_RATE, BALL_LOSE]},
+    {value : "PASS_OPTION_FOR_FORWARD_RATE", probability : 0.2, action: "pass" , ratesSuccess: [PASS_SUCCESSFUL_FOR_FORWARD_RATE, BALL_LOSE]}
+];
+
+let optionsForDef = [
+    {value : "PASS_OPTION_FOR_DEFENDER_RATE", probability : 1, action: "pass" ,ratesSuccess: [PASS_SUCCESSFUL_FOR_DEFENDER_RATE, BALL_LOSE]}
+];
+
+let result = [0,0];
+function optionSuccess (player,teamName) {
+    const {name, first_name, shirt_number, position} = player;
+    //console.log(player);
+    //console.log(position);
+    const ratesOptions = matchPositionWithOption(player);
+    for (let i = 0; i < 1; i++) {
+        const random = Math.random();
+        let totalProba = 0;
+        for (let opt of ratesOptions) {
+            totalProba += opt.probability;
+            //console.log(totalProba);
+            if (random <= totalProba) {
+                const action = opt.action;
+                const optValue = opt.value;
+                let str = "Le joueur " + name + " " + first_name + " #" + shirt_number +" de " + teamName + " fait " + action + " :";
+                //console.log(opt.value)
+                let ratesSuccess = opt.ratesSuccess;
+                const random2 = Math.random();
+                let totalProba2 = 0;
+                for (let rate of ratesSuccess) {
+                    totalProba2 += rate.probability;
+                    if (random2 <= totalProba2) {
+                        //console.log(rate.value);
+                        const {value,success} = rate;
+                        str += " " + success;
+                        //console.log(str);
+                        if (value === "BALL_LOSE") {
+                            //return [action, false, str]
+                            return [optValue, false, str];
+                        }
+                        //return [action, true, str];
+                        return [optValue, true, str];
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+function matchPositionWithOption (player) {
+    const position = (player.position).split(" ")[0];
+    if (position === "milieu") {
+        return optionsForMid;
+    }
+    if (position === "attaquant") {
+        return optionsForAtt;
+    }
+    if (position === "defenseur") {
+        return optionsForDef;
+    }
+}
+
+let player = {
+    name : "Test",
+    first_name : "Test",
+    shirt_number : 1,
+    position : "milieu"
+}
+
+/*for (let i = 0; i < 100; i++) {
+    console.log(optionSuccess(player,"team"));
+}*/
+
+let tmp = [];
+let dribbleSuccess = DRIBBLE_SUCCESSFUL_FOR_MIDFIELDER_RATE.probability * 100;
+let tackleSuccess = TACKLE_SUCCESSFUL_FOR_DEFENDER_RATE.probability * 100;
+let interceptionSuccess = INTERCEPTION_SUCCESSFUL_FOR_DEFENDER_RATE.probability * 100;
+function chooseOptionWhenPlayerVSPlayer (attacking, defending) {
+    let positionAttacking = (attacking.position).split(" ")[0];
+    let positionDefending = (defending.position).split(" ")[0];
+    if (positionAttacking === "milieu") {
+        if (positionDefending === "milieu") {
+            let option = optionSuccess(attacking,"team");
+            console.log(matchAttackingOptionWithDefendingOption(option[0]));
+        }
+    }
+}
+
+
+function matchAttackingOptionWithDefendingOption (attackingOption) {
+    let res = {
+        attacking : "",
+        defending : ""
+    }
+    if (attackingOption === "DRIBBLE_OPTION_FOR_MIDFIELDER_RATE") {
+        res.attacking = DRIBBLE_SUCCESSFUL_FOR_MIDFIELDER_RATE;
+        res.defending = TACKLE_SUCCESSFUL_FOR_MIDFIELDER_RATE;
+    }
+    let probabilityAttacking = res.attacking.probability * 100;
+    let probabilityDefending = (res.defending.probability * 100) + probabilityAttacking;
+    console.log(probabilityAttacking + " " + probabilityDefending);
+    return res;
+}
+
+
+
+(chooseOptionWhenPlayerVSPlayer(player, player));
+
+module.exports = {
+    optionSuccess
+}

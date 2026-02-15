@@ -5,7 +5,9 @@ import club.manager.common_library.dto.PlayerHealthDTO;
 import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
 import club.manager.common_library.dto.PlayerPositionDTO;
 import club.manager.common_library.keys.PlayerKey;
+import club.manager.common_library.parentDTO.PayloadDTO;
 import club.manager.common_library.utils.ExtractPayload;
+import club.manager.common_library.dto.HeatMapPlayerDTO;
 import club.manager.player_performance.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,11 +58,14 @@ public class MatchStreams {
                         .peek((k,v) -> playerService.addStats(v))
                         .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
 
-        KStream<String, PlayerPositionDTO> positionByPlayer =
+        KStream<String, PayloadDTO> positionByPlayer  =
                 playerPosition
-                        .flatMapValues(l -> l)
-                        .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId())
-                        .peek((k, v) -> updatePlayerPosition(v));
+                        .selectKey((k, v) -> {
+                            return v.isEmpty() ? "unknown" : String.valueOf(v.getFirst().getMatchId());
+                        })
+                        .mapValues((k, listPositions) -> updatePlayerPositions(listPositions));
+
+        positionByPlayer.to("heat-map-player-position", Produced.with(Serdes.String(), payloadSerde()));
 
         KStream<String, PlayerHealthDTO> healthByPlayer =
                 playerHealth
@@ -114,9 +119,38 @@ public class MatchStreams {
         return Serdes.serdeFrom(serializer, deserializer);
     }
 
-    private PlayerPositionDTO updatePlayerPosition(PlayerPositionDTO playerPositionDTO) {
+    private Serde<PayloadDTO> payloadSerde() {
+
+        Serializer<PayloadDTO> serializer = (key, data) -> {
+            try {
+                return objectMapper.writeValueAsBytes(data);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+
+        Deserializer<PayloadDTO> deserializer = (key, data) -> {
+            try {
+                return objectMapper.readValue(data, PayloadDTO.class);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+
+        return Serdes.serdeFrom(serializer, deserializer);
+    }
+
+
+    private PayloadDTO updatePlayerPositions(List<PlayerPositionDTO> positions) {
+        var heatMapPlayerDTOs = positions.stream().map(this::updatePlayerPosition).toList();
+        return new PayloadDTO(heatMapPlayerDTOs);
+    }
+
+    private HeatMapPlayerDTO updatePlayerPosition(PlayerPositionDTO playerPositionDTO) {
         currentPlayerPositions.put(new PlayerKey(playerPositionDTO.getMatchId(), playerPositionDTO.getPlayerId()), playerPositionDTO);
         playerService.addDistanceCovered(playerPositionDTO);
-        return playerPositionDTO;
+        int[][] positions = playerService.updatePositionInMatch(playerPositionDTO);
+        return new HeatMapPlayerDTO(playerPositionDTO.getMatchId(), playerPositionDTO.getPlayerId(), positions);
     }
+
 }

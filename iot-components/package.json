@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "axios": "^1.13.5",
+    "lodash": "^4.17.23",
     "mqtt": "^5.14.1"
   },
   "devDependencies": {

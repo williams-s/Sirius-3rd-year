@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        VITE_ENTRANCE_COCKPIT_SERVER: https://172.31.249.162
+    ports:
+      - "3000:80"
+    restart: unless-stopped

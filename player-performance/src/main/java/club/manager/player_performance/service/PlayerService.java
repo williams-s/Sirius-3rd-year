@@ -2,21 +2,21 @@ package club.manager.player_performance.service;
 
 import club.manager.common_library.dto.*;
 import club.manager.common_library.keys.PlayerKey;
+import club.manager.player_performance.utils.PositionInMatch;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class PlayerService {
 
-    public final HashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new HashMap<>();
-    public final HashMap<PlayerKey, StatsDTO> playersStats = new HashMap<>();
+    public final PositionInMatch positionInMatch;
+    public final ConcurrentHashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<PlayerKey, StatsDTO> playersStats = new ConcurrentHashMap<>();
    /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
         PlayerLiveMatchDetailDTO res = null;
         if (p1 == null) {
@@ -125,6 +125,10 @@ public class PlayerService {
             }
 
         }
+
     }
 
+    public int[][] updatePositionInMatch(PlayerPositionDTO playerPositionDTO) {
+        return positionInMatch.updatePosition(playerPositionDTO);
+    }
 }

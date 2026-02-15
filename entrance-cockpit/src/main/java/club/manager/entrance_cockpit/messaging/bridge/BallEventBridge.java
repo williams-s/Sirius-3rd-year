@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -19,30 +21,43 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class BallEventBridge {
     private final WebSocketService webSocketService;
-    private BallEventDTO lastBallEvent;
-    //private final ConcurrentHashMap<Long, BallEventDTO> ballEventsByMatchId = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Long, BallEventDTO> ballEvents = new ConcurrentHashMap<>();
     private final ExtractPayload extractPayload = new ExtractPayload();
-    private final ObjectMapper mapper = new ObjectMapper();
     private final LiveMatchStateService liveMatchStateService;
 
-    @KafkaListener(topics = "ball-events", groupId = "entrance-cockpit")
+    @KafkaListener(topics = "ball-events", groupId = "entrance-cockpit-ball-events")
     public void consumeBallEvent(String message) {
         //log.debug("Received message: {}", message);
         BallEventDTO ballEventDTO = extractPayload.extractBallEvent(message);
         if (ballEventDTO != null) {
-            lastBallEvent = ballEventDTO;
+            Long matchId = ballEventDTO.getMatchId();
+            ballEvents.put(matchId,ballEventDTO);
         }
     }
 
     @Scheduled(fixedRate = 33)
     public void sendBallEvent() {
-        if (lastBallEvent != null) {
-            Long matchId = lastBallEvent.getMatchId();
+        ballEvents.forEach((matchId, ballEvent) -> {
             if (liveMatchStateService.isMatchNotRunning(matchId)) {
                 return;
             }
-            //log.debug("Sending ball event: {}", lastBallEvent);
-            webSocketService.sendObjectToTopic(lastBallEvent, "live-match/" + matchId + "/ball-events");
-        }
+            webSocketService.sendObjectToTopic(ballEvent, "live-match/" + matchId + "/ball-events");
+        });
     }
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void cleanupFinishedMatches() {
+        List<Long> matchesToRemove = new ArrayList<>();
+        ballEvents.forEach((matchId, ballEvent) -> {
+            if (liveMatchStateService.isMatchFinished(matchId)){
+                matchesToRemove.add(matchId);
+            }
+        });
+        matchesToRemove.forEach(ballEvents::remove);
+    }
+
+    public BallEventDTO getCurrentBallEvent(Long matchId) {
+        return ballEvents.getOrDefault(matchId,null);
+    }
+
 }

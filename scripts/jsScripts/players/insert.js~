@@ -1,0 +1,60 @@
+const {pool} = require("../connectToBase.js");
+
+//Insert les joueurs dans une equipe et dans un match
+async function insertForMatch(id_match, id_team, id_player, status, position, shirt_number) {
+    const client = await pool.connect();
+    try {
+        const insertQuery = `INSERT INTO in_game_stats (id_match, id_team, id_player, status ,position) VALUES ($1, $2, $3, $4, $5)`;
+        const insertQuery2 = `INSERT INTO player_belongs_team (id_player, id_team, shirt_number) VALUES ($1, $2, $3)`;
+        await client.query(insertQuery, [id_match, id_team, id_player, status ,position]);
+        await client.query(insertQuery2, [id_player, id_team, shirt_number]);
+        return true;
+    } catch (error) {
+        console.error("Error inserting player:", error.message);
+        return false;
+    } finally {
+        client.release();
+    }
+}
+
+
+/**
+ * @summary Insert les joueurs dans une equipe et dans un match
+ * @param {number} id_match - id du match
+ * @param {number} id_team - id de l'equipe
+ * @param {string} status - statut du joueur (titulaire, remplacement)
+ * @param {number} startPlayers - id du joueur a partir duquel on commence l'insertion
+ * @returns {Promise<number>} - id du dernier joueur insere
+ */
+async function main (id_match, id_team, status ,startPlayers) {
+    let positions = [
+                                       "GARDIEN",
+
+                "DEFENSEUR_CENTRAL",     "DEFENSEUR_CENTRAL",      "DEFENSEUR_CENTRAL",
+
+        "MILIEU_DROIT",     "MILIEU_CENTRAL",      "MILIEU_CENTRAL",     "MILIEU_GAUCHE",
+
+            "ATTAQUANT_DROIT",      "ATTAQUANT_CENTRAL",     "ATTAQUANT_GAUCHE"
+    ];
+    let nbPlayers = 11;
+    //Nombre de joueurs a ignorer si le joueur n'a pas ete insere
+    let gapWhenPlayerNotInserted = 0;
+    for (let i = 0; i < nbPlayers; i++) {
+        const result = await insertForMatch(id_match, id_team, i + startPlayers, status ,positions[i - gapWhenPlayerNotInserted], i + 1);
+        if (result) {
+            //Si le joueur a ete insere, on affiche un message
+            console.log("Team : " + id_team + " Player inserted : " + (i+1));
+        }
+        else {
+            //Si le joueur n'a pas ete insere, on incremente le nombre de joueurs a ignorer
+            nbPlayers++;
+            gapWhenPlayerNotInserted++;
+        }
+    }
+    //On renvoie le numero du dernier joueur insere
+    return nbPlayers;
+}
+
+main(1, 1, "TITULAIRE" ,1).then(endPlayer => {
+    main(1, 2, "TITULAIRE" ,endPlayer + 1);
+});
