@@ -22,12 +22,31 @@ public class PlayerController {
     private final TeamService teamService;
     private final ClubService clubService;
     @GetMapping("/{playerId}")
-    public ResponseEntity<PlayerResponseDTO> getPlayer(@PathVariable Long playerId) {
-        PlayerResponseDTO playerResponseDTO = playerService.getPlayerById(playerId);
-        if (playerResponseDTO != null) {
-            return ResponseEntity.ok(playerResponseDTO);
+    public ResponseEntity<PlayerAttributesDTO> getPlayer(
+            @RequestHeader("X-Auth-Request-Email") String email,
+            @PathVariable Long playerId)
+    {
+        var club = clubService.getClub(email);
+        if (club == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        var teams = teamService.getAllTeamsFromClub(club.clubId());
+
+        PlayerResponseDTO playerResponseDTO = playerService.getPlayerInMatchById(playerId);
+        if (playerResponseDTO == null || teams == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+
+        var teamOfThePlayer = teams.stream().filter(t -> t.teamId().equals(playerResponseDTO.getTeamId())).findFirst();
+        if (teamOfThePlayer.isPresent()){
+            PlayerAttributesDTO playerAttributesDTO = playerService.getPlayerAttributesById(playerResponseDTO.getPlayerId());
+            if (playerAttributesDTO == null)
+                return ResponseEntity.notFound().build();
+
+            return ResponseEntity.ok(playerAttributesDTO);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
     }
 
     @GetMapping("{teamId}/all")
@@ -42,8 +61,8 @@ public class PlayerController {
                 if (players != null)
                     return ResponseEntity.ok(players);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

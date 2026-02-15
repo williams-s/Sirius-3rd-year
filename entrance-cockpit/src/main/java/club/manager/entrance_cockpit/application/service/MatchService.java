@@ -1,5 +1,6 @@
 package club.manager.entrance_cockpit.application.service;
 
+import club.manager.common_library.dto.ClubResponseDTO;
 import club.manager.common_library.dto.MatchResponseDTO;
 import club.manager.common_library.dto.TeamResponseDTO;
 import club.manager.entrance_cockpit.application.mapper.MatchMapper;
@@ -10,6 +11,8 @@ import club.manager.entrance_cockpit.domain.repository.ClubRepository;
 import club.manager.entrance_cockpit.domain.repository.MatchRepository;
 import club.manager.entrance_cockpit.domain.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +33,11 @@ public class MatchService {
         return null;
     }
 
+    public List<MatchResponseDTO> getMatchesFromClub(Long clubId){
+        Optional<List<Match>> matches = matchRepository.findMatchesByClubId(clubId);
+        return matches.map(list -> list.stream().map(matchMapper::toDTO).toList()).orElse(null);
+    }
+
     public List<MatchResponseDTO> getMatches(Long teamId){
         Optional<List<Match>> matches = matchRepository.findMatchesByTeamId(teamId);
         return matches.map(list -> list.stream().map(matchMapper::toDTO).toList()).orElse(null);
@@ -43,6 +51,17 @@ public class MatchService {
             return List.of(homeTeam,awayTeam);
         }
         return null;
+    }
+
+    public Pair<MatchResponseDTO, HttpStatus> isMatchPlayedByThisClub(Long clubId, Long matchId){
+        var allMatches = getMatchesFromClub(clubId);
+        if (allMatches != null) {
+            Optional<MatchResponseDTO> matchResponseDTO = allMatches.stream().filter(m -> m.getIdMatch().equals(matchId)).findFirst();
+            if (matchResponseDTO.isPresent())
+                return new Pair<>(matchResponseDTO.get(),HttpStatus.OK);
+            return new Pair<>(null,HttpStatus.FORBIDDEN);
+        }
+        return new Pair<>(null,HttpStatus.NOT_FOUND);
     }
 }
 

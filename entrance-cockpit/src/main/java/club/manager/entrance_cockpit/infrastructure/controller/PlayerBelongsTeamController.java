@@ -18,14 +18,5 @@ import java.util.List;
 @Slf4j
 public class PlayerBelongsTeamController {
 
-    private final PlayerBelongsTeamService playerBelongsTeamService;
 
-    @GetMapping("/{teamId}")
-    public ResponseEntity<List<PlayerTeamInfoDTO>> getPlayerIdPositionTeamId(@PathVariable Long teamId){
-        List<PlayerTeamInfoDTO> playerTeamInfoDTOS = playerBelongsTeamService.getPlayerIdPositionTeamId(teamId);
-        if (playerTeamInfoDTOS == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(playerTeamInfoDTOS);
-    }
 }

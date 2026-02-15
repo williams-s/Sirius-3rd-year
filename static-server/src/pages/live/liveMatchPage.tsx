@@ -43,7 +43,7 @@ export const LiveMatchPage : React.FC = () => {
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)){
-                    if (error.response?.status === 404){
+                    if (error.response?.status === 410){
                         try {
                             const data = await getMatch(Number(matchId));
                             if (data){

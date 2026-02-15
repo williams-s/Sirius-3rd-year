@@ -3,7 +3,7 @@ package club.manager.entrance_cockpit.application.service;
 import club.manager.common_library.dto.PlayerAttributesDTO;
 import club.manager.common_library.dto.PlayerResponseDTO;
 import club.manager.entrance_cockpit.application.mapper.PlayerAttributesMapper;
-import club.manager.entrance_cockpit.application.mapper.PlayerMapper;
+import club.manager.entrance_cockpit.application.mapper.PlayerResponseMapper;
 import club.manager.entrance_cockpit.domain.entity.Player;
 import club.manager.entrance_cockpit.domain.repository.PlayerBelongsTeamRepository;
 import club.manager.entrance_cockpit.domain.repository.PlayerRepository;
@@ -21,14 +21,26 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final PlayerBelongsTeamRepository playerBelongsTeamRepository;
-    private final PlayerMapper playerMapper;
+    private final PlayerResponseMapper playerResponseMapper;
     private final PlayerAttributesMapper playerAttributesMapper;
-    public PlayerResponseDTO getPlayerById(Long playerId){
+
+    private Player getPlayer(Long playerId){
+        log.debug("getting player {}",playerId);
         Optional<Player> player = playerRepository.findById(playerId);
-        if (player.isPresent()){
-            log.debug("getting player {}",playerId);
-            return playerMapper.toDTO(player.get());
-        }
+        return player.orElse(null);
+    }
+
+    public PlayerResponseDTO getPlayerInMatchById(Long playerId){
+        Player player = getPlayer(playerId);
+        if (player != null)
+            return playerResponseMapper.toDTO(player);
+        return null;
+    }
+
+    public PlayerAttributesDTO getPlayerAttributesById(Long playerId){
+        Player player = getPlayer(playerId);
+        if (player != null)
+            return playerAttributesMapper.toDTO(player);
         return null;
     }
 

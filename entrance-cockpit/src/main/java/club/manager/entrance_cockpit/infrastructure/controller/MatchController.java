@@ -9,11 +9,14 @@ import club.manager.entrance_cockpit.application.service.MatchService;
 import club.manager.entrance_cockpit.application.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.antlr.v4.runtime.misc.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/match")
@@ -37,25 +40,26 @@ public class MatchController {
                 if (matchResponseDTOS != null)
                     return ResponseEntity.ok(matchResponseDTOS);
             }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 
     @GetMapping("/{matchId}")
-    public ResponseEntity<MatchResponseDTO> getMatch(@PathVariable Long matchId){
-        MatchResponseDTO matchResponseDTO = matchService.getMatch(matchId);
-        if (matchResponseDTO == null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(matchResponseDTO);
+    public ResponseEntity<MatchResponseDTO> getMatch(
+            @RequestHeader("X-Auth-Request-Email") String email,
+            @PathVariable Long matchId)
+    {
+        var club = clubService.getClub(email);
+        if (club == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Pair<MatchResponseDTO, HttpStatus> isPlayedByClub = matchService.isMatchPlayedByThisClub(club.clubId(),matchId);
+        if (isPlayedByClub.b == HttpStatus.OK)
+            return ResponseEntity.ok(isPlayedByClub.a);
+        return ResponseEntity.status(isPlayedByClub.b).build();
     }
 
-    @GetMapping("/{matchId}/teams")
-    public ResponseEntity<List<TeamResponseDTO>> getTeams(@PathVariable Long matchId){
-        List<TeamResponseDTO> teamResponseDTOs = matchService.getTeamsFromMatch(matchId);
-        if (teamResponseDTOs == null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(teamResponseDTOs);
-    }
 
 }

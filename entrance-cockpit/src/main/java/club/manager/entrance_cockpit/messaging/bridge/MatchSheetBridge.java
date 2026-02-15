@@ -25,7 +25,7 @@ public class MatchSheetBridge {
     public void consumeMatchSheet(String message){
         MatchSheetRecord matchSheetRecord = extractPayload.extract(message, MatchSheetRecord.class);
         if (matchSheetRecord != null){
-            List<PlayerResponseDTO> playerResponseDTOS = matchSheetRecord.playersIds.stream().map(playerService::getPlayerById).toList();
+            List<PlayerResponseDTO> playerResponseDTOS = matchSheetRecord.playersIds.stream().map(playerService::getPlayerInMatchById).toList();
             matchSheet.put(matchSheetRecord.matchId, playerResponseDTOS);
             webSocketService.sendObjectToTopic(playerResponseDTOS, "live-match/" + matchSheetRecord.matchId + "/match-sheet");
         }

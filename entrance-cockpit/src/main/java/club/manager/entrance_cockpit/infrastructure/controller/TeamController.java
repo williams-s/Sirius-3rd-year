@@ -6,6 +6,7 @@ import club.manager.entrance_cockpit.application.service.ClubService;
 import club.manager.entrance_cockpit.application.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -30,8 +31,9 @@ public class TeamController {
             List<TeamResponseDTO> teamResponseDTOS = teamService.getAllTeamsFromClub(clubResponseDTO.clubId());
             if (teamResponseDTOS != null)
                 return ResponseEntity.ok(teamResponseDTOS);
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 }

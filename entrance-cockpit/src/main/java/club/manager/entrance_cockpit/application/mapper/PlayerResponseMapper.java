@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PlayerMapper {
+public class PlayerResponseMapper {
 
     private final PlayerBelongsTeamService playerBelongsTeamService;
 
