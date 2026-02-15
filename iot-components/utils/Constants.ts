@@ -1,6 +1,5 @@
-import {MqttPublish} from "./classes/MqttPublish";
-import {Player} from "./classes/Player";
-import {PositionEnum} from "./enums/generated/PositionEnum";
+import {Player} from "../classes/Player";
+import {PositionEnum} from "../enums/generated/PositionEnum";
 
 export const OPTIONS_MIDFIELDER = [
     {action: "carry", probability: 4},

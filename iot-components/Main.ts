@@ -1,18 +1,17 @@
 import {MqttPublish} from "./classes/MqttPublish.js";
 import {Player} from "./classes/Player.js";
-import {getPositionsWithPlacement} from "./Positions.js";
+import {getPositionsWithPlacement} from "./utils/Positions.js";
 import {PositionEnum} from "./enums/generated/PositionEnum";
-import {FIELD_HEIGHT, FIELD_WIDTH, TeamSimulate} from "./Constants.js";
-import SimulateMatch from "./SimulateMatch.js";
+import {FIELD_HEIGHT, FIELD_WIDTH, TeamSimulate} from "./utils/Constants.js";
+import SimulateMatch from "./classes/SimulateMatch.js";
 import {BallEvent} from "./types/generated/BallEvent.js";
 import {Requests} from "./classes/Requests";
 import {PlayerTeamInfo} from "./types/generated/PlayerTeamInfo";
 import {getExactAmountOfPlayers, positionLines} from "./utils/formationUtils";
 
 
-const args = process.argv.slice(2);
-const matchId = Number(args[0]);
-
+const matchId = Number(process.env.MATCH_ID ?? 1);
+const API_URL = process.env.API_BASE_URL ?? "localhost:8082";
 const deltaTimeMs = 33;
 
 const mqttPublish = new MqttPublish();
@@ -20,19 +19,19 @@ console.log("Connecting to MQTT broker...");
 
 
 const teamA : TeamSimulate = {
-    teamId : 1,
+    teamId : 0,
     players : [],
     side : "LEFT",
-    name: "PSG"
+    name: ""
 }
 const teamB : TeamSimulate = {
-    teamId : 2,
+    teamId : 0,
     players : [],
     side : "RIGHT",
-    name: "OM"
+    name: ""
 }
 
-const request = new Requests("http://localhost:8082");
+const request = new Requests(API_URL);
 const positions_left = getPositionsWithPlacement("LEFT", FIELD_WIDTH, FIELD_HEIGHT);
 const positions_right = getPositionsWithPlacement("RIGHT", FIELD_WIDTH, FIELD_HEIGHT);
 
@@ -148,15 +147,8 @@ const main = async () => {
                                     process.exit(0);
                                     return;
                                 }
-
-                                // Mettre à jour les positions des joueurs
-                                //for (let p of [...match.teamA.players, ...match.teamB.players]) {
-                                //    match.updatePlayerPosition(p, deltaTimeMs);
-                                //}
-
                                 match.updatePlayersPositions([...match.teamA.players, ...match.teamB.players],deltaTimeMs);
 
-                                // Publier les positions
                                 mqttPublish.publishPlayersPosition([...match.teamA.players, ...match.teamB.players], matchId);
                             }, deltaTimeMs);
 

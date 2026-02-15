@@ -1,4 +1,4 @@
-import {PositionEnum} from "./enums/generated/PositionEnum";
+import {PositionEnum} from "../enums/generated/PositionEnum";
 
 export const getPositionsWithPlacement = (side : string, maxWidth : number, maxHeight : number) : {position : PositionEnum, x : number, y : number}[] => {
     let defensiveLineXStart : number, midfieldLineXStart : number, attackingLineXStart : number, goalKeeperXStart : number;

@@ -1,5 +1,5 @@
-import {Player} from "./classes/Player";
-import {BallEvent} from "./types/generated/BallEvent";
+import {Player} from "./Player";
+import {BallEvent} from "../types/generated/BallEvent";
 import {
     FIELD_HEIGHT,
     FIELD_WIDTH,
@@ -8,14 +8,14 @@ import {
     GOAL_START_Y,
     SUCCESS_RATES,
     TeamSimulate
-} from "./Constants";
-import {PositionEnum} from "./enums/generated/PositionEnum";
-import {MqttPublish} from "./classes/MqttPublish";
-import {EventTypeEnum} from "./enums/generated/EventTypeEnum";
-import {getPlacementByPosition} from "./Positions";
-import {MatchStateEnum} from "./enums/generated/MatchStateEnum";
-import {TeamScore} from "./types/generated/TeamScore";
-import {Score} from "./types/generated/Score";
+} from "../utils/Constants";
+import {PositionEnum} from "../enums/generated/PositionEnum";
+import {MqttPublish} from "./MqttPublish";
+import {EventTypeEnum} from "../enums/generated/EventTypeEnum";
+import {getPlacementByPosition} from "../utils/Positions";
+import {MatchStateEnum} from "../enums/generated/MatchStateEnum";
+import {TeamScore} from "../types/generated/TeamScore";
+import {Score} from "../types/generated/Score";
 
 
 const MQTT_BROKER = "172.31.249.162:1883"

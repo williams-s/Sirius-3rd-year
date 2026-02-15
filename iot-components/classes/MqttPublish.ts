@@ -10,13 +10,13 @@ import {MatchState} from "../types/generated/MatchState";
 import {Score} from "../types/generated/Score";
 import {MatchEvent} from "../types/generated/MatchEvent";
 
-const MQTT_BROKER = "172.31.249.162:1883"
+const MQTT_BROKER = process.env.MQTT_BROKER ?? "172.31.249.162:1883"
 
 export class MqttPublish {
     private client : any;
     constructor() {
         this.client = mqtt.connect("mqtt://" + MQTT_BROKER, {
-            reconnectPeriod: 0 // pas de reconnexion automatique
+            reconnectPeriod: 0
         });
     }
 
