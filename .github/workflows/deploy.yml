@@ -3,9 +3,8 @@ name: Deploy
 on:
   push:
     branches:
-      #- dev
+      - dev
       #- main
-      - mock-upgrade
 
 jobs:
   build-and-push:

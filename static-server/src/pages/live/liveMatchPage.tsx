@@ -24,86 +24,70 @@ export const LiveMatchPage : React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [players, setPlayers] = useState<PlayerResponse[]>();
     const matchId = useParams().matchId;
+    const [authorized,setAuthorized] = useState(false);
     useEffect(() => {
-        //console.log("Live match page")
-        const client = ConnectToWebSocketSTOMP();
         if (!matchId) {
             return;
         }
-        client.onConnect = async () => {
-            console.log("STOMP connecté");
+        const fetchLiveMatch = async () => {
             try {
                 const data = await getCurrentLiveMatchDetails(Number(matchId));
+                setAuthorized(true);
                 if (data) {
                     setBallEvent(data.ballEvent);
                     setMatchState(data.matchState);
                     setPlayersPosition(data.playersPositions);
                     setPlayers(data.matchSheet);
-                    console.log(data.matchSheet);
                 }
             } catch (error) {
-                if (axios.isAxiosError(error)){
-                    if (error.response?.status === 410){
+                if (axios.isAxiosError(error)) {
+                    if (error.response?.status === 410) {
+                        setAuthorized(true);
                         try {
                             const data = await getMatch(Number(matchId));
-                            if (data){
+                            if (data)
                                 setMatchDetails(data);
-                            }
                         } catch (e) {
                             console.error(e);
                         }
+                    } else {
+                        //setAuthorized(true);
+                        setAuthorized(false);
+                        return;
                     }
-                    else {
-                        console.error(error);
-                    }
-                }else {
-                    console.error(error);
                 }
             } finally {
                 setIsLoading(false);
             }
-            client.subscribe(liveMatchTopic(matchId,"players-position"), (message) => {
-                try {
-                    const playerPositionsData: PlayerPosition[] = JSON.parse(message.body);
-                    //console.log(playerPositionsData);
-                    setPlayersPosition(playerPositionsData);
-                } catch (error) {
-                    console.error("Erreur de parsing du message:", error);
-                }
-            });
-            client.subscribe(liveMatchTopic(matchId,"ball-events"), (message) => {
-                try {
-                    const ballEventData: BallEvent = JSON.parse(message.body);
-                    //console.log(ballEvent);
-                    setBallEvent(ballEventData);
-                } catch (error) {
-                    console.error("Erreur de parsing du message:", error);
-                }
-            });
-            client.subscribe(liveMatchTopic(matchId,"match-state"), (message) => {
-                try {
-                    const matchStateData: MatchState = JSON.parse(message.body);
-                    //console.log(matchStateData);
-                    setMatchState(matchStateData)
-                } catch (error) {
-                    console.error("Erreur de parsing du message:", error);
-                }
-            });
-            client.subscribe(liveMatchTopic(matchId,"match-sheet"), (message) => {
-                try {
-                    const matchSheetData: PlayerResponse[] = JSON.parse(message.body);
-                    console.log(matchSheetData);
-                    setPlayers(matchSheetData);
-                } catch (error){
-                    console.error("Erreur ",error);
-                }
-            });
-        }
-        client.activate();
 
-        return () => {
-            client.deactivate();
-        };
+            const client = ConnectToWebSocketSTOMP();
+            client.onConnect = () => {
+                console.log("STOMP connecté");
+                client.subscribe(liveMatchTopic(matchId, "players-position"), (message) => {
+                    const playerPositionsData: PlayerPosition[] = JSON.parse(message.body);
+                    setPlayersPosition(playerPositionsData);
+                });
+                client.subscribe(liveMatchTopic(matchId, "ball-events"), (message) => {
+                    const ballEventData: BallEvent = JSON.parse(message.body);
+                    setBallEvent(ballEventData);
+                });
+                client.subscribe(liveMatchTopic(matchId, "match-state"), (message) => {
+                    const matchStateData: MatchState = JSON.parse(message.body);
+                    setMatchState(matchStateData);
+                });
+                client.subscribe(liveMatchTopic(matchId, "match-sheet"), (message) => {
+                    const matchSheetData: PlayerResponse[] = JSON.parse(message.body);
+                    setPlayers(matchSheetData);
+                });
+            };
+
+            client.activate();
+
+            return () => {
+                client.deactivate();
+            };
+        }
+        fetchLiveMatch();
     }, []);
 
 
@@ -119,9 +103,15 @@ export const LiveMatchPage : React.FC = () => {
         )
     }
 
+    if (!authorized){
+        return (
+            <div>Accès refusé</div>
+        )
+    }
+
     if (!playersPosition || !ballEvent){
         return (
-            <div>Not working</div>
+            <div>Pas de données pour l'instant</div>
         )
     }
     const teamIds = players ? [...new Set(playersPosition.map(p => p.teamId))].sort() : [];
