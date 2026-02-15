@@ -2,7 +2,6 @@ import type {MatchResponse} from "../types/generated/MatchResponse.ts";
 import {MatchStatusEnum} from "../enums/generated/MatchStatusEnum.ts";
 import {formatDate} from "../utils/dateFormat.ts";
 import {Ban , RadioTower, Trophy, CalendarCheck } from "lucide-react";
-import React from "react";
 
 export const MatchCard = ({match} : {match:MatchResponse}) => {
 
@@ -16,7 +15,7 @@ export const MatchCard = ({match} : {match:MatchResponse}) => {
                 <div className="bg-gray-800 text-white py-3 px-6 rounded-t-lg flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Trophy size={18}/>
-                        <span>{match.competition}</span>
+                        <span>{match.competition} - {match.matchDay} - {match.season}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Header matchStatus={match.status}/>

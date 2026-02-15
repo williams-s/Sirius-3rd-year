@@ -1,6 +1,7 @@
-import {PLAYER_API} from "../constants/back.ts";
+import {PLAYER_API, TEST_API} from "../constants/back.ts";
 import type {PlayerResponse} from "../types/generated/PlayerResponse.ts";
 import axios from "axios";
+import type {PlayerAttributes} from "../types/generated/PlayerAttributes.ts";
 
 export const getPlayer = async (playerId : number)=> {
     const url = `${PLAYER_API}/${playerId}`;
@@ -9,10 +10,10 @@ export const getPlayer = async (playerId : number)=> {
     return response.data;
 }
 
-export const getPlayers = async (playerIds : number[]) => {
-    const players : PlayerResponse[] = [];
-    for (const id of playerIds){
-        players.push(await getPlayer(id));
-    }
-    return players;
+export const getPlayers = async (teamId : number) => {
+    //const url = `${TEST_API}/player/all/${teamId}`;
+    const url = `${PLAYER_API}/${teamId}/all`;
+    const response = await axios.get<PlayerAttributes[]>(url);
+    console.log("Response:", response.data);
+    return response.data;
 }

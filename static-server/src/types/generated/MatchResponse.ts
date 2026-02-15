@@ -1,6 +1,6 @@
 /**
  * Generated from: MatchResponseDTO.java
- * Generated on: 2026-02-10 09:56:47
+ * Generated on: 2026-02-15 15:39:00
  */
 
 import { MatchStatusEnum } from '../../enums/generated/MatchStatusEnum';
@@ -15,4 +15,6 @@ export interface MatchResponse {
   date: string;
   status: MatchStatusEnum;
   competition: string;
+  season: string;
+  matchDay: string;
 }

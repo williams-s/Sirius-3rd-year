@@ -19,7 +19,7 @@ public class Club {
     @Column(name = "president")
     private String president;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
 }

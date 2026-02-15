@@ -4,14 +4,13 @@ import club.manager.common_library.dto.ClubResponseDTO;
 import club.manager.common_library.dto.MatchResponseDTO;
 import club.manager.common_library.dto.TeamResponseDTO;
 import club.manager.common_library.enums.MatchStatusEnum;
+import club.manager.entrance_cockpit.application.service.ClubService;
 import club.manager.entrance_cockpit.application.service.MatchService;
+import club.manager.entrance_cockpit.application.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +22,25 @@ import java.util.List;
 public class MatchController {
 
     private final MatchService matchService;
+    private final TeamService teamService;
+    private final ClubService clubService;
+
+    @GetMapping("/{teamId}/all")
+    public ResponseEntity<List<MatchResponseDTO>> getMatches(
+            @RequestHeader("X-Auth-Request-Email") String email,
+            @PathVariable Long teamId)
+    {
+        var club = clubService.getClub(email);
+        if (club != null) {
+            if (teamService.isTeamBelongsToClub(club.clubId(), teamId)) {
+                List<MatchResponseDTO> matchResponseDTOS = matchService.getMatches(teamId);
+                if (matchResponseDTOS != null)
+                    return ResponseEntity.ok(matchResponseDTOS);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
     @GetMapping("/{matchId}")
     public ResponseEntity<MatchResponseDTO> getMatch(@PathVariable Long matchId){
@@ -40,22 +58,4 @@ public class MatchController {
         return ResponseEntity.ok(teamResponseDTOs);
     }
 
-    private List<TeamResponseDTO> randomTeams(){
-        return List.of(
-                TeamResponseDTO.builder().teamId(1L).name("PSG").coach("Enrique").stadium("Le parc").league("Ligue1")
-                    .club(generateClub(1L,"Paris saint germain","Nasser"))
-                    .build(),
-                TeamResponseDTO.builder().teamId(2L).name("OM").coach("De Zerbi").stadium("Veledrome").league("Ligue1")
-                        .club(generateClub(2L,"Olympique de Marseille", "Longoria"))
-                        .build()
-        );
-    }
-
-    private ClubResponseDTO generateClub(Long clubId, String name, String president){
-        return ClubResponseDTO.builder()
-                .clubId(clubId)
-                .name(name)
-                .president(president)
-                .build();
-    }
 }

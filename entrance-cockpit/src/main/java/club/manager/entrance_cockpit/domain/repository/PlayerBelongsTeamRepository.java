@@ -9,10 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface PlayerBelongsTeamRepository extends JpaRepository<PlayerBelongsTeam, PlayerBelongsTeamId> {
 
-    List<PlayerBelongsTeam> findAllByTeam_TeamId(Long teamId);
+    Optional<List<PlayerBelongsTeam>> findAllByTeam_TeamId(Long teamId);
 
     PlayerBelongsTeam findByPlayer_PlayerIdAndTeam_TeamId(Long playerId, Long teamId);
 

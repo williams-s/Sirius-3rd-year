@@ -13,7 +13,7 @@ import {getMatch} from "../../api/matchApi.ts";
 import type {MatchResponse} from "../../types/generated/MatchResponse.ts";
 import {MatchCard} from "../../components/MatchDetailsComponent.tsx";
 import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
-import {PlayerCard} from "../../components/PlayerCard.tsx";
+import {PlayerCardForMatch} from "../../components/players/PlayerCardForMatch.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -153,7 +153,7 @@ export const LiveMatchPage : React.FC = () => {
                             {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
                         </h2>
                         {teamA.map(p => (
-                            <PlayerCard key={p.playerId} player={p} color="blue" />
+                            <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
                         ))}
                     </div>
 
@@ -164,7 +164,7 @@ export const LiveMatchPage : React.FC = () => {
                             {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
                         </h2>
                         {teamB.map(p => (
-                            <PlayerCard key={p.playerId} player={p} color="red"/>
+                            <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
                         ))}
                     </div>
 

@@ -21,4 +21,6 @@ public class MatchResponseDTO {
     private LocalDateTime date;
     private MatchStatusEnum status;
     private String competition;
+    private String season;
+    private String matchDay;
 }

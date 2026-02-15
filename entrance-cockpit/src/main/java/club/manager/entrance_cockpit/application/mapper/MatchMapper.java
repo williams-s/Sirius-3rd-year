@@ -21,6 +21,7 @@ public class MatchMapper {
                 .date(match.getDateTime())
                 .status(match.getStatus())
                 .competition(match.getCompetition())
+                .season(match.getSeason()).matchDay(match.getMatchDay())
                 .build();
     }
 }

@@ -1,6 +1,6 @@
-import type {PlayerResponse} from "../types/generated/PlayerResponse.ts";
+import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
 
-export const PlayerCard = ({ player, color } : {player : PlayerResponse, color: string}) => {
+export const PlayerCardForMatch = ({ player, color } : {player : PlayerResponse, color: string}) => {
     return (
         <div className="group flex items-stretch rounded-md overflow-hidden shadow hover:shadow-md transition-all duration-200 hover:-translate-y-px">
 
