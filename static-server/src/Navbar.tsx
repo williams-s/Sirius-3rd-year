@@ -20,7 +20,7 @@ export const Navbar = () => {
     }, []);
 
     const LogInOut = () => {
-        window.location.href = isAuthenticated ? "/oauth2/sign_out" : "/oauth2/start";
+        window.location.href = isAuthenticated ? "/oauth2/sign_out?rd=https://172.31.249.162" : "/oauth2/start";
     };
 
     return (
