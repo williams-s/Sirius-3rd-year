@@ -1,0 +1,18 @@
+export const FIELD_WIDTH = 105;
+export const FIELD_HEIGHT = 68;
+export const GOAL_WIDTH = 7.32;
+export const GOAL_START_Y = (FIELD_HEIGHT - GOAL_WIDTH) / 2;
+export const GOAL_END_Y = GOAL_START_Y + GOAL_WIDTH;
+
+export const PENALTY_AREA_WIDTH = 40.32;
+export const PENALTY_AREA_DEPTH = 16.5;
+export const PENALTY_AREA_START_Y = (FIELD_HEIGHT - PENALTY_AREA_WIDTH) / 2;
+export const PENALTY_AREA_END_Y = PENALTY_AREA_START_Y + PENALTY_AREA_WIDTH;
+
+
+export const GOAL_AREA_WIDTH = 18.32;
+export const GOAL_AREA_DEPTH = 5.5;
+export const GOAL_AREA_START_Y = (FIELD_HEIGHT - GOAL_AREA_WIDTH) / 2;
+export const GOAL_AREA_END_Y = GOAL_AREA_START_Y + GOAL_AREA_WIDTH;
+
+export const PENALTY_SPOT_DISTANCE = 11;

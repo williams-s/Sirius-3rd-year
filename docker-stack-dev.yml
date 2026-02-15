@@ -1,0 +1,153 @@
+networks:
+  front-network:
+    driver: overlay
+  mqtt-network:
+    driver: overlay
+  rp-network:
+    driver: overlay
+
+configs:
+  nginx_conf:
+    external: true
+  nginx_snippets_oauth2:
+    external: true
+  mosquitto_conf:
+    external: true
+
+secrets:
+  nginx_cert:
+    external: true
+  nginx_key:
+    external: true
+
+services:
+
+  static-server-backend:
+    image: clubmanagersirius/static-server-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "3000:80"
+    networks:
+      - front-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == front
+
+  entrance-cockpit-backend:
+    image: clubmanagersirius/entrance-cockpit-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8082:8082"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
+      - POSTGRES_SERVER=192.168.0.33:5432
+    networks:
+      - front-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == front
+
+  bridge-messaging:
+    image: clubmanagersirius/bridge-messaging:${IMAGE_TAG:-latest}
+    environment:
+      - KAFKA_BOOTSTRAP=192.168.0.50:9092
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+    networks:
+      - mqtt-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == mqtt-bridge
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    configs:
+      - source: mosquitto_conf
+        target: /mosquitto/config/mosquitto.conf
+    volumes:
+      - mqtt_data:/mosquitto/data
+      - mqtt_log:/mosquitto/log
+    networks:
+      - mqtt-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == mqtt-bridge
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/nginx.conf
+      - source: nginx_snippets_oauth2
+        target: /etc/nginx/snippets/oauth2_headers.conf
+    secrets:
+      - source: nginx_cert
+        target: /etc/nginx/ssl/cert.pem
+      - source: nginx_key
+        target: /etc/nginx/ssl/privkey.pem
+    networks:
+      - rp-network
+      - front-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == reverse-proxy
+
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+    environment:
+      - OAUTH2_PROXY_PROVIDER=keycloak-oidc
+      - OAUTH2_PROXY_CLIENT_ID=portal
+      - OAUTH2_PROXY_CLIENT_SECRET=kylsNSnaDEtMkZIU8JBANZ24pWMo0pCA
+      - OAUTH2_PROXY_COOKIE_SECRET=abcdefghijklmnopabcdefghijklmnop
+      - OAUTH2_PROXY_EMAIL_DOMAINS=*
+      - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
+      - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
+      - OAUTH2_PROXY_LOGIN_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/auth
+      - OAUTH2_PROXY_OIDC_ISSUER_URL=http://192.168.0.65:8180/realms/cm-realm
+      - OAUTH2_PROXY_REDEEM_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/token
+      - OAUTH2_PROXY_OIDC_JWKS_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/certs
+      - OAUTH2_PROXY_SKIP_OIDC_DISCOVERY=true
+      - OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION=true
+      - OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL=true
+      - OAUTH2_PROXY_OIDC_EXTRA_AUDIENCES=account
+      - OAUTH2_PROXY_SET_XAUTHREQUEST=true
+      - OAUTH2_PROXY_PASS_ACCESS_TOKEN=true
+      - OAUTH2_PROXY_SET_AUTHORIZATION_HEADER=true
+      - OAUTH2_PROXY_COOKIE_NAME=_oauth2_proxy
+      - OAUTH2_PROXY_CSRF_COOKIE_NAME=_oauth2_proxy_csrf
+      - OAUTH2_PROXY_COOKIE_SAMESITE=lax
+      - OAUTH2_PROXY_COOKIE_SECURE=true
+      - OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY=true
+      - OAUTH2_PROXY_CODE_CHALLENGE_METHOD=S256
+      - OAUTH2_PROXY_PROXY_PREFIX=/oauth2
+      - OAUTH2_PROXY_REVERSE_PROXY=true
+      - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
+      - OAUTH2_PROXY_LOGOUT_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
+    networks:
+      - rp-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == reverse-proxy
+
+  data-pipeline:
+    image: eclipse-temurin:17-jdk-alpine
+    environment:
+      - JAVA_OPTS=-Djava.awt.headless=true -Xmx512m
+    command: tail -f /dev/null
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == etl
+
+volumes:
+  mqtt_data:
+  mqtt_log:

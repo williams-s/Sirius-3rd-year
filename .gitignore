@@ -4,3 +4,4 @@ scripts/venv
 /clearTopics.sh
 local-scripts
 /club-manager-parent.iml
+/scripts/jsScripts/node_modules/

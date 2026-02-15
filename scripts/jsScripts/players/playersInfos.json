@@ -1,0 +1,103 @@
+{
+  "nationality": {
+    "BRAZIL": {
+      "proba": 3,
+      "locale": "pt_BR"
+    },
+    "GERMANY": {
+      "proba": 3,
+      "locale": "de_DE"
+    },
+    "ARGENTINA": {
+      "proba": 3,
+      "locale": "es_AR"
+    },
+    "FRANCE": {
+      "proba": 120,
+      "locale": "fr_FR"
+    },
+    "ITALY": {
+      "proba": 3,
+      "locale": "it_IT"
+    },
+    "SPAIN": {
+      "proba": 3,
+      "locale": "es_ES"
+    },
+    "ENGLAND": {
+      "proba": 2,
+      "locale": "en_GB"
+    },
+    "PORTUGAL": {
+      "proba": 3,
+      "locale": "pt_PT"
+    },
+    "NETHERLANDS": {
+      "proba": 2,
+      "locale": "nl_NL"
+    },
+    "BELGIUM": {
+      "proba": 3,
+      "locale": "nl_BE"
+    },
+    "URUGUAY": {
+      "proba": 1,
+      "locale": "es_UY"
+    },
+    "CROATIA": {
+      "proba": 1,
+      "locale": "hr_HR"
+    },
+    "RUSSIA": {
+      "proba": 1,
+      "locale": "ru_RU"
+    },
+    "POLAND": {
+      "proba": 1,
+      "locale": "pl_PL"
+    },
+    "NORWAY": {
+      "proba": 1,
+      "locale": "nb_NO"
+    },
+    "SWEDEN": {
+      "proba": 1,
+      "locale": "sv_SE"
+    },
+    "DENMARK": {
+      "proba": 1,
+      "locale": "da_DK"
+    },
+    "SWITZERLAND": {
+      "proba": 3,
+      "locale": "fr_CH"
+    },
+    "JAPAN": {
+      "proba": 1,
+      "locale": "ja_JP"
+    },
+    "SOUTH_KOREA": {
+      "proba": 1,
+      "locale": "ko_KR"
+    }
+  },
+  "positions": {
+    "GOALKEEPER": 4,
+    "RIGHT_BACK": 8,
+    "CENTER_BACK": 9,
+    "LEFT_BACK": 8,
+    "CENTER_DEFENSIVE_MIDFIELDER": 7,
+    "RIGHT_MIDFIELDER": 6,
+    "CENTER_MIDFIELDER": 10,
+    "LEFT_MIDFIELDER": 6,
+    "CENTER_ATTACKING_MIDFIELDER": 7,
+    "RIGHT_WINGER": 5,
+    "LEFT_WINGER": 5,
+    "STRIKER": 9
+  },
+  "footOptions": {
+    "LEFT": 3,
+    "RIGHT": 6,
+    "BOTH": 2
+  }
+}

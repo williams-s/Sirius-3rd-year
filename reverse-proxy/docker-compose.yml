@@ -1,0 +1,56 @@
+  services:
+    nginx:
+      image: nginx:latest
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+        - ./snippets:/etc/nginx/snippets
+        - ./ssl:/etc/nginx/ssl
+      depends_on:
+        - oauth2-proxy
+      networks:
+        - app-network
+
+    oauth2-proxy:
+      image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+      networks:
+        - app-network
+      environment:
+        - OAUTH2_PROXY_PROVIDER=keycloak-oidc
+        - OAUTH2_PROXY_CLIENT_ID=portal
+        - OAUTH2_PROXY_CLIENT_SECRET=kylsNSnaDEtMkZIU8JBANZ24pWMo0pCA
+        - OAUTH2_PROXY_COOKIE_SECRET=abcdefghijklmnopabcdefghijklmnop
+        - OAUTH2_PROXY_EMAIL_DOMAINS=*
+        - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
+
+        - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
+        - OAUTH2_PROXY_LOGIN_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/auth
+
+        - OAUTH2_PROXY_OIDC_ISSUER_URL=http://192.168.0.65:8180/realms/cm-realm
+        - OAUTH2_PROXY_REDEEM_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/token
+        - OAUTH2_PROXY_OIDC_JWKS_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/certs
+
+        - OAUTH2_PROXY_SKIP_OIDC_DISCOVERY=true
+        - OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION=true
+        - OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL=true
+        - OAUTH2_PROXY_OIDC_EXTRA_AUDIENCES=account
+
+        - OAUTH2_PROXY_PASS_ACCESS_TOKEN=false
+        - OAUTH2_PROXY_SET_AUTHORIZATION_HEADER=true
+        - OAUTH2_PROXY_COOKIE_NAME=_oauth2_proxy
+        - OAUTH2_PROXY_CSRF_COOKIE_NAME=_oauth2_proxy_csrf
+        - OAUTH2_PROXY_COOKIE_SAMESITE=lax
+        - OAUTH2_PROXY_COOKIE_SECURE=true
+
+        - OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY=true
+        - OAUTH2_PROXY_CODE_CHALLENGE_METHOD=S256
+        - OAUTH2_PROXY_PROXY_PREFIX=/oauth2
+        - OAUTH2_PROXY_REVERSE_PROXY=true
+
+        - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
+
+  networks:
+    app-network:
+      driver: bridge

@@ -1,21 +1,21 @@
-import {MatchEventEnum} from "../enums/generated/MatchEventEnum.ts";
+import {MatchStateEnum} from "../enums/generated/MatchStateEnum.ts";
 
-export const MatchEventComponent = ({matchEvent}:{matchEvent:MatchEventEnum}) => {
+export const MatchEventComponent = ({matchStateEnum}:{matchStateEnum:MatchStateEnum}) => {
     let textToDisplay = ""
-    switch (matchEvent) {
-        case MatchEventEnum.HALF_TIME:
+    switch (matchStateEnum) {
+        case MatchStateEnum.HALF_TIME:
             textToDisplay = "Mi-temps !"
             break;
-        case MatchEventEnum.FULL_TIME:
+        case MatchStateEnum.FULL_TIME:
             textToDisplay = "Fin du match !"
             break;
-        case MatchEventEnum.SECOND_HALF_KICK_OFF:
+        case MatchStateEnum.SECOND_HALF_KICK_OFF:
             textToDisplay = "Début de la seconde mi-temps !"
             break;
-        case MatchEventEnum.KICK_OFF:
+        case MatchStateEnum.KICK_OFF:
             textToDisplay = "Début du match !"
             break;
-        case MatchEventEnum.SCORE_UPDATE:
+        case MatchStateEnum.SCORE_UPDATE:
             textToDisplay = "BUUUUUUUUT !"
             break;
         default:

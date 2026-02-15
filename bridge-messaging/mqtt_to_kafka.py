@@ -3,10 +3,10 @@ import paho.mqtt.client as mqtt
 import confluent_kafka as kafka
 import os
 
-MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
+MQTT_BROKER = os.getenv("MQTT_BROKER", "172.31.249.162")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 
-KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP")
+KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "172.31.125.112:9092")
 
 
 producer = kafka.Producer({
@@ -21,7 +21,8 @@ mqtt_topic_to_kafka_topic = {
     "players/position": "players-position",
     "ball/events": "ball-events",
     "match/events": "match-events",
-    "match/state": "match-state"
+    "match/state": "match-state",
+    "match/sheet": "match-sheet"
 }
 
 
@@ -32,6 +33,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("ball/events")
     client.subscribe("match/events")
     client.subscribe("match/state")
+    client.subscribe("match/sheet")
 
 
 def on_message(client, userdata, msg):
