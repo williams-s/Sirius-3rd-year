@@ -57,7 +57,7 @@ with DAG(
     {% endraw %}
     """,
         conn_timeout=30,
-        cmd_timeout=600,
+        cmd_timeout=3600,
     )
 
     bronze_to_silver_job = SSHOperator(
@@ -70,7 +70,7 @@ with DAG(
     {% endraw %}
     """,
         conn_timeout=30,
-        cmd_timeout=600,
+        cmd_timeout=3600,
     )
 
     silver_to_gold_job = SSHOperator(
@@ -83,7 +83,7 @@ with DAG(
     {% endraw %}
     """,
         conn_timeout=30,
-        cmd_timeout=600,
+        cmd_timeout=3600,
     )
 
     check_mongo_task >> download_sources >> source_to_bronze_job >> bronze_to_silver_job >> silver_to_gold_job
