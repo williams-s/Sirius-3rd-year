@@ -29,7 +29,7 @@ export const Navbar = () => {
             } catch (e) {
 
             }
-            window.location.href = "http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/logout" +
+            window.location.href = "https://172.31.249.162/realms/cm-realm/protocol/openid-connect/logout" +
                 "?client_id=portal" +
                 "&post_logout_redirect_uri=" + encodeURIComponent("https://172.31.249.162");
         } else {
