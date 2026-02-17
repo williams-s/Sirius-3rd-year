@@ -33,12 +33,27 @@ with DAG(
         python_callable=check_mongo
     )
 
+    download_sources = SSHOperator(
+        task_id='download_sources_job',
+        ssh_conn_id='spark_vm',
+        command="""
+    {% raw %}
+        CID=$(docker ps --filter "name=club_manager_dev_data-pipeline" -q)
+        docker exec $CID python3 download_dataset.py
+    {% endraw %}
+    """,
+        conn_timeout=30,
+        cmd_timeout=600,
+    )
+
+
     source_to_bronze_job = SSHOperator(
         task_id='source_to_bronze_job',
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-        docker exec data-pipeline sh /data/sourcetobronze/sourcetobronze_run.sh
+    CID=$(docker ps --filter "name=club_manager_dev_data-pipeline" -q)
+    docker exec $CID sh ./sourcetobronze/sourcetobronze_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
@@ -50,7 +65,8 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    docker exec data-pipeline sh /data/bronzetosilver/bronzetosilver_run.sh
+    CID=$(docker ps --filter "name=club_manager_dev_data-pipeline" -q)
+    docker exec $CID sh ./bronzetosilver/bronzetosilver_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
@@ -62,13 +78,14 @@ with DAG(
         ssh_conn_id='spark_vm',
         command="""
     {% raw %}
-    docker exec data-pipeline sh /data/silvertogold/silvertogold_run.sh
+    CID=$(docker ps --filter "name=club_manager_dev_data-pipeline" -q)
+    docker exec $CID sh ./silvertogold/silvertogold_run.sh
     {% endraw %}
     """,
         conn_timeout=30,
         cmd_timeout=600,
     )
 
-    check_mongo_task >> source_to_bronze_job >> bronze_to_silver_job >> silver_to_gold_job
+    check_mongo_task >> download_sources >> source_to_bronze_job >> bronze_to_silver_job >> silver_to_gold_job
 
 

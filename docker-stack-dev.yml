@@ -150,10 +150,7 @@ services:
           - node.labels.role == reverse-proxy
 
   data-pipeline:
-    image: eclipse-temurin:17-jdk-alpine
-    environment:
-      - JAVA_OPTS=-Djava.awt.headless=true -Xmx512m
-    command: tail -f /dev/null
+    image: clubmanagersirius/data-pipeline:${IMAGE_TAG:-latest}
     deploy:
       placement:
         constraints:
