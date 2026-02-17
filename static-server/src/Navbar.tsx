@@ -19,8 +19,22 @@ export const Navbar = () => {
             .catch(() => setIsAuthenticated(false));
     }, []);
 
-    const LogInOut = () => {
-        window.location.href = isAuthenticated ? "/oauth2/sign_out?rd=https://172.31.249.162" : "/oauth2/start";
+    const LogInOut = async () => {
+        if (isAuthenticated) {
+            try {
+                await axios.get("/oauth2/sign_out", {
+                    maxRedirects: 0,
+                    validateStatus: (status) => status === 302 || status === 200
+                });
+            } catch (e) {
+
+            }
+            window.location.href = "http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/logout" +
+                "?client_id=portal" +
+                "&post_logout_redirect_uri=" + encodeURIComponent("https://172.31.249.162");
+        } else {
+            window.location.href = "/oauth2/start";
+        }
     };
 
     return (
