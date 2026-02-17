@@ -100,6 +100,15 @@ services:
         constraints:
           - node.labels.role == reverse-proxy
 
+  redis:
+    image: redis:7-alpine
+    networks:
+      - rp-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == reverse-proxy
+
   oauth2-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
     environment:
@@ -131,6 +140,8 @@ services:
       - OAUTH2_PROXY_REVERSE_PROXY=true
       - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
       - OAUTH2_PROXY_LOGOUT_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
+      - OAUTH2_PROXY_SESSION_STORE_TYPE=redis
+      - OAUTH2_PROXY_REDIS_CONNECTION_URL=redis://redis:6379
     networks:
       - rp-network
     deploy:
