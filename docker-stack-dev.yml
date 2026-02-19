@@ -15,8 +15,6 @@ configs:
     external: true
   kc_cm_realm:
     external: true
-  kc_master_realm:
-    external: true
 
 secrets:
   nginx_cert:
@@ -125,8 +123,8 @@ services:
       - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
       - OAUTH2_PROXY_LOGIN_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/auth
       - OAUTH2_PROXY_OIDC_ISSUER_URL=https://172.31.249.162/realms/cm-realm
-      - OAUTH2_PROXY_REDEEM_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/token
-      - OAUTH2_PROXY_OIDC_JWKS_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/certs
+      - OAUTH2_PROXY_REDEEM_URL=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/token
+      - OAUTH2_PROXY_OIDC_JWKS_URL=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/certs
       - OAUTH2_PROXY_SKIP_OIDC_DISCOVERY=true
       - OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION=true
       - OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL=true
@@ -168,17 +166,17 @@ services:
     configs:
       - source: kc_cm_realm
         target: /opt/keycloak/data/import/cm-realm-realm.json
-      - source: kc_master_realm
-        target: /opt/keycloak/data/import/master-realm.json
-    volumes:
-      - kc_database:/opt/keycloak/data
     environment:
       - KC_HTTP_ENABLED=true
       - KC_HOSTNAME=172.31.249.162
       - KC_HOSTNAME_STRICT=false
-      - KC_PROXY=edge
+      - KC_PROXY_HEADERS=xforwarded
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://192.168.0.33:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak
     command:
       - start-dev
       - --import-realm
@@ -190,8 +188,6 @@ services:
           - node.labels.role == idp
 
 
-
 volumes:
   mqtt_data:
   mqtt_log:
-  kc_database:
