@@ -1,13 +1,9 @@
 package club.manager.player_performance.streams;
 
-import club.manager.common_library.dto.MatchEventDTO;
-import club.manager.common_library.dto.PlayerHealthDTO;
-import club.manager.common_library.dto.PlayerLiveMatchDetailDTO;
-import club.manager.common_library.dto.PlayerPositionDTO;
+import club.manager.common_library.dto.*;
 import club.manager.common_library.keys.PlayerKey;
 import club.manager.common_library.parentDTO.PayloadDTO;
 import club.manager.common_library.utils.ExtractPayload;
-import club.manager.common_library.dto.HeatMapPlayerDTO;
 import club.manager.player_performance.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +61,15 @@ public class MatchStreams {
                         })
                         .mapValues((k, listPositions) -> updatePlayerPositions(listPositions));
 
+        KStream<String, PayloadDTO> statsByPlayer =
+                playerPosition
+                        .selectKey((k, v) -> {
+                            return v.isEmpty() ? "unknown" : String.valueOf(v.getFirst().getMatchId());
+                        })
+                        .mapValues((k, v) -> getStatsPlayers(v));
+
         positionByPlayer.to("heat-map-player-position", Produced.with(Serdes.String(), payloadSerde()));
+        statsByPlayer.to("stats-player-position", Produced.with(Serdes.String(), payloadSerde()));
 
         KStream<String, PlayerHealthDTO> healthByPlayer =
                 playerHealth
@@ -153,4 +157,8 @@ public class MatchStreams {
         return new HeatMapPlayerDTO(playerPositionDTO.getMatchId(), playerPositionDTO.getPlayerId(), positions);
     }
 
+    private PayloadDTO getStatsPlayers(List<PlayerPositionDTO> positions) {
+        List<StatsDTO> stats =  positions.stream().map(p -> playerService.getPlayerStats(new PlayerKey(p.getMatchId(), p.getPlayerId()))).toList();
+        return new PayloadDTO(stats);
+    }
 }

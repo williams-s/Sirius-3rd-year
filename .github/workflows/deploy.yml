@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - dev
+      #- dev
       #- main
 
 jobs:
@@ -24,6 +24,21 @@ jobs:
 
       #- name: Set IMAGE_TAG
       #  run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Create Docker secrets
+        run: |
+          echo "${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}" | docker secret create kc_admin_password - || true
+          echo "${{ secrets.KEYCLOAK_PASSWORD_DB}}" | docker secret create kc_db_password - || true
+
+      - name: Login Docker on all nodes
+        run: |
+          ssh usercm@192.168.0.10 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.80 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.90 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.32 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.65 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.60 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          ssh usercm@192.168.0.34 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build & Push frontend
         uses: docker/build-push-action@v4
@@ -76,6 +91,9 @@ jobs:
 
       - name: Deploy Stack Dev
         #run: IMAGE_TAG=${{ env.IMAGE_TAG }} docker stack deploy -c docker-stack-dev.yml club_manager_dev --with-registry-auth
+        env:
+          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+          KEYCLOAK_PASSWORD_DB: ${{ secrets.KEYCLOAK_PASSWORD_DB }}
         run: docker stack deploy -c docker-stack-dev.yml club_manager_dev --with-registry-auth
 
   deploy-prod:
