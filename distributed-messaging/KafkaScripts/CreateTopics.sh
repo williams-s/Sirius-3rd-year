@@ -6,3 +6,4 @@
 /opt/kafka/bin/kafka-topics.sh --create --topic match-state --bootstrap-server localhost:9092
 /opt/kafka/bin/kafka-topics.sh --create --topic heat-map-player-position --bootstrap-server localhost:9092
 /opt/kafka/bin/kafka-topics.sh --create --topic match-sheet --bootstrap-server localhost:9092
+/opt/kafka/bin/kafka-topics.sh --create --topic stats-player-position --bootstrap-server localhost:9092
