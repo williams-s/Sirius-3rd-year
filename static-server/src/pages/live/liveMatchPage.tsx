@@ -14,6 +14,8 @@ import type {MatchResponse} from "../../types/generated/MatchResponse.ts";
 import {MatchCard} from "../../components/MatchDetailsComponent.tsx";
 import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
 import {PlayerCardForMatch} from "../../components/players/PlayerCardForMatch.tsx";
+import {PlayerHeatMap} from "../../components/heatmap/PlayerHeatMap.tsx";
+import {getPlayer} from "../../api/playerApi.ts";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -25,6 +27,10 @@ export const LiveMatchPage : React.FC = () => {
     const [players, setPlayers] = useState<PlayerResponse[]>();
     const matchId = useParams().matchId;
     const [authorized,setAuthorized] = useState(false);
+    const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | null>(null);
+    const [showStats, setShowStats] = useState(false);
+    const [showHeatMap, setShowHeatMap] = useState(false);
+    const [authorizedToSeePlayer, setAuthorizedToSeePlayer] = useState(false);
     useEffect(() => {
         if (!matchId) {
             return;
@@ -91,6 +97,34 @@ export const LiveMatchPage : React.FC = () => {
     }, []);
 
 
+
+    useEffect(() => {
+        if (!selectedPlayer) {
+            return;
+        }
+
+        const fetchPlayer = async () => {
+            try {
+                const data = await getPlayer(selectedPlayer.playerId);
+                if (data) {
+                    setAuthorizedToSeePlayer(true);
+                    setShowStats(true);
+                    setShowHeatMap(false);
+                }
+            } catch (error) {
+                console.error("Erreur getPlayer:", error);
+                //setAuthorizedToSeePlayer(true);
+                setShowStats(false);
+                setShowHeatMap(false);
+                setAuthorizedToSeePlayer(false);
+                setSelectedPlayer(null);
+            }
+        }
+        fetchPlayer();
+
+    }, [selectedPlayer]);
+
+
     if (isLoading) {
         return <div>Loading match data...</div>;
     }
@@ -118,6 +152,7 @@ export const LiveMatchPage : React.FC = () => {
     const teamA = players?.filter(p => p.teamId === teamIds[0]) ?? [];
     const teamB = players?.filter(p => p.teamId === teamIds[1]) ?? [];
 
+
     return (
         <div className="flex w-full h-full bg-slate-400 overflow-hidden">
 
@@ -127,6 +162,7 @@ export const LiveMatchPage : React.FC = () => {
                     ballEvent={ballEvent}
                 />
             </div>
+
 
             <div className="flex flex-col flex-1 min-w-0 ml-6 overflow-hidden">
 
@@ -143,9 +179,12 @@ export const LiveMatchPage : React.FC = () => {
                             {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
                         </h2>
                         {teamA.map(p => (
-                            <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
+                            <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
+                            </div>
                         ))}
                     </div>
+
 
                     <div className="w-px bg-slate-500 flex-shrink-0" />
 
@@ -154,13 +193,65 @@ export const LiveMatchPage : React.FC = () => {
                             {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
                         </h2>
                         {teamB.map(p => (
-                            <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
+                            <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
+                            </div>
                         ))}
                     </div>
 
                 </div>
             </div>
+            {selectedPlayer && (
+                authorizedToSeePlayer && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <div className="bg-slate-800 p-6 w-[80vw] h-[90vh]">
+                        <div className="flex gap-20">
+                            <button
+                                onClick={() => {
+                                    setSelectedPlayer(null);
+                                    setShowHeatMap(false);
+                                    setShowStats(false);
+                                }}>
+                                ✕
+                            </button>
+                            <button onClick={() => {
+                                setShowStats(true)
+                                setShowHeatMap(false)
+                            }}
+                            >Stats</button>
+                            <button onClick={() => {
+                                setShowHeatMap(true)
+                                setShowStats(false)
+                            }}
+                            >Heatmap</button>
+                        </div>
 
+                        <h2 className="text-white text-xl font-bold mb-4 text-center">
+                            {selectedPlayer.firstName} {selectedPlayer.name}
+                        </h2>
+
+                        <div className="w-full h-[90%]">
+                            {
+                                showHeatMap &&
+                                <PlayerHeatMap
+                                    matchId={matchId!}
+                                    playerId={selectedPlayer.playerId}
+                                />
+                            }
+                            {
+                                showStats &&
+                                <div>
+                                    <h2 className="text-white text-xl font-bold mb-4 text-center">
+                                        Stats
+                                    </h2>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                )
+            )}
         </div>
     );
 }

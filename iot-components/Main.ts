@@ -11,7 +11,7 @@ import {getExactAmountOfPlayers, positionLines} from "./utils/formationUtils";
 
 
 const matchId = Number(process.env.MATCH_ID ?? 1);
-const API_URL = process.env.API_BASE_URL ?? "localhost:8082";
+const API_URL = process.env.API_BASE_URL ?? "http://localhost:8082";
 const deltaTimeMs = 33;
 
 const mqttPublish = new MqttPublish();

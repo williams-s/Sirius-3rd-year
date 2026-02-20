@@ -26,6 +26,11 @@ jobs:
       #- name: Set IMAGE_TAG
       #  run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
+      - name: Create Docker secrets
+        run: |
+          echo "${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}" | docker secret create kc_admin_password -
+          echo "${{ secrets.KEYCLOAK_PASSWORD_DB}}" | docker secret create kc_db_password -
+
       - name: Build & Push frontend
         uses: docker/build-push-action@v4
         with:
