@@ -16,6 +16,7 @@ import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
 import {PlayerCardForMatch} from "../../components/players/PlayerCardForMatch.tsx";
 import {PlayerHeatMap} from "../../components/heatmap/PlayerHeatMap.tsx";
 import {getPlayer} from "../../api/playerApi.ts";
+import {PlayerStats} from "../../components/stats/PlayerStats.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -154,6 +155,7 @@ export const LiveMatchPage : React.FC = () => {
 
 
     return (
+        matchId &&
         <div className="flex w-full h-full bg-slate-400 overflow-hidden">
 
             <div className="pt-4 flex-shrink-0 overflow-hidden h-full">
@@ -234,17 +236,13 @@ export const LiveMatchPage : React.FC = () => {
                             {
                                 showHeatMap &&
                                 <PlayerHeatMap
-                                    matchId={matchId!}
+                                    matchId={matchId}
                                     playerId={selectedPlayer.playerId}
                                 />
                             }
                             {
                                 showStats &&
-                                <div>
-                                    <h2 className="text-white text-xl font-bold mb-4 text-center">
-                                        Stats
-                                    </h2>
-                                </div>
+                                <PlayerStats matchId={matchId} playerId={selectedPlayer.playerId}/>
                             }
                         </div>
 
