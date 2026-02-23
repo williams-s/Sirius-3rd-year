@@ -147,6 +147,9 @@ const main = async () => {
                                     process.exit(0);
                                     return;
                                 }
+                                //console.log(match.flight.active);
+                                match.updateBallFlight(deltaTimeMs);
+                                //console.log(match.flight.active);
                                 match.updatePlayersPositions([...match.teamA.players, ...match.teamB.players],deltaTimeMs);
 
                                 mqttPublish.publishPlayersPosition([...match.teamA.players, ...match.teamB.players], matchId);

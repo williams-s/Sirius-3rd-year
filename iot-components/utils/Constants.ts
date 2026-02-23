@@ -60,3 +60,23 @@ export const getOptionsForPosition = (position: PositionEnum)=> {
     if (position === "GOALKEEPER") return OPTIONS_GOALKEEPER;
     return OPTIONS_MIDFIELDER;
 }
+
+
+export const INTERCEPTION_RADIUS = 3.5;
+export const DRIBBLE_RANGE = 4;
+
+export enum BallFlightType {
+    PASS = 'PASS',
+    SHOT = 'SHOT'
+}
+
+export interface BallFlight {
+    active: boolean;
+    type: BallFlightType;
+    origin: { x: number; y: number };
+    target: { x: number; y: number };
+    speed: number;
+    pendingOwner: Player | null;
+    shooter: Player | null;
+    lastPasser: Player | null;
+}
