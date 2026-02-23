@@ -35,7 +35,7 @@ class SimulateMatch {
     private matchTime90minutes: number;
     public running: boolean;
     public score: Score;
-
+    public matchPause = true;
     public flight: BallFlight = {
         active: false,
         type: BallFlightType.PASS,
@@ -99,7 +99,7 @@ class SimulateMatch {
         }
     }
 
-    updateBallFlight(deltaTimeMs: number) {
+    async updateBallFlight(deltaTimeMs: number) {
         if (!this.flight.active) return;
         //console.log("ball in flight, pos:", this.ball.ballCoordinates, "target:", this.flight.target);
 
@@ -120,7 +120,7 @@ class SimulateMatch {
             this.ball.ballCoordinates.y = this.flight.target.y;
             this.ball.speed = 0;
             this.flight.active = false;
-            this.onBallArrived();
+            await this.onBallArrived();
         } else {
             this.ball.ballCoordinates.x += (dx / distanceLeft) * step;
             this.ball.ballCoordinates.y += (dy / distanceLeft) * step;
@@ -148,7 +148,7 @@ class SimulateMatch {
          }) ?? null;
     }
 
-    private handleInterception(interceptor: Player) {
+    handleInterception(interceptor: Player) {
         this.flight.active = false;
         this.ball.ballCoordinates.x = interceptor.getPlayerPosition().playerCoordinates.x;
         this.ball.ballCoordinates.y = interceptor.getPlayerPosition().playerCoordinates.y;
@@ -160,7 +160,7 @@ class SimulateMatch {
         this.mqttPublish.publishActionEvent(interceptor, EventTypeEnum.INTERCEPTION, this.matchId, false);
     }
 
-    private onBallArrived() {
+    async onBallArrived() {
         const { type, pendingOwner, shooter, lastPasser } = this.flight;
 
         if (type === BallFlightType.PASS) {
@@ -182,7 +182,7 @@ class SimulateMatch {
                     ? this.score.awayTeam.score++
                     : this.score.homeTeam.score++;
                 this.mqttPublish.publishGoalEvent(shooter, this.matchId, this.matchTime90minutes, this.score, lastPasser);
-                this.resetBall();
+                await this.resetAllPlacements(teamThatScored.teamId === this.teamA.teamId ? this.teamB : this.teamA);
             } else {
                 if (goalkeeper) {
                     this.mqttPublish.publishActionEvent(goalkeeper, EventTypeEnum.SHOT_SAVED, this.matchId, false);
@@ -562,19 +562,35 @@ class SimulateMatch {
         }
     }
 
-    resetBall() {
+    async resetAllPlacements(teamThatKickoff : TeamSimulate) {
+        this.matchPause = true;
         this.ball.ballCoordinates = { x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, z: 0 };
         this.ball.speed = 0;
         this.ballOwner = null;
         this.flight.active = false;
         this.ballFlightGoal = false;
         this.currentCarryStreak = 0;
+        this.lastPasser = null;
+        this.resetPositionOfPlayers([...this.teamA.players, ...this.teamB.players]);
+        this.mqttPublish.publishBallPosition(this.ball, this.matchId);
+        this.mqttPublish.publishPlayersPosition([...this.teamA.players, ...this.teamB.players], this.matchId);
+        console.log('Reseting positions');
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        this.kickoff(teamThatKickoff);
     }
 
-    kickoff() {
-        let playersToKickOff = this.teamA.players.filter(p =>
-            !p.getPlayerPosition().position.includes("BACK") && p.getPlayerPosition().position !== "GOALKEEPER"
-        );
+    kickoff(team : TeamSimulate = null) {
+        this.matchPause = false;
+        let playersToKickOff : Player[];
+        if (!team){
+            playersToKickOff = this.teamA.players.filter(p =>
+                !p.getPlayerPosition().position.includes("BACK") && p.getPlayerPosition().position !== "GOALKEEPER"
+            );
+        }else {
+            playersToKickOff = team.players.filter(p =>
+                !p.getPlayerPosition().position.includes("BACK") && p.getPlayerPosition().position !== "GOALKEEPER"
+            );
+        }
         const player1 = playersToKickOff[Math.floor(Math.random() * playersToKickOff.length)];
         playersToKickOff = playersToKickOff.filter(p => p !== player1);
         const player2 = playersToKickOff[Math.floor(Math.random() * playersToKickOff.length)];
@@ -599,11 +615,11 @@ class SimulateMatch {
         this.mqttPublish.publishBallPosition(this.ball, this.matchId);
     }
 
-    secondHalfStart() {
+    async secondHalfStart() {
         this.teamA.side = "RIGHT";
         this.teamB.side = "LEFT";
-        this.resetPositionOfPlayers([...this.teamA.players, ...this.teamB.players]);
         this.mqttPublish.publishMatchState(MatchStateEnum.SECOND_HALF_KICK_OFF, this.matchId, this.matchTime90minutes, this.score);
+        await this.resetAllPlacements(this.teamB);
     }
 
     resetPositionOfPlayers(allPlayers: Player[]) {
@@ -629,8 +645,14 @@ class SimulateMatch {
             if (this.matchTime === Math.round(duration / 2)) {
                 this.mqttPublish.publishMatchState(MatchStateEnum.HALF_TIME, this.matchId, this.matchTime90minutes, this.score);
                 console.log(`MI-TEMPS`);
-                await new Promise(resolve => setTimeout(resolve, 30000));
-                this.secondHalfStart();
+                //this.matchPause = true;
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                await this.secondHalfStart();
+                //await new Promise(resolve => setTimeout(resolve, 10000));
+            }
+
+            while (this.matchPause) {
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
 
             for (let i = 0; i < actionsPerSecond; i++) {

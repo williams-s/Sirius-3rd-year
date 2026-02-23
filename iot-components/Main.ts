@@ -12,7 +12,7 @@ import {getExactAmountOfPlayers, positionLines} from "./utils/formationUtils";
 
 const matchId = Number(process.env.MATCH_ID ?? 1);
 const API_URL = process.env.API_BASE_URL ?? "http://localhost:8082";
-const deltaTimeMs = 33;
+const deltaTimeMs = 100;
 
 const mqttPublish = new MqttPublish();
 console.log("Connecting to MQTT broker...");
@@ -136,24 +136,31 @@ const main = async () => {
                             console.log(players);
                             mqttPublish.publishMatchSheet(players, matchId);
                             match.running = true;
-                            match.startSimulation();
+                            const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-                            updateInterval = setInterval(() => {
-                                if (!match.running) {
-                                    if (updateInterval) {
-                                        clearInterval(updateInterval);
+                            const mainSimu = async () => {
+                                const allPlayers = [...match.teamA.players, ...match.teamB.players];
+
+                                while (match.running) {
+                                    try {
+                                        if (!match.matchPause){
+                                            await match.updateBallFlight(deltaTimeMs);
+                                            match.updatePlayersPositions(allPlayers, deltaTimeMs);
+                                            mqttPublish.publishPlayersPosition(allPlayers, matchId);
+                                        }
+                                        await sleep(deltaTimeMs);
+                                    } catch (error) {
+                                        console.error("Erreur :", error);
+                                        match.running = false;
+                                        break;
                                     }
-                                    mqttPublish.disconnect();
-                                    process.exit(0);
-                                    return;
                                 }
-                                //console.log(match.flight.active);
-                                match.updateBallFlight(deltaTimeMs);
-                                //console.log(match.flight.active);
-                                match.updatePlayersPositions([...match.teamA.players, ...match.teamB.players],deltaTimeMs);
+                                mqttPublish.disconnect();
+                                process.exit(match.running ? 0 : 1);
+                            };
 
-                                mqttPublish.publishPlayersPosition([...match.teamA.players, ...match.teamB.players], matchId);
-                            }, deltaTimeMs);
+                            match.startSimulation();
+                            mainSimu();
 
                         } catch (error) {
                             console.error("Erreur:", error);
