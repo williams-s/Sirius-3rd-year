@@ -39,7 +39,6 @@ jobs:
           ssh usercm@192.168.0.32 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ssh usercm@192.168.0.65 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ssh usercm@192.168.0.60 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          ssh usercm@192.168.0.34 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build & Push frontend
         uses: docker/build-push-action@v4
