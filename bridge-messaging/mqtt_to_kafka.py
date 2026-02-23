@@ -1,4 +1,6 @@
 import json
+import time
+
 import paho.mqtt.client as mqtt
 import confluent_kafka as kafka
 import os
@@ -10,7 +12,10 @@ KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "172.31.125.112:9092")
 
 
 producer = kafka.Producer({
-    "bootstrap.servers": KAFKA_BOOTSTRAP
+    "bootstrap.servers": KAFKA_BOOTSTRAP,
+    "acks": "all",
+    "enable.idempotence": True,
+    "retries": 3
 })
 
 print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
@@ -50,9 +55,13 @@ def on_message(client, userdata, msg):
         "payload": parsed_payload
     }
 
+    match_id = parsed_payload["matchId"]
+
     producer.produce(
         kafka_topic,
-        value=json.dumps(message)
+        key=str(match_id),
+        value=json.dumps(message),
+        timestamp=int(time.time() * 1000)
     )
     producer.poll(0)
 

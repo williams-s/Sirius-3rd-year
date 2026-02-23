@@ -5,6 +5,7 @@ import { Stage } from "react-konva";
 import { HeatMapOverlay } from "./HeatMapOverlay.tsx";
 import { ConnectToWebSocketSTOMP } from "../../utils/websocketConnection.ts";
 import { liveMatchTopic } from "../../utils/topics.ts";
+import {getCurrentHeatMap} from "../../api/liveMatchApi.ts";
 
 type Props = {
     matchId: string;
@@ -48,6 +49,16 @@ export const PlayerHeatMap = ({
     }, [width, height]);
 
     useEffect(() => {
+
+        const currentHeatMap = async (matchId : number, playerId : number) =>{
+            try {
+                const data = await getCurrentHeatMap(matchId, playerId);
+                setHeatMapPlayer(data);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        currentHeatMap(Number(matchId),playerId);
         const client = ConnectToWebSocketSTOMP();
 
         client.onConnect = () => {

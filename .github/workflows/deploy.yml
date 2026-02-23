@@ -4,6 +4,7 @@ on:
   push:
     branches:
       #- dev
+      - data-pipeline-update
       #- main
 
 jobs:
