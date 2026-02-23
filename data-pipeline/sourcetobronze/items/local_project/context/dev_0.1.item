@@ -2,13 +2,13 @@
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd">
   <talendfile:ContextType xmi:id="_pzhZYNCjEfCgDOCaZzuFFA" confirmationNeeded="false" name="Default">
     <contextParameter xmi:id="_2TGfgNCjEfCgDOCaZzuFFA" comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv"/>
-    <contextParameter xmi:id="_-mx0MNEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.31"/>
+    <contextParameter xmi:id="_-mx0MNEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162"/>
     <contextParameter xmi:id="_4b9bQNEYEfCI_a0scet84w" comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata"/>
     <contextParameter xmi:id="_4b9bQdEYEfCI_a0scet84w" comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="27017"/>
     <contextParameter xmi:id="_4b9bQtEYEfCI_a0scet84w" comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="bronze"/>
     <contextParameter xmi:id="_4b9bQ9EYEfCI_a0scet84w" comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="silver"/>
     <contextParameter xmi:id="_4b9bRNEYEfCI_a0scet84w" comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata"/>
-    <contextParameter xmi:id="_4b9bRdEYEfCI_a0scet84w" comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.33"/>
+    <contextParameter xmi:id="_4b9bRdEYEfCI_a0scet84w" comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.33 "/>
     <contextParameter xmi:id="_4b9bRtEYEfCI_a0scet84w" comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="5432"/>
     <contextParameter xmi:id="_c8HlgNEZEfCI_a0scet84w" comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="admin"/>
     <contextParameter xmi:id="_c8HlgdEZEfCI_a0scet84w" comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="Ravus77!"/>
@@ -30,7 +30,7 @@
   </talendfile:ContextType>
   <talendfile:ContextType xmi:id="_2t1TsNCjEfCgDOCaZzuFFA" confirmationNeeded="false" name="dev">
     <contextParameter xmi:id="_2t1TsdCjEfCgDOCaZzuFFA" comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv"/>
-    <contextParameter xmi:id="_-mx0MdEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.31"/>
+    <contextParameter xmi:id="_-mx0MdEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162"/>
     <contextParameter xmi:id="_4b9bR9EYEfCI_a0scet84w" comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata"/>
     <contextParameter xmi:id="_4b9bSNEYEfCI_a0scet84w" comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="27017"/>
     <contextParameter xmi:id="_4b9bSdEYEfCI_a0scet84w" comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="bronze"/>

@@ -139,6 +139,30 @@ protected static void logIgnoredError(String message, Throwable cause) {
 				
 			}
 			
+			if(mongo_player_injuries != null){
+				
+					this.setProperty("mongo_player_injuries", mongo_player_injuries.toString());
+				
+			}
+			
+			if(mongo_player_latest_market_value != null){
+				
+					this.setProperty("mongo_player_latest_market_value", mongo_player_latest_market_value.toString());
+				
+			}
+			
+			if(mongo_player_performances != null){
+				
+					this.setProperty("mongo_player_performances", mongo_player_performances.toString());
+				
+			}
+			
+			if(mongo_player_profiles != null){
+				
+					this.setProperty("mongo_player_profiles", mongo_player_profiles.toString());
+				
+			}
+			
 			if(mongo_port != null){
 				
 					this.setProperty("mongo_port", mongo_port.toString());
@@ -148,6 +172,18 @@ protected static void logIgnoredError(String message, Throwable cause) {
 			if(mongo_server != null){
 				
 					this.setProperty("mongo_server", mongo_server.toString());
+				
+			}
+			
+			if(mongo_team_details != null){
+				
+					this.setProperty("mongo_team_details", mongo_team_details.toString());
+				
+			}
+			
+			if(mongo_transfer_history != null){
+				
+					this.setProperty("mongo_transfer_history", mongo_transfer_history.toString());
 				
 			}
 			
@@ -181,15 +217,15 @@ protected static void logIgnoredError(String message, Throwable cause) {
 				
 			}
 			
-			if(postgres_table_players != null){
+			if(postgres_table_bodytype != null){
 				
-					this.setProperty("postgres_table_players", postgres_table_players.toString());
+					this.setProperty("postgres_table_bodytype", postgres_table_bodytype.toString());
 				
 			}
 			
-			if(postgres_table_nationality != null){
+			if(postgres_table_players != null){
 				
-					this.setProperty("postgres_table_nationality", postgres_table_nationality.toString());
+					this.setProperty("postgres_table_players", postgres_table_players.toString());
 				
 			}
 			
@@ -202,6 +238,42 @@ protected static void logIgnoredError(String message, Throwable cause) {
 			if(source != null){
 				
 					this.setProperty("source", source.toString());
+				
+			}
+			
+			if(source_player_injuries != null){
+				
+					this.setProperty("source_player_injuries", source_player_injuries.toString());
+				
+			}
+			
+			if(source_player_latest_market_value != null){
+				
+					this.setProperty("source_player_latest_market_value", source_player_latest_market_value.toString());
+				
+			}
+			
+			if(source_player_performances != null){
+				
+					this.setProperty("source_player_performances", source_player_performances.toString());
+				
+			}
+			
+			if(source_player_profiles != null){
+				
+					this.setProperty("source_player_profiles", source_player_profiles.toString());
+				
+			}
+			
+			if(source_team_details != null){
+				
+					this.setProperty("source_team_details", source_team_details.toString());
+				
+			}
+			
+			if(source_transfer_history != null){
+				
+					this.setProperty("source_transfer_history", source_transfer_history.toString());
 				
 			}
 			
@@ -228,6 +300,22 @@ public String mongo_database;
 public String getMongo_database(){
 	return this.mongo_database;
 }
+public String mongo_player_injuries;
+public String getMongo_player_injuries(){
+	return this.mongo_player_injuries;
+}
+public String mongo_player_latest_market_value;
+public String getMongo_player_latest_market_value(){
+	return this.mongo_player_latest_market_value;
+}
+public String mongo_player_performances;
+public String getMongo_player_performances(){
+	return this.mongo_player_performances;
+}
+public String mongo_player_profiles;
+public String getMongo_player_profiles(){
+	return this.mongo_player_profiles;
+}
 public String mongo_port;
 public String getMongo_port(){
 	return this.mongo_port;
@@ -235,6 +323,14 @@ public String getMongo_port(){
 public String mongo_server;
 public String getMongo_server(){
 	return this.mongo_server;
+}
+public String mongo_team_details;
+public String getMongo_team_details(){
+	return this.mongo_team_details;
+}
+public String mongo_transfer_history;
+public String getMongo_transfer_history(){
+	return this.mongo_transfer_history;
 }
 public String postgres_database;
 public String getPostgres_database(){
@@ -256,13 +352,13 @@ public String postgres_server;
 public String getPostgres_server(){
 	return this.postgres_server;
 }
+public String postgres_table_bodytype;
+public String getPostgres_table_bodytype(){
+	return this.postgres_table_bodytype;
+}
 public String postgres_table_players;
 public String getPostgres_table_players(){
 	return this.postgres_table_players;
-}
-public String postgres_table_nationality;
-public String getPostgres_table_nationality(){
-	return this.postgres_table_nationality;
 }
 public String postgres_user;
 public String getPostgres_user(){
@@ -271,6 +367,30 @@ public String getPostgres_user(){
 public String source;
 public String getSource(){
 	return this.source;
+}
+public String source_player_injuries;
+public String getSource_player_injuries(){
+	return this.source_player_injuries;
+}
+public String source_player_latest_market_value;
+public String getSource_player_latest_market_value(){
+	return this.source_player_latest_market_value;
+}
+public String source_player_performances;
+public String getSource_player_performances(){
+	return this.source_player_performances;
+}
+public String source_player_profiles;
+public String getSource_player_profiles(){
+	return this.source_player_profiles;
+}
+public String source_team_details;
+public String getSource_team_details(){
+	return this.source_team_details;
+}
+public String source_transfer_history;
+public String getSource_transfer_history(){
+	return this.source_transfer_history;
 }
 	}
 	protected ContextProperties context = new ContextProperties(); // will be instanciated by MS.
@@ -434,7 +554,7 @@ private class TalendException extends Exception {
 					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
-			public void tMap_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+			public void tMap_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 				
 				end_Hash.put(errorComponent, System.currentTimeMillis());
 				
@@ -443,7 +563,58 @@ private class TalendException extends Exception {
 					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
 			}
 			
-			public void tMongoDBOutput_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+			public void tLogRow_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tMongoDBInput_2_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tMongoDBInput_3_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tAdvancedHash_row3_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tAdvancedHash_row4_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+				end_Hash.put(errorComponent, System.currentTimeMillis());
+				
+				status = "failure";
+				
+					tMongoDBInput_1_onSubJobError(exception, errorComponent, globalMap);
+			}
+			
+			public void tAggregateRow_1_AGGOUT_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
+				
+							tAggregateRow_1_AGGIN_error(exception, errorComponent, globalMap);
+						
+						}
+					
+			public void tAggregateRow_1_AGGIN_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap) throws TalendException {
 				
 				end_Hash.put(errorComponent, System.currentTimeMillis());
 				
@@ -464,57 +635,45 @@ resumeUtil.addLog("SYSTEM_LOG", "NODE:"+ errorComponent, "", Thread.currentThrea
 
 
 
-public static class coucouStruct implements routines.system.IPersistableRow<coucouStruct> {
+public static class sortieeStruct implements routines.system.IPersistableRow<sortieeStruct> {
     final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
     static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
 
 	
-			    public String shirt_name;
+			    public String player_id;
 
-				public String getShirt_name () {
-					return this.shirt_name;
+				public String getPlayer_id () {
+					return this.player_id;
 				}
 				
-			    public String full_name;
+			    public String season_name;
 
-				public String getFull_name () {
-					return this.full_name;
+				public String getSeason_name () {
+					return this.season_name;
 				}
 				
-			    public String nationality;
+			    public String date_unix;
 
-				public String getNationality () {
-					return this.nationality;
+				public String getDate_unix () {
+					return this.date_unix;
 				}
 				
-			    public Float weight_kgs;
+			    public String value;
 
-				public Float getWeight_kgs () {
-					return this.weight_kgs;
+				public String getValue () {
+					return this.value;
 				}
 				
-			    public String positions;
+			    public String team_id;
 
-				public String getPositions () {
-					return this.positions;
+				public String getTeam_id () {
+					return this.team_id;
 				}
 				
-			    public Float height_cm;
+			    public String goals;
 
-				public Float getHeight_cm () {
-					return this.height_cm;
-				}
-				
-			    public String preferred_foot;
-
-				public String getPreferred_foot () {
-					return this.preferred_foot;
-				}
-				
-			    public String body_type;
-
-				public String getBody_type () {
-					return this.body_type;
+				public String getGoals () {
+					return this.goals;
 				}
 				
 
@@ -588,31 +747,17 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 
         		int length = 0;
 		
-					this.shirt_name = readString(dis);
+					this.player_id = readString(dis);
 					
-					this.full_name = readString(dis);
+					this.season_name = readString(dis);
 					
-					this.nationality = readString(dis);
+					this.date_unix = readString(dis);
 					
-			            length = dis.readByte();
-           				if (length == -1) {
-           	    			this.weight_kgs = null;
-           				} else {
-           			    	this.weight_kgs = dis.readFloat();
-           				}
+					this.value = readString(dis);
 					
-					this.positions = readString(dis);
+					this.team_id = readString(dis);
 					
-			            length = dis.readByte();
-           				if (length == -1) {
-           	    			this.height_cm = null;
-           				} else {
-           			    	this.height_cm = dis.readFloat();
-           				}
-					
-					this.preferred_foot = readString(dis);
-					
-					this.body_type = readString(dis);
+					this.goals = readString(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -636,31 +781,17 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 
         		int length = 0;
 		
-					this.shirt_name = readString(dis);
+					this.player_id = readString(dis);
 					
-					this.full_name = readString(dis);
+					this.season_name = readString(dis);
 					
-					this.nationality = readString(dis);
+					this.date_unix = readString(dis);
 					
-			            length = dis.readByte();
-           				if (length == -1) {
-           	    			this.weight_kgs = null;
-           				} else {
-           			    	this.weight_kgs = dis.readFloat();
-           				}
+					this.value = readString(dis);
 					
-					this.positions = readString(dis);
+					this.team_id = readString(dis);
 					
-			            length = dis.readByte();
-           				if (length == -1) {
-           	    			this.height_cm = null;
-           				} else {
-           			    	this.height_cm = dis.readFloat();
-           				}
-					
-					this.preferred_foot = readString(dis);
-					
-					this.body_type = readString(dis);
+					this.goals = readString(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -682,45 +813,27 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		
 					// String
 				
-						writeString(this.shirt_name,dos);
+						writeString(this.player_id,dos);
 					
 					// String
 				
-						writeString(this.full_name,dos);
+						writeString(this.season_name,dos);
 					
 					// String
 				
-						writeString(this.nationality,dos);
-					
-					// Float
-				
-						if(this.weight_kgs == null) {
-			                dos.writeByte(-1);
-						} else {
-               				dos.writeByte(0);
-           			    	dos.writeFloat(this.weight_kgs);
-		            	}
+						writeString(this.date_unix,dos);
 					
 					// String
 				
-						writeString(this.positions,dos);
-					
-					// Float
-				
-						if(this.height_cm == null) {
-			                dos.writeByte(-1);
-						} else {
-               				dos.writeByte(0);
-           			    	dos.writeFloat(this.height_cm);
-		            	}
+						writeString(this.value,dos);
 					
 					// String
 				
-						writeString(this.preferred_foot,dos);
+						writeString(this.team_id,dos);
 					
 					// String
 				
-						writeString(this.body_type,dos);
+						writeString(this.goals,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -735,45 +848,27 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		
 					// String
 				
-						writeString(this.shirt_name,dos);
+						writeString(this.player_id,dos);
 					
 					// String
 				
-						writeString(this.full_name,dos);
+						writeString(this.season_name,dos);
 					
 					// String
 				
-						writeString(this.nationality,dos);
-					
-					// Float
-				
-						if(this.weight_kgs == null) {
-			                dos.writeByte(-1);
-						} else {
-               				dos.writeByte(0);
-           			    	dos.writeFloat(this.weight_kgs);
-		            	}
+						writeString(this.date_unix,dos);
 					
 					// String
 				
-						writeString(this.positions,dos);
-					
-					// Float
-				
-						if(this.height_cm == null) {
-			                dos.writeByte(-1);
-						} else {
-               				dos.writeByte(0);
-           			    	dos.writeFloat(this.height_cm);
-		            	}
+						writeString(this.value,dos);
 					
 					// String
 				
-						writeString(this.preferred_foot,dos);
+						writeString(this.team_id,dos);
 					
 					// String
 				
-						writeString(this.body_type,dos);
+						writeString(this.goals,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -788,14 +883,12 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append("[");
-		sb.append("shirt_name="+shirt_name);
-		sb.append(",full_name="+full_name);
-		sb.append(",nationality="+nationality);
-		sb.append(",weight_kgs="+String.valueOf(weight_kgs));
-		sb.append(",positions="+positions);
-		sb.append(",height_cm="+String.valueOf(height_cm));
-		sb.append(",preferred_foot="+preferred_foot);
-		sb.append(",body_type="+body_type);
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",date_unix="+date_unix);
+		sb.append(",value="+value);
+		sb.append(",team_id="+team_id);
+		sb.append(",goals="+goals);
 	    sb.append("]");
 
 	    return sb.toString();
@@ -804,7 +897,7 @@ public static class coucouStruct implements routines.system.IPersistableRow<couc
     /**
      * Compare keys
      */
-    public int compareTo(coucouStruct other) {
+    public int compareTo(sortieeStruct other) {
 
 		int returnValue = -1;
 		
@@ -841,292 +934,46 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
     static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
 
 	
-			    public String name;
+			    public String player_id;
 
-				public String getName () {
-					return this.name;
+				public String getPlayer_id () {
+					return this.player_id;
 				}
 				
-			    public String full_name;
+			    public String season_name;
 
-				public String getFull_name () {
-					return this.full_name;
+				public String getSeason_name () {
+					return this.season_name;
 				}
 				
-			    public String birth_date;
+			    public String injury_reason;
 
-				public String getBirth_date () {
-					return this.birth_date;
+				public String getInjury_reason () {
+					return this.injury_reason;
 				}
 				
-			    public String age;
+			    public String from_date;
 
-				public String getAge () {
-					return this.age;
+				public String getFrom_date () {
+					return this.from_date;
 				}
 				
-			    public String height_cm;
+			    public String end_date;
 
-				public String getHeight_cm () {
-					return this.height_cm;
+				public String getEnd_date () {
+					return this.end_date;
 				}
 				
-			    public String weight_kgs;
+			    public Integer days_missed;
 
-				public String getWeight_kgs () {
-					return this.weight_kgs;
+				public Integer getDays_missed () {
+					return this.days_missed;
 				}
 				
-			    public String positions;
+			    public Integer games_missed;
 
-				public String getPositions () {
-					return this.positions;
-				}
-				
-			    public String nationality;
-
-				public String getNationality () {
-					return this.nationality;
-				}
-				
-			    public String overall_rating;
-
-				public String getOverall_rating () {
-					return this.overall_rating;
-				}
-				
-			    public String potential;
-
-				public String getPotential () {
-					return this.potential;
-				}
-				
-			    public String value_euro;
-
-				public String getValue_euro () {
-					return this.value_euro;
-				}
-				
-			    public String wage_euro;
-
-				public String getWage_euro () {
-					return this.wage_euro;
-				}
-				
-			    public String preferred_foot;
-
-				public String getPreferred_foot () {
-					return this.preferred_foot;
-				}
-				
-			    public String international_reputation;
-
-				public String getInternational_reputation () {
-					return this.international_reputation;
-				}
-				
-			    public String weak_foot;
-
-				public String getWeak_foot () {
-					return this.weak_foot;
-				}
-				
-			    public String skill_moves;
-
-				public String getSkill_moves () {
-					return this.skill_moves;
-				}
-				
-			    public String body_type;
-
-				public String getBody_type () {
-					return this.body_type;
-				}
-				
-			    public String release_clause_euro;
-
-				public String getRelease_clause_euro () {
-					return this.release_clause_euro;
-				}
-				
-			    public String national_team;
-
-				public String getNational_team () {
-					return this.national_team;
-				}
-				
-			    public String national_rating;
-
-				public String getNational_rating () {
-					return this.national_rating;
-				}
-				
-			    public String national_team_position;
-
-				public String getNational_team_position () {
-					return this.national_team_position;
-				}
-				
-			    public String national_jersey_number;
-
-				public String getNational_jersey_number () {
-					return this.national_jersey_number;
-				}
-				
-			    public String crossing;
-
-				public String getCrossing () {
-					return this.crossing;
-				}
-				
-			    public String finishing;
-
-				public String getFinishing () {
-					return this.finishing;
-				}
-				
-			    public String heading_accuracy;
-
-				public String getHeading_accuracy () {
-					return this.heading_accuracy;
-				}
-				
-			    public String short_passing;
-
-				public String getShort_passing () {
-					return this.short_passing;
-				}
-				
-			    public String volleys;
-
-				public String getVolleys () {
-					return this.volleys;
-				}
-				
-			    public String dribbling;
-
-				public String getDribbling () {
-					return this.dribbling;
-				}
-				
-			    public String curve;
-
-				public String getCurve () {
-					return this.curve;
-				}
-				
-			    public String freekick_accuracy;
-
-				public String getFreekick_accuracy () {
-					return this.freekick_accuracy;
-				}
-				
-			    public String long_passing;
-
-				public String getLong_passing () {
-					return this.long_passing;
-				}
-				
-			    public String ball_control;
-
-				public String getBall_control () {
-					return this.ball_control;
-				}
-				
-			    public String acceleration;
-
-				public String getAcceleration () {
-					return this.acceleration;
-				}
-				
-			    public String sprint_speed;
-
-				public String getSprint_speed () {
-					return this.sprint_speed;
-				}
-				
-			    public String agility;
-
-				public String getAgility () {
-					return this.agility;
-				}
-				
-			    public String reactions;
-
-				public String getReactions () {
-					return this.reactions;
-				}
-				
-			    public String balance;
-
-				public String getBalance () {
-					return this.balance;
-				}
-				
-			    public String shot_power;
-
-				public String getShot_power () {
-					return this.shot_power;
-				}
-				
-			    public String jumping;
-
-				public String getJumping () {
-					return this.jumping;
-				}
-				
-			    public String stamina;
-
-				public String getStamina () {
-					return this.stamina;
-				}
-				
-			    public String strength;
-
-				public String getStrength () {
-					return this.strength;
-				}
-				
-			    public String long_shots;
-
-				public String getLong_shots () {
-					return this.long_shots;
-				}
-				
-			    public String aggression;
-
-				public String getAggression () {
-					return this.aggression;
-				}
-				
-			    public String interceptions;
-
-				public String getInterceptions () {
-					return this.interceptions;
-				}
-				
-			    public String positioning;
-
-				public String getPositioning () {
-					return this.positioning;
-				}
-				
-			    public String vision;
-
-				public String getVision () {
-					return this.vision;
-				}
-				
-			    public String penalties;
-
-				public String getPenalties () {
-					return this.penalties;
-				}
-				
-			    public String composure;
-
-				public String getComposure () {
-					return this.composure;
+				public Integer getGames_missed () {
+					return this.games_missed;
 				}
 				
 
@@ -1191,6 +1038,47 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
             marshaller.write(byteArray);
     	}
     }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
 
     public void readData(ObjectInputStream dis) {
 
@@ -1200,101 +1088,19 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 
         		int length = 0;
 		
-					this.name = readString(dis);
+					this.player_id = readString(dis);
 					
-					this.full_name = readString(dis);
+					this.season_name = readString(dis);
 					
-					this.birth_date = readString(dis);
+					this.injury_reason = readString(dis);
 					
-					this.age = readString(dis);
+					this.from_date = readString(dis);
 					
-					this.height_cm = readString(dis);
+					this.end_date = readString(dis);
 					
-					this.weight_kgs = readString(dis);
+						this.days_missed = readInteger(dis);
 					
-					this.positions = readString(dis);
-					
-					this.nationality = readString(dis);
-					
-					this.overall_rating = readString(dis);
-					
-					this.potential = readString(dis);
-					
-					this.value_euro = readString(dis);
-					
-					this.wage_euro = readString(dis);
-					
-					this.preferred_foot = readString(dis);
-					
-					this.international_reputation = readString(dis);
-					
-					this.weak_foot = readString(dis);
-					
-					this.skill_moves = readString(dis);
-					
-					this.body_type = readString(dis);
-					
-					this.release_clause_euro = readString(dis);
-					
-					this.national_team = readString(dis);
-					
-					this.national_rating = readString(dis);
-					
-					this.national_team_position = readString(dis);
-					
-					this.national_jersey_number = readString(dis);
-					
-					this.crossing = readString(dis);
-					
-					this.finishing = readString(dis);
-					
-					this.heading_accuracy = readString(dis);
-					
-					this.short_passing = readString(dis);
-					
-					this.volleys = readString(dis);
-					
-					this.dribbling = readString(dis);
-					
-					this.curve = readString(dis);
-					
-					this.freekick_accuracy = readString(dis);
-					
-					this.long_passing = readString(dis);
-					
-					this.ball_control = readString(dis);
-					
-					this.acceleration = readString(dis);
-					
-					this.sprint_speed = readString(dis);
-					
-					this.agility = readString(dis);
-					
-					this.reactions = readString(dis);
-					
-					this.balance = readString(dis);
-					
-					this.shot_power = readString(dis);
-					
-					this.jumping = readString(dis);
-					
-					this.stamina = readString(dis);
-					
-					this.strength = readString(dis);
-					
-					this.long_shots = readString(dis);
-					
-					this.aggression = readString(dis);
-					
-					this.interceptions = readString(dis);
-					
-					this.positioning = readString(dis);
-					
-					this.vision = readString(dis);
-					
-					this.penalties = readString(dis);
-					
-					this.composure = readString(dis);
+						this.games_missed = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1318,101 +1124,19 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 
         		int length = 0;
 		
-					this.name = readString(dis);
+					this.player_id = readString(dis);
 					
-					this.full_name = readString(dis);
+					this.season_name = readString(dis);
 					
-					this.birth_date = readString(dis);
+					this.injury_reason = readString(dis);
 					
-					this.age = readString(dis);
+					this.from_date = readString(dis);
 					
-					this.height_cm = readString(dis);
+					this.end_date = readString(dis);
 					
-					this.weight_kgs = readString(dis);
+						this.days_missed = readInteger(dis);
 					
-					this.positions = readString(dis);
-					
-					this.nationality = readString(dis);
-					
-					this.overall_rating = readString(dis);
-					
-					this.potential = readString(dis);
-					
-					this.value_euro = readString(dis);
-					
-					this.wage_euro = readString(dis);
-					
-					this.preferred_foot = readString(dis);
-					
-					this.international_reputation = readString(dis);
-					
-					this.weak_foot = readString(dis);
-					
-					this.skill_moves = readString(dis);
-					
-					this.body_type = readString(dis);
-					
-					this.release_clause_euro = readString(dis);
-					
-					this.national_team = readString(dis);
-					
-					this.national_rating = readString(dis);
-					
-					this.national_team_position = readString(dis);
-					
-					this.national_jersey_number = readString(dis);
-					
-					this.crossing = readString(dis);
-					
-					this.finishing = readString(dis);
-					
-					this.heading_accuracy = readString(dis);
-					
-					this.short_passing = readString(dis);
-					
-					this.volleys = readString(dis);
-					
-					this.dribbling = readString(dis);
-					
-					this.curve = readString(dis);
-					
-					this.freekick_accuracy = readString(dis);
-					
-					this.long_passing = readString(dis);
-					
-					this.ball_control = readString(dis);
-					
-					this.acceleration = readString(dis);
-					
-					this.sprint_speed = readString(dis);
-					
-					this.agility = readString(dis);
-					
-					this.reactions = readString(dis);
-					
-					this.balance = readString(dis);
-					
-					this.shot_power = readString(dis);
-					
-					this.jumping = readString(dis);
-					
-					this.stamina = readString(dis);
-					
-					this.strength = readString(dis);
-					
-					this.long_shots = readString(dis);
-					
-					this.aggression = readString(dis);
-					
-					this.interceptions = readString(dis);
-					
-					this.positioning = readString(dis);
-					
-					this.vision = readString(dis);
-					
-					this.penalties = readString(dis);
-					
-					this.composure = readString(dis);
+						this.games_missed = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1434,195 +1158,31 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		
 					// String
 				
-						writeString(this.name,dos);
+						writeString(this.player_id,dos);
 					
 					// String
 				
-						writeString(this.full_name,dos);
+						writeString(this.season_name,dos);
 					
 					// String
 				
-						writeString(this.birth_date,dos);
+						writeString(this.injury_reason,dos);
 					
 					// String
 				
-						writeString(this.age,dos);
+						writeString(this.from_date,dos);
 					
 					// String
 				
-						writeString(this.height_cm,dos);
+						writeString(this.end_date,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.weight_kgs,dos);
+						writeInteger(this.days_missed,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.positions,dos);
-					
-					// String
-				
-						writeString(this.nationality,dos);
-					
-					// String
-				
-						writeString(this.overall_rating,dos);
-					
-					// String
-				
-						writeString(this.potential,dos);
-					
-					// String
-				
-						writeString(this.value_euro,dos);
-					
-					// String
-				
-						writeString(this.wage_euro,dos);
-					
-					// String
-				
-						writeString(this.preferred_foot,dos);
-					
-					// String
-				
-						writeString(this.international_reputation,dos);
-					
-					// String
-				
-						writeString(this.weak_foot,dos);
-					
-					// String
-				
-						writeString(this.skill_moves,dos);
-					
-					// String
-				
-						writeString(this.body_type,dos);
-					
-					// String
-				
-						writeString(this.release_clause_euro,dos);
-					
-					// String
-				
-						writeString(this.national_team,dos);
-					
-					// String
-				
-						writeString(this.national_rating,dos);
-					
-					// String
-				
-						writeString(this.national_team_position,dos);
-					
-					// String
-				
-						writeString(this.national_jersey_number,dos);
-					
-					// String
-				
-						writeString(this.crossing,dos);
-					
-					// String
-				
-						writeString(this.finishing,dos);
-					
-					// String
-				
-						writeString(this.heading_accuracy,dos);
-					
-					// String
-				
-						writeString(this.short_passing,dos);
-					
-					// String
-				
-						writeString(this.volleys,dos);
-					
-					// String
-				
-						writeString(this.dribbling,dos);
-					
-					// String
-				
-						writeString(this.curve,dos);
-					
-					// String
-				
-						writeString(this.freekick_accuracy,dos);
-					
-					// String
-				
-						writeString(this.long_passing,dos);
-					
-					// String
-				
-						writeString(this.ball_control,dos);
-					
-					// String
-				
-						writeString(this.acceleration,dos);
-					
-					// String
-				
-						writeString(this.sprint_speed,dos);
-					
-					// String
-				
-						writeString(this.agility,dos);
-					
-					// String
-				
-						writeString(this.reactions,dos);
-					
-					// String
-				
-						writeString(this.balance,dos);
-					
-					// String
-				
-						writeString(this.shot_power,dos);
-					
-					// String
-				
-						writeString(this.jumping,dos);
-					
-					// String
-				
-						writeString(this.stamina,dos);
-					
-					// String
-				
-						writeString(this.strength,dos);
-					
-					// String
-				
-						writeString(this.long_shots,dos);
-					
-					// String
-				
-						writeString(this.aggression,dos);
-					
-					// String
-				
-						writeString(this.interceptions,dos);
-					
-					// String
-				
-						writeString(this.positioning,dos);
-					
-					// String
-				
-						writeString(this.vision,dos);
-					
-					// String
-				
-						writeString(this.penalties,dos);
-					
-					// String
-				
-						writeString(this.composure,dos);
+						writeInteger(this.games_missed,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1637,195 +1197,31 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		
 					// String
 				
-						writeString(this.name,dos);
+						writeString(this.player_id,dos);
 					
 					// String
 				
-						writeString(this.full_name,dos);
+						writeString(this.season_name,dos);
 					
 					// String
 				
-						writeString(this.birth_date,dos);
+						writeString(this.injury_reason,dos);
 					
 					// String
 				
-						writeString(this.age,dos);
+						writeString(this.from_date,dos);
 					
 					// String
 				
-						writeString(this.height_cm,dos);
+						writeString(this.end_date,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.weight_kgs,dos);
+						writeInteger(this.days_missed,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.positions,dos);
-					
-					// String
-				
-						writeString(this.nationality,dos);
-					
-					// String
-				
-						writeString(this.overall_rating,dos);
-					
-					// String
-				
-						writeString(this.potential,dos);
-					
-					// String
-				
-						writeString(this.value_euro,dos);
-					
-					// String
-				
-						writeString(this.wage_euro,dos);
-					
-					// String
-				
-						writeString(this.preferred_foot,dos);
-					
-					// String
-				
-						writeString(this.international_reputation,dos);
-					
-					// String
-				
-						writeString(this.weak_foot,dos);
-					
-					// String
-				
-						writeString(this.skill_moves,dos);
-					
-					// String
-				
-						writeString(this.body_type,dos);
-					
-					// String
-				
-						writeString(this.release_clause_euro,dos);
-					
-					// String
-				
-						writeString(this.national_team,dos);
-					
-					// String
-				
-						writeString(this.national_rating,dos);
-					
-					// String
-				
-						writeString(this.national_team_position,dos);
-					
-					// String
-				
-						writeString(this.national_jersey_number,dos);
-					
-					// String
-				
-						writeString(this.crossing,dos);
-					
-					// String
-				
-						writeString(this.finishing,dos);
-					
-					// String
-				
-						writeString(this.heading_accuracy,dos);
-					
-					// String
-				
-						writeString(this.short_passing,dos);
-					
-					// String
-				
-						writeString(this.volleys,dos);
-					
-					// String
-				
-						writeString(this.dribbling,dos);
-					
-					// String
-				
-						writeString(this.curve,dos);
-					
-					// String
-				
-						writeString(this.freekick_accuracy,dos);
-					
-					// String
-				
-						writeString(this.long_passing,dos);
-					
-					// String
-				
-						writeString(this.ball_control,dos);
-					
-					// String
-				
-						writeString(this.acceleration,dos);
-					
-					// String
-				
-						writeString(this.sprint_speed,dos);
-					
-					// String
-				
-						writeString(this.agility,dos);
-					
-					// String
-				
-						writeString(this.reactions,dos);
-					
-					// String
-				
-						writeString(this.balance,dos);
-					
-					// String
-				
-						writeString(this.shot_power,dos);
-					
-					// String
-				
-						writeString(this.jumping,dos);
-					
-					// String
-				
-						writeString(this.stamina,dos);
-					
-					// String
-				
-						writeString(this.strength,dos);
-					
-					// String
-				
-						writeString(this.long_shots,dos);
-					
-					// String
-				
-						writeString(this.aggression,dos);
-					
-					// String
-				
-						writeString(this.interceptions,dos);
-					
-					// String
-				
-						writeString(this.positioning,dos);
-					
-					// String
-				
-						writeString(this.vision,dos);
-					
-					// String
-				
-						writeString(this.penalties,dos);
-					
-					// String
-				
-						writeString(this.composure,dos);
+						writeInteger(this.games_missed,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1840,54 +1236,13 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append("[");
-		sb.append("name="+name);
-		sb.append(",full_name="+full_name);
-		sb.append(",birth_date="+birth_date);
-		sb.append(",age="+age);
-		sb.append(",height_cm="+height_cm);
-		sb.append(",weight_kgs="+weight_kgs);
-		sb.append(",positions="+positions);
-		sb.append(",nationality="+nationality);
-		sb.append(",overall_rating="+overall_rating);
-		sb.append(",potential="+potential);
-		sb.append(",value_euro="+value_euro);
-		sb.append(",wage_euro="+wage_euro);
-		sb.append(",preferred_foot="+preferred_foot);
-		sb.append(",international_reputation="+international_reputation);
-		sb.append(",weak_foot="+weak_foot);
-		sb.append(",skill_moves="+skill_moves);
-		sb.append(",body_type="+body_type);
-		sb.append(",release_clause_euro="+release_clause_euro);
-		sb.append(",national_team="+national_team);
-		sb.append(",national_rating="+national_rating);
-		sb.append(",national_team_position="+national_team_position);
-		sb.append(",national_jersey_number="+national_jersey_number);
-		sb.append(",crossing="+crossing);
-		sb.append(",finishing="+finishing);
-		sb.append(",heading_accuracy="+heading_accuracy);
-		sb.append(",short_passing="+short_passing);
-		sb.append(",volleys="+volleys);
-		sb.append(",dribbling="+dribbling);
-		sb.append(",curve="+curve);
-		sb.append(",freekick_accuracy="+freekick_accuracy);
-		sb.append(",long_passing="+long_passing);
-		sb.append(",ball_control="+ball_control);
-		sb.append(",acceleration="+acceleration);
-		sb.append(",sprint_speed="+sprint_speed);
-		sb.append(",agility="+agility);
-		sb.append(",reactions="+reactions);
-		sb.append(",balance="+balance);
-		sb.append(",shot_power="+shot_power);
-		sb.append(",jumping="+jumping);
-		sb.append(",stamina="+stamina);
-		sb.append(",strength="+strength);
-		sb.append(",long_shots="+long_shots);
-		sb.append(",aggression="+aggression);
-		sb.append(",interceptions="+interceptions);
-		sb.append(",positioning="+positioning);
-		sb.append(",vision="+vision);
-		sb.append(",penalties="+penalties);
-		sb.append(",composure="+composure);
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",injury_reason="+injury_reason);
+		sb.append(",from_date="+from_date);
+		sb.append(",end_date="+end_date);
+		sb.append(",days_missed="+String.valueOf(days_missed));
+		sb.append(",games_missed="+String.valueOf(games_missed));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -1927,10 +1282,1073 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 
 
 }
+
+public static class OnRowsEndStructtAggregateRow_1 implements routines.system.IPersistableRow<OnRowsEndStructtAggregateRow_1> {
+    final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
+    static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
+
+	
+			    public String player_id;
+
+				public String getPlayer_id () {
+					return this.player_id;
+				}
+				
+			    public String season_name;
+
+				public String getSeason_name () {
+					return this.season_name;
+				}
+				
+			    public String injury_reason;
+
+				public String getInjury_reason () {
+					return this.injury_reason;
+				}
+				
+			    public String from_date;
+
+				public String getFrom_date () {
+					return this.from_date;
+				}
+				
+			    public String end_date;
+
+				public String getEnd_date () {
+					return this.end_date;
+				}
+				
+			    public Integer days_missed;
+
+				public Integer getDays_missed () {
+					return this.days_missed;
+				}
+				
+			    public Integer games_missed;
+
+				public Integer getGames_missed () {
+					return this.games_missed;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			unmarshaller.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+    
+    private void writeString(String str, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+    }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+						this.days_missed = readInteger(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+    
+    public void readData(org.jboss.marshalling.Unmarshaller dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+						this.days_missed = readInteger(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// Integer
+				
+						writeInteger(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+    
+    public void writeData(org.jboss.marshalling.Marshaller dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// Integer
+				
+						writeInteger(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",injury_reason="+injury_reason);
+		sb.append(",from_date="+from_date);
+		sb.append(",end_date="+end_date);
+		sb.append(",days_missed="+String.valueOf(days_missed));
+		sb.append(",games_missed="+String.valueOf(games_missed));
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(OnRowsEndStructtAggregateRow_1 other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
+    final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
+    static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
+
+	
+			    public String player_id;
+
+				public String getPlayer_id () {
+					return this.player_id;
+				}
+				
+			    public String season_name;
+
+				public String getSeason_name () {
+					return this.season_name;
+				}
+				
+			    public String injury_reason;
+
+				public String getInjury_reason () {
+					return this.injury_reason;
+				}
+				
+			    public String from_date;
+
+				public String getFrom_date () {
+					return this.from_date;
+				}
+				
+			    public String end_date;
+
+				public String getEnd_date () {
+					return this.end_date;
+				}
+				
+			    public String days_missed;
+
+				public String getDays_missed () {
+					return this.days_missed;
+				}
+				
+			    public Integer games_missed;
+
+				public Integer getGames_missed () {
+					return this.games_missed;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			unmarshaller.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+    
+    private void writeString(String str, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+    }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+					this.days_missed = readString(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+    
+    public void readData(org.jboss.marshalling.Unmarshaller dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+					this.days_missed = readString(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// String
+				
+						writeString(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+    
+    public void writeData(org.jboss.marshalling.Marshaller dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// String
+				
+						writeString(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",injury_reason="+injury_reason);
+		sb.append(",from_date="+from_date);
+		sb.append(",end_date="+end_date);
+		sb.append(",days_missed="+days_missed);
+		sb.append(",games_missed="+String.valueOf(games_missed));
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row1Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+
+public static class after_tMongoDBInput_1Struct implements routines.system.IPersistableRow<after_tMongoDBInput_1Struct> {
+    final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
+    static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
+
+	
+			    public String player_id;
+
+				public String getPlayer_id () {
+					return this.player_id;
+				}
+				
+			    public String season_name;
+
+				public String getSeason_name () {
+					return this.season_name;
+				}
+				
+			    public String injury_reason;
+
+				public String getInjury_reason () {
+					return this.injury_reason;
+				}
+				
+			    public String from_date;
+
+				public String getFrom_date () {
+					return this.from_date;
+				}
+				
+			    public String end_date;
+
+				public String getEnd_date () {
+					return this.end_date;
+				}
+				
+			    public String days_missed;
+
+				public String getDays_missed () {
+					return this.days_missed;
+				}
+				
+			    public Integer games_missed;
+
+				public Integer getGames_missed () {
+					return this.games_missed;
+				}
+				
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			unmarshaller.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+    
+    private void writeString(String str, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+    }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
+
+    public void readData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+					this.days_missed = readString(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+    
+    public void readData(org.jboss.marshalling.Unmarshaller dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+					this.season_name = readString(dis);
+					
+					this.injury_reason = readString(dis);
+					
+					this.from_date = readString(dis);
+					
+					this.end_date = readString(dis);
+					
+					this.days_missed = readString(dis);
+					
+						this.games_missed = readInteger(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// String
+				
+						writeString(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+    
+    public void writeData(org.jboss.marshalling.Marshaller dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+					// String
+				
+						writeString(this.season_name,dos);
+					
+					// String
+				
+						writeString(this.injury_reason,dos);
+					
+					// String
+				
+						writeString(this.from_date,dos);
+					
+					// String
+				
+						writeString(this.end_date,dos);
+					
+					// String
+				
+						writeString(this.days_missed,dos);
+					
+					// Integer
+				
+						writeInteger(this.games_missed,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",injury_reason="+injury_reason);
+		sb.append(",from_date="+from_date);
+		sb.append(",end_date="+end_date);
+		sb.append(",days_missed="+days_missed);
+		sb.append(",games_missed="+String.valueOf(games_missed));
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(after_tMongoDBInput_1Struct other) {
+
+		int returnValue = -1;
+		
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
 public void tMongoDBInput_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
 	globalMap.put("tMongoDBInput_1_SUBPROCESS_STATE", 0);
 
  final boolean execStat = this.execStat;
+		String currentVirtualComponent = null;
 	
 		String iterateId = "";
 	
@@ -1949,226 +2367,278 @@ public void tMongoDBInput_1Process(final java.util.Map<String, Object> globalMap
 				globalResumeTicket = true;
 
 
+		tMongoDBInput_2Process(globalMap);
+		tMongoDBInput_3Process(globalMap);
 
-		row2Struct row2 = new row2Struct();
-coucouStruct coucou = new coucouStruct();
-
+		row1Struct row1 = new row1Struct();
+row2Struct row2 = new row2Struct();
+sortieeStruct sortiee = new sortieeStruct();
 
 
 
 
 	
 	/**
-	 * [tMongoDBOutput_1 begin ] start
+	 * [tAggregateRow_1_AGGOUT begin ] start
 	 */
 
 	
 
 	
 		
-		ok_Hash.put("tMongoDBOutput_1", false);
-		start_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
+		ok_Hash.put("tAggregateRow_1_AGGOUT", false);
+		start_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
 		
 	
-	currentComponent="tMongoDBOutput_1";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 					if(execStat) {
-						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"coucou");
+						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"row1");
 					}
 				
-		int tos_count_tMongoDBOutput_1 = 0;
+		int tos_count_tAggregateRow_1_AGGOUT = 0;
 		
 
-	
+// ------------ Seems it is not used
 
-        java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(java.util.logging.Level.SEVERE);
+java.util.Map hashAggreg_tAggregateRow_1 = new java.util.HashMap(); 
 
-final String applicationName_tMongoDBOutput_1 = "Talend";
+// ------------
 
-    int nb_line_tMongoDBOutput_1 = 0;
+	class UtilClass_tAggregateRow_1 { // G_OutBegin_AggR_144
 
-			class DBObjectUtil_tMongoDBOutput_1 {
-				
-				private org.bson.Document object = null;
-				//Put value to embedded document
-				//If have no embedded document, put the value to root document
-				public void put(String parentNode, String curentName, Object value) {
-					if (parentNode == null || "".equals(parentNode)) {
-						object.put(curentName, value);
-					} else {
-						String objNames[]= parentNode.split("\\.");
-						org.bson.Document lastNode = getParentNode(parentNode, objNames.length-1);
-						lastNode.put(curentName, value);
-						org.bson.Document parenttNode = null;
-						for (int i = objNames.length - 1; i >=0; i--) {
-							parenttNode=getParentNode(parentNode, i-1);
-							parenttNode.put(objNames[i], lastNode);
-							lastNode=clone(parenttNode);
-						}
-						object=lastNode;
-					}
-				}
-				
-				private org.bson.Document clone(org.bson.Document source){
-					org.bson.Document to = new org.bson.Document();
-					for(java.util.Map.Entry<String,Object> cur:source.entrySet()) {
-						to.append(cur.getKey(), cur.getValue());
-					}
-					return to;
-				}
-				
-				//Get node(embedded document) by path configuration
-				public org.bson.Document getParentNode(String parentNode, int index) {
-					org.bson.Document document = object;
-					if (parentNode == null || "".equals(parentNode)) {
-						return object;
-					} else {
-						String objNames[] = parentNode.split("\\.");
-						for (int i = 0; i <= index; i++) {
-							document = (org.bson.Document) document
-									.get(objNames[i]);
-							if (document == null) {
-								document = new org.bson.Document();
-								return document;
-							}
-							if (i == index) {
-								break;
-							}
-						}
-						return document;
-					}
-				}
-				
-				public void putkeyNode(String parentNode, String curentName, Object value){
-					if (parentNode == null || "".equals(parentNode) || ".".equals(parentNode)) {
-						put(parentNode, curentName, value);
-					}else{
-						put("", parentNode+"."+curentName, value);
-					}
-				}
-			
-				public org.bson.Document getObject() {
-					return this.object;
-				}
-				
-				public void setObject(org.bson.Document object){
-					this.object=object;
-				}
-			
+		public double sd(Double[] data) {
+	        final int n = data.length;
+        	if (n < 2) {
+	            return Double.NaN;
+        	}
+        	double d1 = 0d;
+        	double d2 =0d;
+	        
+	        for (int i = 0; i < data.length; i++) {
+            	d1 += (data[i]*data[i]);
+            	d2 += data[i];
+        	}
+        
+	        return Math.sqrt((n*d1 - d2*d2)/n/(n-1));
+	    }
+	    
+		public void checkedIADD(byte a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    byte r = (byte) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'short/Short'", "'byte/Byte'"));
+		    }
+		}
+		
+		public void checkedIADD(short a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    short r = (short) (a + b);
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'int/Integer'", "'short/Short'"));
+		    }
+		}
+		
+		public void checkedIADD(int a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    int r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'long/Long'", "'int/Integer'"));
+		    }
+		}
+		
+		public void checkedIADD(long a, long b, boolean checkTypeOverFlow, boolean checkUlp) {
+		    long r = a + b;
+		    if (checkTypeOverFlow && ((a ^ r) & (b ^ r)) < 0) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'long/Long'"));
+		    }
+		}
+		
+		public void checkedIADD(float a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    float minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+			    }
 			}
-            DBObjectUtil_tMongoDBOutput_1 updateObjectUtil_tMongoDBOutput_1=new DBObjectUtil_tMongoDBOutput_1();
-            DBObjectUtil_tMongoDBOutput_1 queryObjectUtil_tMongoDBOutput_1=new DBObjectUtil_tMongoDBOutput_1();
-            java.util.Map<String, String> pathMap_tMongoDBOutput_1=new java.util.HashMap<>();
-
-                pathMap_tMongoDBOutput_1.put("shirt_name","");
-                pathMap_tMongoDBOutput_1.put("full_name","");
-                pathMap_tMongoDBOutput_1.put("nationality","");
-                pathMap_tMongoDBOutput_1.put("weight_kgs","");
-                pathMap_tMongoDBOutput_1.put("positions","");
-                pathMap_tMongoDBOutput_1.put("height_cm","");
-                pathMap_tMongoDBOutput_1.put("preferred_foot","");
-                pathMap_tMongoDBOutput_1.put("body_type","");
-
-
-
-
-
-        com.mongodb.MongoClient mongo_tMongoDBOutput_1=null;
-        com.mongodb.client.MongoDatabase db_tMongoDBOutput_1=null;
-
-            // Empty client options
-            com.mongodb.MongoClientOptions clientOptions_tMongoDBOutput_1 = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_tMongoDBOutput_1).build();
-            // Empty client credentials list
-            java.util.List<com.mongodb.MongoCredential> mongoCredentialList_tMongoDBOutput_1 = new java.util.ArrayList<com.mongodb.MongoCredential>();
-
-                com.mongodb.ServerAddress serverAddress_tMongoDBOutput_1 = new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue());
-                mongo_tMongoDBOutput_1 = new com.mongodb.MongoClient(serverAddress_tMongoDBOutput_1, mongoCredentialList_tMongoDBOutput_1, clientOptions_tMongoDBOutput_1);
-
-
-            resourceMap.put("mongo_tMongoDBOutput_1", mongo_tMongoDBOutput_1);
-                db_tMongoDBOutput_1 = mongo_tMongoDBOutput_1.getDatabase(context.mongo_database);
-
-
-
-
-        db_tMongoDBOutput_1.getCollection(context.mongo_collection_silver).drop();
-    com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBOutput_1 = db_tMongoDBOutput_1.getCollection(context.mongo_collection_silver);
-
-
- 
-
-
-
-/**
- * [tMongoDBOutput_1 begin ] stop
- */
-
-
-
-	
-	/**
-	 * [tMap_1 begin ] start
-	 */
-
-	
-
-	
+			
+		    if (checkTypeOverFlow && ((double) a + (double) b > (double) Float.MAX_VALUE) || ((double) a + (double) b < (double) -Float.MAX_VALUE)) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'double' or 'BigDecimal'", "'float/Float'"));
+		    }
+		}
 		
-		ok_Hash.put("tMap_1", false);
-		start_Hash.put("tMap_1", System.currentTimeMillis());
+		public void checkedIADD(double a, double b, boolean checkTypeOverFlow, boolean checkUlp) {
 		
-	
-	currentComponent="tMap_1";
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, byte b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, short b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, int b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		public void checkedIADD(double a, float b, boolean checkTypeOverFlow, boolean checkUlp) {
+		
+			if(checkUlp) {
+			    double minAddedValue = Math.ulp(a);
+			    if (minAddedValue > Math.abs(b)) {
+			        throw new RuntimeException(buildPrecisionMessage(String.valueOf(a), String.valueOf(a), "'BigDecimal'", "'double/Double'"));
+			    }
+			}
+		
+		    if (checkTypeOverFlow && (a + b > (double) Double.MAX_VALUE) || (a + b < -Double.MAX_VALUE )) {
+		        throw new RuntimeException(buildOverflowMessage(String.valueOf(a), String.valueOf(b), "'BigDecimal'", "'double/Double'"));
+		    }
+		}
+		
+		private String buildOverflowMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "Type overflow when adding " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+		
+		private String buildPrecisionMessage(String a, String b, String advicedTypes, String originalType) {
+		    return "The double precision is unsufficient to add the value " + b + " to " + a
+		    + ", to resolve this problem, increase the precision by using "+ advicedTypes +" type in place of "+ originalType +".";
+		}
+
+	} // G_OutBegin_AggR_144
+
+	UtilClass_tAggregateRow_1 utilClass_tAggregateRow_1 = new UtilClass_tAggregateRow_1();
 
 	
-					if(execStat) {
-						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"row2");
-					}
+	
+		class AggCountDistinctValuesStruct_player_id_tAggregateRow_1 { // G_OutBegin_AggR_1100
+	
+			private static final int DEFAULT_HASHCODE = 1;
+		    private static final int PRIME = 31;
+		    private int hashCode = DEFAULT_HASHCODE;
+		    public boolean hashCodeDirty = true;
+	
+	        
+    					String player_id;        
+	        
+		    @Override
+			public int hashCode() {
+				if (this.hashCodeDirty) {
+					final int prime = PRIME;
+					int result = DEFAULT_HASHCODE;
+			
+								result = prime * result + ((this.player_id == null) ? 0 : this.player_id.hashCode());
+								
+		    		this.hashCode = result;
+		    		this.hashCodeDirty = false;		
+				}
+				return this.hashCode;
+			}
+			
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj) return true;
+				if (obj == null) return false;
+				if (getClass() != obj.getClass()) return false;
+				final AggCountDistinctValuesStruct_player_id_tAggregateRow_1 other = (AggCountDistinctValuesStruct_player_id_tAggregateRow_1) obj;
 				
-		int tos_count_tMap_1 = 0;
+									if (this.player_id == null) {
+										if (other.player_id != null) 
+											return false;
+									} else if (!this.player_id.equals(other.player_id)) 
+										return false;
+								
+				
+				return true;
+			}
+	  
+	        
+		} // G_OutBegin_AggR_1100
+
+	
+
+	class AggOperationStruct_tAggregateRow_1 { // G_OutBegin_AggR_100
+
+		private static final int DEFAULT_HASHCODE = 1;
+	    private static final int PRIME = 31;
+	    private int hashCode = DEFAULT_HASHCODE;
+	    public boolean hashCodeDirty = true;
+
+    				String player_id;java.util.Set<AggCountDistinctValuesStruct_player_id_tAggregateRow_1> distinctValues_player_id = new java.util.HashSet<AggCountDistinctValuesStruct_player_id_tAggregateRow_1>();
+           			
+        
+	    @Override
+		public int hashCode() {
+			if (this.hashCodeDirty) {
+				final int prime = PRIME;
+				int result = DEFAULT_HASHCODE;
 		
-
-
-
-
-// ###############################
-// # Lookup's keys initialization
-// ###############################        
-
-// ###############################
-// # Vars initialization
-class  Var__tMap_1__Struct  {
-}
-Var__tMap_1__Struct Var__tMap_1 = new Var__tMap_1__Struct();
-// ###############################
-
-// ###############################
-// # Outputs initialization
-coucouStruct coucou_tmp = new coucouStruct();
-// ###############################
-
+							result = prime * result + ((this.player_id == null) ? 0 : this.player_id.hashCode());
+							
+	    		this.hashCode = result;
+	    		this.hashCodeDirty = false;		
+			}
+			return this.hashCode;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (obj == null) return false;
+			if (getClass() != obj.getClass()) return false;
+			final AggOperationStruct_tAggregateRow_1 other = (AggOperationStruct_tAggregateRow_1) obj;
+			
+							if (this.player_id == null) {
+								if (other.player_id != null) 
+									return false;
+							} else if (!this.player_id.equals(other.player_id)) 
+								return false;
+						
+			
+			return true;
+		}
+  
         
-        
+	} // G_OutBegin_AggR_100
 
-
-
-        
-
-
-
-
-
-
-
-
+	System.err.println(
+	
+		"Warning:the operation 'distinct' for the output column 'player_id' can't be processed because of incompatible input and/or output types"
+	);
+	
+	AggOperationStruct_tAggregateRow_1 operation_result_tAggregateRow_1 = null;
+	AggOperationStruct_tAggregateRow_1 operation_finder_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+	java.util.Map<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1> hash_tAggregateRow_1 = new java.util.HashMap<AggOperationStruct_tAggregateRow_1,AggOperationStruct_tAggregateRow_1>();
+	
 
  
 
 
 
 /**
- * [tMap_1 begin ] stop
+ * [tAggregateRow_1_AGGOUT begin ] stop
  */
 
 
@@ -2201,28 +2671,32 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 	
 
 
+    // Declarations
+    com.mongodb.client.MongoClient mongo_tMongoDBInput_1=null;
+    com.mongodb.client.MongoDatabase db_tMongoDBInput_1=null;
 
-        com.mongodb.MongoClient mongo_tMongoDBInput_1=null;
-        com.mongodb.client.MongoDatabase db_tMongoDBInput_1=null;
+        // Internal declarations
+        List<com.mongodb.ServerAddress> addrs_tMongoDBInput_1 = new java.util.ArrayList<>();
+        com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_tMongoDBInput_1 = com.mongodb.MongoClientSettings.builder().applicationName(applicationName_tMongoDBInput_1);
+        com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_tMongoDBInput_1 = com.mongodb.connection.ClusterSettings.builder();
+        com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_tMongoDBInput_1 = com.mongodb.connection.SslSettings.builder();
 
-            // Empty client options
-            com.mongodb.MongoClientOptions clientOptions_tMongoDBInput_1 = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_tMongoDBInput_1).build();
-            // Empty client credentials list
-            java.util.List<com.mongodb.MongoCredential> mongoCredentialList_tMongoDBInput_1 = new java.util.ArrayList<com.mongodb.MongoCredential>();
+                // SSL
 
-                com.mongodb.ServerAddress serverAddress_tMongoDBInput_1 = new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue());
-                mongo_tMongoDBInput_1 = new com.mongodb.MongoClient(serverAddress_tMongoDBInput_1, mongoCredentialList_tMongoDBInput_1, clientOptions_tMongoDBInput_1);
+                // Client Credentials
+                    addrs_tMongoDBInput_1.add(new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue()));
+                clusterSettingsBuilder_tMongoDBInput_1.hosts(addrs_tMongoDBInput_1);
 
-
-            resourceMap.put("mongo_tMongoDBInput_1", mongo_tMongoDBInput_1);
-                db_tMongoDBInput_1 = mongo_tMongoDBInput_1.getDatabase(context.mongo_database);
-
+                clientSettingsBuilder_tMongoDBInput_1.applyToClusterSettings(builder -> builder.applySettings(clusterSettingsBuilder_tMongoDBInput_1.build()));
 
 
+
+        mongo_tMongoDBInput_1 = com.mongodb.client.MongoClients.create(clientSettingsBuilder_tMongoDBInput_1.build());
+        db_tMongoDBInput_1 = mongo_tMongoDBInput_1.getDatabase(context.mongo_database);
 
 
 				
-					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_1 = db_tMongoDBInput_1.getCollection(context.mongo_collection_bronze);
+					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_1 = db_tMongoDBInput_1.getCollection(context.mongo_player_injuries);
 				
 				
 				
@@ -2298,59 +2772,34 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 							}
 						}
 						
+						    if(value instanceof org.bson.Document){
+						        value = ((org.bson.Document)value).toJson();
+						    }else if (value instanceof java.util.List){
+
+						    java.util.List list = new java.util.ArrayList();
+						    ((java.util.List)value).stream().forEach(e -> {
+						    if(e instanceof org.bson.Document){
+						        list.add(((org.bson.Document)e).toJson());
+						    }else{
+						        list.add(e);
+						    }
+						    });
+						    value = list;
+						    }
+
+						
 						return value;
 					}
 				}
 				DBObjectInputUtil_tMongoDBInput_1 dbObjectInputUtil_tMongoDBInput_1=new DBObjectInputUtil_tMongoDBInput_1();
 				java.util.Map<String, String> pathMap_tMongoDBInput_1=new java.util.HashMap<>();
-				pathMap_tMongoDBInput_1.put("name","");
-				pathMap_tMongoDBInput_1.put("full_name","");
-				pathMap_tMongoDBInput_1.put("birth_date","");
-				pathMap_tMongoDBInput_1.put("age","");
-				pathMap_tMongoDBInput_1.put("height_cm","");
-				pathMap_tMongoDBInput_1.put("weight_kgs","");
-				pathMap_tMongoDBInput_1.put("positions","");
-				pathMap_tMongoDBInput_1.put("nationality","");
-				pathMap_tMongoDBInput_1.put("overall_rating","");
-				pathMap_tMongoDBInput_1.put("potential","");
-				pathMap_tMongoDBInput_1.put("value_euro","");
-				pathMap_tMongoDBInput_1.put("wage_euro","");
-				pathMap_tMongoDBInput_1.put("preferred_foot","");
-				pathMap_tMongoDBInput_1.put("international_reputation","");
-				pathMap_tMongoDBInput_1.put("weak_foot","");
-				pathMap_tMongoDBInput_1.put("skill_moves","");
-				pathMap_tMongoDBInput_1.put("body_type","");
-				pathMap_tMongoDBInput_1.put("release_clause_euro","");
-				pathMap_tMongoDBInput_1.put("national_team","");
-				pathMap_tMongoDBInput_1.put("national_rating","");
-				pathMap_tMongoDBInput_1.put("national_team_position","");
-				pathMap_tMongoDBInput_1.put("national_jersey_number","");
-				pathMap_tMongoDBInput_1.put("crossing","");
-				pathMap_tMongoDBInput_1.put("finishing","");
-				pathMap_tMongoDBInput_1.put("heading_accuracy","");
-				pathMap_tMongoDBInput_1.put("short_passing","");
-				pathMap_tMongoDBInput_1.put("volleys","");
-				pathMap_tMongoDBInput_1.put("dribbling","");
-				pathMap_tMongoDBInput_1.put("curve","");
-				pathMap_tMongoDBInput_1.put("freekick_accuracy","");
-				pathMap_tMongoDBInput_1.put("long_passing","");
-				pathMap_tMongoDBInput_1.put("ball_control","");
-				pathMap_tMongoDBInput_1.put("acceleration","");
-				pathMap_tMongoDBInput_1.put("sprint_speed","");
-				pathMap_tMongoDBInput_1.put("agility","");
-				pathMap_tMongoDBInput_1.put("reactions","");
-				pathMap_tMongoDBInput_1.put("balance","");
-				pathMap_tMongoDBInput_1.put("shot_power","");
-				pathMap_tMongoDBInput_1.put("jumping","");
-				pathMap_tMongoDBInput_1.put("stamina","");
-				pathMap_tMongoDBInput_1.put("strength","");
-				pathMap_tMongoDBInput_1.put("long_shots","");
-				pathMap_tMongoDBInput_1.put("aggression","");
-				pathMap_tMongoDBInput_1.put("interceptions","");
-				pathMap_tMongoDBInput_1.put("positioning","");
-				pathMap_tMongoDBInput_1.put("vision","");
-				pathMap_tMongoDBInput_1.put("penalties","");
-				pathMap_tMongoDBInput_1.put("composure","");
+				pathMap_tMongoDBInput_1.put("player_id","");
+				pathMap_tMongoDBInput_1.put("season_name","");
+				pathMap_tMongoDBInput_1.put("injury_reason","");
+				pathMap_tMongoDBInput_1.put("from_date","");
+				pathMap_tMongoDBInput_1.put("end_date","");
+				pathMap_tMongoDBInput_1.put("days_missed","");
+				pathMap_tMongoDBInput_1.put("games_missed","");
 
 						
 					com.mongodb.client.MongoCursor<org.bson.Document> cursor_tMongoDBInput_1 = findIterable_tMongoDBInput_1.iterator();
@@ -2359,198 +2808,40 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 				org.bson.Document o_tMongoDBInput_1 = cursor_tMongoDBInput_1.next();
 				nb_line_tMongoDBInput_1++;
 				Object valueObj_tMongoDBInput_1=null;
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("name"),"name",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("player_id"),"player_id",o_tMongoDBInput_1);
 					
-				row2.name = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.player_id = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("full_name"),"full_name",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("season_name"),"season_name",o_tMongoDBInput_1);
 					
-				row2.full_name = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.season_name = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("birth_date"),"birth_date",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("injury_reason"),"injury_reason",o_tMongoDBInput_1);
 					
-				row2.birth_date = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.injury_reason = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("age"),"age",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("from_date"),"from_date",o_tMongoDBInput_1);
 					
-				row2.age = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.from_date = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("height_cm"),"height_cm",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("end_date"),"end_date",o_tMongoDBInput_1);
 					
-				row2.height_cm = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.end_date = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("weight_kgs"),"weight_kgs",o_tMongoDBInput_1);
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("days_missed"),"days_missed",o_tMongoDBInput_1);
 					
-				row2.weight_kgs = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
+				row1.days_missed = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
 				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("positions"),"positions",o_tMongoDBInput_1);
-					
-				row2.positions = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("nationality"),"nationality",o_tMongoDBInput_1);
-					
-				row2.nationality = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("overall_rating"),"overall_rating",o_tMongoDBInput_1);
-					
-				row2.overall_rating = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("potential"),"potential",o_tMongoDBInput_1);
-					
-				row2.potential = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("value_euro"),"value_euro",o_tMongoDBInput_1);
-					
-				row2.value_euro = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("wage_euro"),"wage_euro",o_tMongoDBInput_1);
-					
-				row2.wage_euro = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("preferred_foot"),"preferred_foot",o_tMongoDBInput_1);
-					
-				row2.preferred_foot = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("international_reputation"),"international_reputation",o_tMongoDBInput_1);
-					
-				row2.international_reputation = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("weak_foot"),"weak_foot",o_tMongoDBInput_1);
-					
-				row2.weak_foot = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("skill_moves"),"skill_moves",o_tMongoDBInput_1);
-					
-				row2.skill_moves = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("body_type"),"body_type",o_tMongoDBInput_1);
-					
-				row2.body_type = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("release_clause_euro"),"release_clause_euro",o_tMongoDBInput_1);
-					
-				row2.release_clause_euro = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("national_team"),"national_team",o_tMongoDBInput_1);
-					
-				row2.national_team = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("national_rating"),"national_rating",o_tMongoDBInput_1);
-					
-				row2.national_rating = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("national_team_position"),"national_team_position",o_tMongoDBInput_1);
-					
-				row2.national_team_position = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("national_jersey_number"),"national_jersey_number",o_tMongoDBInput_1);
-					
-				row2.national_jersey_number = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("crossing"),"crossing",o_tMongoDBInput_1);
-					
-				row2.crossing = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("finishing"),"finishing",o_tMongoDBInput_1);
-					
-				row2.finishing = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("heading_accuracy"),"heading_accuracy",o_tMongoDBInput_1);
-					
-				row2.heading_accuracy = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("short_passing"),"short_passing",o_tMongoDBInput_1);
-					
-				row2.short_passing = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("volleys"),"volleys",o_tMongoDBInput_1);
-					
-				row2.volleys = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("dribbling"),"dribbling",o_tMongoDBInput_1);
-					
-				row2.dribbling = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("curve"),"curve",o_tMongoDBInput_1);
-					
-				row2.curve = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("freekick_accuracy"),"freekick_accuracy",o_tMongoDBInput_1);
-					
-				row2.freekick_accuracy = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("long_passing"),"long_passing",o_tMongoDBInput_1);
-					
-				row2.long_passing = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("ball_control"),"ball_control",o_tMongoDBInput_1);
-					
-				row2.ball_control = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("acceleration"),"acceleration",o_tMongoDBInput_1);
-					
-				row2.acceleration = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("sprint_speed"),"sprint_speed",o_tMongoDBInput_1);
-					
-				row2.sprint_speed = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("agility"),"agility",o_tMongoDBInput_1);
-					
-				row2.agility = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("reactions"),"reactions",o_tMongoDBInput_1);
-					
-				row2.reactions = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("balance"),"balance",o_tMongoDBInput_1);
-					
-				row2.balance = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("shot_power"),"shot_power",o_tMongoDBInput_1);
-					
-				row2.shot_power = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("jumping"),"jumping",o_tMongoDBInput_1);
-					
-				row2.jumping = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("stamina"),"stamina",o_tMongoDBInput_1);
-					
-				row2.stamina = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("strength"),"strength",o_tMongoDBInput_1);
-					
-				row2.strength = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("long_shots"),"long_shots",o_tMongoDBInput_1);
-					
-				row2.long_shots = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("aggression"),"aggression",o_tMongoDBInput_1);
-					
-				row2.aggression = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("interceptions"),"interceptions",o_tMongoDBInput_1);
-					
-				row2.interceptions = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("positioning"),"positioning",o_tMongoDBInput_1);
-					
-				row2.positioning = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("vision"),"vision",o_tMongoDBInput_1);
-					
-				row2.vision = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("penalties"),"penalties",o_tMongoDBInput_1);
-					
-				row2.penalties = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
-                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("composure"),"composure",o_tMongoDBInput_1);
-					
-				row2.composure = valueObj_tMongoDBInput_1==null ? null : valueObj_tMongoDBInput_1.toString();
-				
+                    valueObj_tMongoDBInput_1=dbObjectInputUtil_tMongoDBInput_1.getValue(pathMap_tMongoDBInput_1.get("games_missed"),"games_missed",o_tMongoDBInput_1);
+				if(valueObj_tMongoDBInput_1!=null && valueObj_tMongoDBInput_1.toString().length() > 0) {
+                            if (valueObj_tMongoDBInput_1.getClass().equals(Double.class)) {
+                                row1.games_missed = ParserUtils.parseTo_Double(valueObj_tMongoDBInput_1.toString()).intValue();
+                            } else {
+                                row1.games_missed = ParserUtils.parseTo_Integer(valueObj_tMongoDBInput_1.toString());
+                            }
+				}else{
+					row1.games_missed = null;
+				}
 
 
  
@@ -2604,91 +2895,73 @@ final String applicationName_tMongoDBInput_1 = "Talend";
 
 	
 	/**
-	 * [tMap_1 main ] start
+	 * [tAggregateRow_1_AGGOUT main ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMap_1";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 					if(execStat){
 						runStat.updateStatOnConnection(iterateId,1,1
 						
-							,"row2"
+							,"row1"
 						
 						);
 					}
 					
+	
+operation_finder_tAggregateRow_1.player_id = row1.player_id;
+			
 
+	operation_finder_tAggregateRow_1.hashCodeDirty = true;
+	
+	operation_result_tAggregateRow_1 = hash_tAggregateRow_1.get(operation_finder_tAggregateRow_1);
+
+	
+
+	if(operation_result_tAggregateRow_1 == null) { // G_OutMain_AggR_001
+
+		operation_result_tAggregateRow_1 = new AggOperationStruct_tAggregateRow_1();
+
+		operation_result_tAggregateRow_1.player_id = operation_finder_tAggregateRow_1.player_id;
+				
 		
 		
-		boolean hasCasePrimitiveKeyWithNull_tMap_1 = false;
-		
 
-        // ###############################
-        // # Input tables (lookups)
-		  boolean rejectedInnerJoin_tMap_1 = false;
-		  boolean mainRowRejected_tMap_1 = false;
-            				    								  
-		// ###############################
-        { // start of Var scope
-        
-	        // ###############################
-        	// # Vars tables
-        
-Var__tMap_1__Struct Var = Var__tMap_1;// ###############################
-        // ###############################
-        // # Output tables
-
-coucou = null;
+		hash_tAggregateRow_1.put(operation_result_tAggregateRow_1, operation_result_tAggregateRow_1);
+	
+	} // G_OutMain_AggR_001
 
 
-// # Output table : 'coucou'
-coucou_tmp.shirt_name = row2.name ;
-coucou_tmp.full_name = row2.full_name ;
-coucou_tmp.nationality = row2.nationality ;
-coucou_tmp.weight_kgs = Float.parseFloat(row2.weight_kgs) ;
-coucou_tmp.positions = row2.positions ;
-coucou_tmp.height_cm = Float.parseFloat(row2.height_cm) ;
-coucou_tmp.preferred_foot = row2.preferred_foot ;
-coucou_tmp.body_type = row2.body_type ;
-coucou = coucou_tmp;
-// ###############################
-
-} // end of Var scope
-
-rejectedInnerJoin_tMap_1 = false;
-
-
-
-
-
-
-
-
+	
 
 
  
 
 
-	tos_count_tMap_1++;
+	tos_count_tAggregateRow_1_AGGOUT++;
 
 /**
- * [tMap_1 main ] stop
+ * [tAggregateRow_1_AGGOUT main ] stop
  */
 	
 	/**
-	 * [tMap_1 process_data_begin ] start
+	 * [tAggregateRow_1_AGGOUT process_data_begin ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMap_1";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 
@@ -2697,79 +2970,20 @@ rejectedInnerJoin_tMap_1 = false;
 
 
 /**
- * [tMap_1 process_data_begin ] stop
+ * [tAggregateRow_1_AGGOUT process_data_begin ] stop
  */
-// Start of branch "coucou"
-if(coucou != null) { 
-
-
-
 	
 	/**
-	 * [tMongoDBOutput_1 main ] start
+	 * [tAggregateRow_1_AGGOUT process_data_end ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMongoDBOutput_1";
-
+		currentVirtualComponent = "tAggregateRow_1";
 	
-					if(execStat){
-						runStat.updateStatOnConnection(iterateId,1,1
-						
-							,"coucou"
-						
-						);
-					}
-					
-
-	
-try{
-				updateObjectUtil_tMongoDBOutput_1.setObject(new org.bson.Document());
-				
-				
-
-				
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("shirt_name"),"shirt_name", coucou.shirt_name);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("full_name"),"full_name", coucou.full_name);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("nationality"),"nationality", coucou.nationality);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("weight_kgs"),"weight_kgs", coucou.weight_kgs);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("positions"),"positions", coucou.positions);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("height_cm"),"height_cm", coucou.height_cm);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("preferred_foot"),"preferred_foot", coucou.preferred_foot);
-                                        updateObjectUtil_tMongoDBOutput_1.put(pathMap_tMongoDBOutput_1.get("body_type"),"body_type", coucou.body_type);
-				org.bson.Document updateObj_tMongoDBOutput_1 = updateObjectUtil_tMongoDBOutput_1.getObject();
-				
-						coll_tMongoDBOutput_1.insertOne(updateObj_tMongoDBOutput_1);
-					
-				} catch (Exception e_tMongoDBOutput_1) {
-				
-    					
-    						System.err.println(e_tMongoDBOutput_1.getMessage());
-    					
-    			}
-				nb_line_tMongoDBOutput_1 ++;
-				
- 
-
-
-	tos_count_tMongoDBOutput_1++;
-
-/**
- * [tMongoDBOutput_1 main ] stop
- */
-	
-	/**
-	 * [tMongoDBOutput_1 process_data_begin ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMongoDBOutput_1";
+	currentComponent="tAggregateRow_1_AGGOUT";
 
 	
 
@@ -2778,53 +2992,7 @@ try{
 
 
 /**
- * [tMongoDBOutput_1 process_data_begin ] stop
- */
-	
-	/**
-	 * [tMongoDBOutput_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMongoDBOutput_1";
-
-	
-
- 
-
-
-
-/**
- * [tMongoDBOutput_1 process_data_end ] stop
- */
-
-} // End of branch "coucou"
-
-
-
-
-	
-	/**
-	 * [tMap_1 process_data_end ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMap_1";
-
-	
-
- 
-
-
-
-/**
- * [tMap_1 process_data_end ] stop
+ * [tAggregateRow_1_AGGOUT process_data_end ] stop
  */
 
 
@@ -2863,7 +3031,7 @@ try{
 	
 
             }
-                    if(mongo_tMongoDBInput_1 != null ) {
+                    if(mongo_tMongoDBInput_1 != null) {
                         mongo_tMongoDBInput_1.close();
                     }
     globalMap.put("tMongoDBInput_1_NB_LINE", nb_line_tMongoDBInput_1);
@@ -2881,20 +3049,864 @@ end_Hash.put("tMongoDBInput_1", System.currentTimeMillis());
 
 	
 	/**
-	 * [tMap_1 end ] start
+	 * [tAggregateRow_1_AGGOUT end ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMap_1";
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+				if(execStat){
+			  		runStat.updateStat(resourceMap,iterateId,2,0,"row1");
+			  	}
+			  	
+ 
+
+ok_Hash.put("tAggregateRow_1_AGGOUT", true);
+end_Hash.put("tAggregateRow_1_AGGOUT", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT end ] stop
+ */
+
+
+
+	
+	/**
+	 * [tLogRow_1 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tLogRow_1", false);
+		start_Hash.put("tLogRow_1", System.currentTimeMillis());
+		
+	
+	currentComponent="tLogRow_1";
+
+	
+					if(execStat) {
+						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"sortiee");
+					}
+				
+		int tos_count_tLogRow_1 = 0;
+		
+
+	///////////////////////
+	
+		final String OUTPUT_FIELD_SEPARATOR_tLogRow_1 = "|";
+		java.io.PrintStream consoleOut_tLogRow_1 = null;	
+
+ 		StringBuilder strBuffer_tLogRow_1 = null;
+		int nb_line_tLogRow_1 = 0;
+///////////////////////    			
+
+
+
+ 
+
+
+
+/**
+ * [tLogRow_1 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMap_2 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tMap_2", false);
+		start_Hash.put("tMap_2", System.currentTimeMillis());
+		
+	
+	currentComponent="tMap_2";
+
+	
+					if(execStat) {
+						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"row2");
+					}
+				
+		int tos_count_tMap_2 = 0;
+		
+
+
+
+
+// ###############################
+// # Lookup's keys initialization
+	
+		org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row3Struct> tHash_Lookup_row3 = (org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row3Struct>) 
+				((org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row3Struct>) 
+					globalMap.get( "tHash_Lookup_row3" ))
+					;					
+					
+	
+
+row3Struct row3HashKey = new row3Struct();
+row3Struct row3Default = new row3Struct();
+	
+		org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row4Struct> tHash_Lookup_row4 = (org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row4Struct>) 
+				((org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row4Struct>) 
+					globalMap.get( "tHash_Lookup_row4" ))
+					;					
+					
+	
+
+row4Struct row4HashKey = new row4Struct();
+row4Struct row4Default = new row4Struct();
+// ###############################        
+
+// ###############################
+// # Vars initialization
+class  Var__tMap_2__Struct  {
+}
+Var__tMap_2__Struct Var__tMap_2 = new Var__tMap_2__Struct();
+// ###############################
+
+// ###############################
+// # Outputs initialization
+sortieeStruct sortiee_tmp = new sortieeStruct();
+// ###############################
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+/**
+ * [tMap_2 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tAggregateRow_1_AGGIN", false);
+		start_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
+		
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+		int tos_count_tAggregateRow_1_AGGIN = 0;
+		
+
+java.util.Collection<AggOperationStruct_tAggregateRow_1> values_tAggregateRow_1 = hash_tAggregateRow_1.values();
+
+globalMap.put("tAggregateRow_1_NB_LINE", values_tAggregateRow_1.size());
+
+for(AggOperationStruct_tAggregateRow_1 aggregated_row_tAggregateRow_1 : values_tAggregateRow_1) { // G_AggR_600
+
+
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN begin ] stop
+ */
+	
+	/**
+	 * [tAggregateRow_1_AGGIN main ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+            				    row2.player_id = aggregated_row_tAggregateRow_1.player_id;
+            				    
+
+ 
+
+
+	tos_count_tAggregateRow_1_AGGIN++;
+
+/**
+ * [tAggregateRow_1_AGGIN main ] stop
+ */
+	
+	/**
+	 * [tAggregateRow_1_AGGIN process_data_begin ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN process_data_begin ] stop
+ */
+
+	
+	/**
+	 * [tMap_2 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_2";
+
+	
+					if(execStat){
+						runStat.updateStatOnConnection(iterateId,1,1
+						
+							,"row2"
+						
+						);
+					}
+					
+
+		
+		
+		boolean hasCasePrimitiveKeyWithNull_tMap_2 = false;
+		
+
+        // ###############################
+        // # Input tables (lookups)
+		  boolean rejectedInnerJoin_tMap_2 = false;
+		  boolean mainRowRejected_tMap_2 = false;
+            				    								  
+		
+
+				///////////////////////////////////////////////
+				// Starting Lookup Table "row3" 
+				///////////////////////////////////////////////
+
+
+				
+				
+                            
+ 					    boolean forceLooprow3 = false;
+       		  	    	
+       		  	    	
+ 							row3Struct row3ObjectFromLookup = null;
+                          
+		           		  	if(!rejectedInnerJoin_tMap_2) { // G_TM_M_020
+
+								
+								hasCasePrimitiveKeyWithNull_tMap_2 = false;
+								
+                        		    		    row3HashKey.player_id = row2.player_id ;
+                        		    		
+
+								
+		                        	row3HashKey.hashCodeDirty = true;
+                        		
+	  					
+	  							
+			  					
+			  					
+	  					
+		  							tHash_Lookup_row3.lookup( row3HashKey );
+
+	  							
+
+	  							
+
+ 								
+								  
+								  if(!tHash_Lookup_row3.hasNext()) { // G_TM_M_090
+
+  								
+		  				
+	  								
+			  							rejectedInnerJoin_tMap_2 = true;
+	  								
+						
+									
+  									  		
+ 								
+								  
+								  } // G_TM_M_090
+
+  								
+
+
+
+							} // G_TM_M_020
+			           		  	  
+							
+				           		if(tHash_Lookup_row3 != null && tHash_Lookup_row3.getCount(row3HashKey) > 1) { // G 071
+			  							
+			  						
+									 		
+									//System.out.println("WARNING: UNIQUE MATCH is configured for the lookup 'row3' and it contains more one result from keys :  row3.player_id = '" + row3HashKey.player_id + "'");
+								} // G 071
+							
+
+							row3Struct row3 = null;
+                    		  	 
+							   
+                    		  	 
+	       		  	    	row3Struct fromLookup_row3 = null;
+							row3 = row3Default;
+										 
+							
+								 
+							
+							
+								if (tHash_Lookup_row3 !=null && tHash_Lookup_row3.hasNext()) { // G 099
+								
+							
+								
+								fromLookup_row3 = tHash_Lookup_row3.next();
+
+							
+							
+								} // G 099
+							
+							
+
+							if(fromLookup_row3 != null) {
+								row3 = fromLookup_row3;
+							}
+							
+							
+							
+			  							
+								
+	                    		  	
+		                    
+	            	
+	           	
+	            	
+	            	
+	            
+
+				///////////////////////////////////////////////
+				// Starting Lookup Table "row4" 
+				///////////////////////////////////////////////
+
+
+				
+				
+                            
+ 					    boolean forceLooprow4 = false;
+       		  	    	
+       		  	    	
+ 							row4Struct row4ObjectFromLookup = null;
+                          
+		           		  	if(!rejectedInnerJoin_tMap_2) { // G_TM_M_020
+
+								
+								hasCasePrimitiveKeyWithNull_tMap_2 = false;
+								
+                        		    		    row4HashKey.player_id = row2.player_id ;
+                        		    		
+
+								
+		                        	row4HashKey.hashCodeDirty = true;
+                        		
+	  					
+	  							
+			  					
+			  					
+	  					
+		  							tHash_Lookup_row4.lookup( row4HashKey );
+
+	  							
+
+	  							
+
+ 								
+								  
+								  if(!tHash_Lookup_row4.hasNext()) { // G_TM_M_090
+
+  								
+		  				
+	  								
+			  							rejectedInnerJoin_tMap_2 = true;
+	  								
+						
+									
+  									  		
+ 								
+								  
+								  } // G_TM_M_090
+
+  								
+
+
+
+							} // G_TM_M_020
+			           		  	  
+							
+				           		if(tHash_Lookup_row4 != null && tHash_Lookup_row4.getCount(row4HashKey) > 1) { // G 071
+			  							
+			  						
+									 		
+									//System.out.println("WARNING: UNIQUE MATCH is configured for the lookup 'row4' and it contains more one result from keys :  row4.player_id = '" + row4HashKey.player_id + "'");
+								} // G 071
+							
+
+							row4Struct row4 = null;
+                    		  	 
+							   
+                    		  	 
+	       		  	    	row4Struct fromLookup_row4 = null;
+							row4 = row4Default;
+										 
+							
+								 
+							
+							
+								if (tHash_Lookup_row4 !=null && tHash_Lookup_row4.hasNext()) { // G 099
+								
+							
+								
+								fromLookup_row4 = tHash_Lookup_row4.next();
+
+							
+							
+								} // G 099
+							
+							
+
+							if(fromLookup_row4 != null) {
+								row4 = fromLookup_row4;
+							}
+							
+							
+							
+			  							
+								
+	                    		  	
+		                    
+	            	
+	            	
+	            // ###############################
+        { // start of Var scope
+        
+	        // ###############################
+        	// # Vars tables
+        
+Var__tMap_2__Struct Var = Var__tMap_2;// ###############################
+        // ###############################
+        // # Output tables
+
+sortiee = null;
+
+if(!rejectedInnerJoin_tMap_2 ) {
+
+// # Output table : 'sortiee'
+sortiee_tmp.player_id = row2.player_id ;
+sortiee_tmp.season_name = row2.season_name ;
+sortiee_tmp.date_unix = row3.date_unix ;
+sortiee_tmp.value = row3.value ;
+sortiee_tmp.team_id = row4.team_id ;
+sortiee_tmp.goals = row4.goals ;
+sortiee = sortiee_tmp;
+}  // closing inner join bracket (2)
+// ###############################
+
+} // end of Var scope
+
+rejectedInnerJoin_tMap_2 = false;
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+	tos_count_tMap_2++;
+
+/**
+ * [tMap_2 main ] stop
+ */
+	
+	/**
+	 * [tMap_2 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tMap_2 process_data_begin ] stop
+ */
+// Start of branch "sortiee"
+if(sortiee != null) { 
+
+
+
+	
+	/**
+	 * [tLogRow_1 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_1";
+
+	
+					if(execStat){
+						runStat.updateStatOnConnection(iterateId,1,1
+						
+							,"sortiee"
+						
+						);
+					}
+					
+///////////////////////		
+						
+
+
+
+				strBuffer_tLogRow_1 = new StringBuilder();
+
+
+
+
+   				
+	    		if(sortiee.player_id != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.player_id)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_1.append("|");
+    			
+
+
+   				
+	    		if(sortiee.season_name != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.season_name)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_1.append("|");
+    			
+
+
+   				
+	    		if(sortiee.date_unix != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.date_unix)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_1.append("|");
+    			
+
+
+   				
+	    		if(sortiee.value != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.value)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_1.append("|");
+    			
+
+
+   				
+	    		if(sortiee.team_id != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.team_id)							
+				);
+
+
+							
+	    		} //  			
+
+    			strBuffer_tLogRow_1.append("|");
+    			
+
+
+   				
+	    		if(sortiee.goals != null) { //              
+                    							
+       
+				strBuffer_tLogRow_1.append(
+				                String.valueOf(sortiee.goals)							
+				);
+
+
+							
+	    		} //  			
+ 
+
+                    if (globalMap.get("tLogRow_CONSOLE")!=null)
+                    {
+                    	consoleOut_tLogRow_1 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
+                    }
+                    else
+                    {
+                    	consoleOut_tLogRow_1 = new java.io.PrintStream(new java.io.BufferedOutputStream(System.out));
+                    	globalMap.put("tLogRow_CONSOLE",consoleOut_tLogRow_1);
+                    }
+                    consoleOut_tLogRow_1.println(strBuffer_tLogRow_1.toString());
+                    consoleOut_tLogRow_1.flush();
+                    nb_line_tLogRow_1++;
+//////
+
+//////                    
+                    
+///////////////////////    			
+
+ 
+
+
+	tos_count_tLogRow_1++;
+
+/**
+ * [tLogRow_1 main ] stop
+ */
+	
+	/**
+	 * [tLogRow_1 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tLogRow_1 process_data_begin ] stop
+ */
+	
+	/**
+	 * [tLogRow_1 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tLogRow_1 process_data_end ] stop
+ */
+
+} // End of branch "sortiee"
+
+
+
+
+	
+	/**
+	 * [tMap_2 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tMap_2 process_data_end ] stop
+ */
+
+
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN process_data_end ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN process_data_end ] stop
+ */
+	
+	/**
+	 * [tAggregateRow_1_AGGIN end ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+} // G_AggR_600
+
+ 
+
+ok_Hash.put("tAggregateRow_1_AGGIN", true);
+end_Hash.put("tAggregateRow_1_AGGIN", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN end ] stop
+ */
+
+	
+	/**
+	 * [tMap_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_2";
 
 	
 
 
 // ###############################
 // # Lookup hashes releasing
+					if(tHash_Lookup_row3 != null) {
+						tHash_Lookup_row3.endGet();
+					}
+					globalMap.remove( "tHash_Lookup_row3" );
+
+					
+					
+				
+					if(tHash_Lookup_row4 != null) {
+						tHash_Lookup_row4.endGet();
+					}
+					globalMap.remove( "tHash_Lookup_row4" );
+
+					
+					
+				
 // ###############################      
 
 
@@ -2907,56 +3919,1105 @@ end_Hash.put("tMongoDBInput_1", System.currentTimeMillis());
 			  	
  
 
-ok_Hash.put("tMap_1", true);
-end_Hash.put("tMap_1", System.currentTimeMillis());
+ok_Hash.put("tMap_2", true);
+end_Hash.put("tMap_2", System.currentTimeMillis());
 
 
 
 
 /**
- * [tMap_1 end ] stop
+ * [tMap_2 end ] stop
  */
 
 	
 	/**
-	 * [tMongoDBOutput_1 end ] start
+	 * [tLogRow_1 end ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMongoDBOutput_1";
+	currentComponent="tLogRow_1";
 
 	
 
-		if(mongo_tMongoDBOutput_1 != null){
-			
-				mongo_tMongoDBOutput_1.close();
-			
-		}
-		resourceMap.put("finish_tMongoDBOutput_1", true); 
-		
-	globalMap.put("tMongoDBOutput_1_NB_LINE", nb_line_tMongoDBOutput_1);
+
+//////
+//////
+globalMap.put("tLogRow_1_NB_LINE",nb_line_tLogRow_1);
+
+///////////////////////    			
 
 				if(execStat){
-			  		runStat.updateStat(resourceMap,iterateId,2,0,"coucou");
+			  		runStat.updateStat(resourceMap,iterateId,2,0,"sortiee");
 			  	}
 			  	
  
 
-ok_Hash.put("tMongoDBOutput_1", true);
-end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
+ok_Hash.put("tLogRow_1", true);
+end_Hash.put("tLogRow_1", System.currentTimeMillis());
 
 
 
 
 /**
- * [tMongoDBOutput_1 end ] stop
+ * [tLogRow_1 end ] stop
  */
 
 
 
+
+
+
+
+
+
+
+
+
+				}//end the resume
+
+				
+
+
+
+	
+			}catch(java.lang.Exception e){	
+				
+				TalendException te = new TalendException(e, currentComponent, globalMap);
+				
+					te.setVirtualComponentName(currentVirtualComponent);
+				
+				throw te;
+			}catch(java.lang.Error error){	
+				
+					runStat.stopThreadStat();
+				
+				throw error;
+			}finally{
+				
+					     			//free memory for "tMap_2"
+					     			globalMap.remove("tHash_Lookup_row3"); 
+				     			
+					     			//free memory for "tMap_2"
+					     			globalMap.remove("tHash_Lookup_row4"); 
+				     			
+							//free memory for "tAggregateRow_1_AGGIN"
+							globalMap.remove("tAggregateRow_1");
+						
+				try{
+					
+	
+	/**
+	 * [tMongoDBInput_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_1 finally ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGOUT finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGOUT";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGOUT finally ] stop
+ */
+
+	
+	/**
+	 * [tAggregateRow_1_AGGIN finally ] start
+	 */
+
+	
+
+	
+	
+		currentVirtualComponent = "tAggregateRow_1";
+	
+	currentComponent="tAggregateRow_1_AGGIN";
+
+	
+
+ 
+
+
+
+/**
+ * [tAggregateRow_1_AGGIN finally ] stop
+ */
+
+	
+	/**
+	 * [tMap_2 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMap_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tMap_2 finally ] stop
+ */
+
+	
+	/**
+	 * [tLogRow_1 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tLogRow_1";
+
+	
+
+ 
+
+
+
+/**
+ * [tLogRow_1 finally ] stop
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+				}catch(java.lang.Exception e){	
+					//ignore
+				}catch(java.lang.Error error){
+					//ignore
+				}
+				resourceMap = null;
+			}
+		
+
+		globalMap.put("tMongoDBInput_1_SUBPROCESS_STATE", 1);
+	}
+	
+
+
+public static class row3Struct implements routines.system.IPersistableComparableLookupRow<row3Struct> {
+    final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
+    static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
+	protected static final int DEFAULT_HASHCODE = 1;
+    protected static final int PRIME = 31;
+    protected int hashCode = DEFAULT_HASHCODE;
+    public boolean hashCodeDirty = true;
+
+    public String loopKey;
+
+
+
+	
+			    public String player_id;
+
+				public String getPlayer_id () {
+					return this.player_id;
+				}
+				
+			    public String date_unix;
+
+				public String getDate_unix () {
+					return this.date_unix;
+				}
+				
+			    public String value;
+
+				public String getValue () {
+					return this.value;
+				}
+				
+
+
+	@Override
+	public int hashCode() {
+		if (this.hashCodeDirty) {
+			final int prime = PRIME;
+			int result = DEFAULT_HASHCODE;
+	
+						result = prime * result + ((this.player_id == null) ? 0 : this.player_id.hashCode());
+					
+    		this.hashCode = result;
+    		this.hashCodeDirty = false;
+		}
+		return this.hashCode;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		final row3Struct other = (row3Struct) obj;
+		
+						if (this.player_id == null) {
+							if (other.player_id != null)
+								return false;
+						
+						} else if (!this.player_id.equals(other.player_id))
+						
+							return false;
+					
+
+		return true;
+    }
+
+	public void copyDataTo(row3Struct other) {
+
+		other.player_id = this.player_id;
+	            other.date_unix = this.date_unix;
+	            other.value = this.value;
+	            
+	}
+
+	public void copyKeysDataTo(row3Struct other) {
+
+		other.player_id = this.player_id;
+	            	
+	}
+
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			unmarshaller.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+    
+    private void writeString(String str, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+    }
+	
+	private String readString(DataInputStream dis, ObjectInputStream ois) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			byte[] byteArray = new byte[length];
+			dis.read(byteArray);
+			strReturn = new String(byteArray, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(DataInputStream dis, org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			byte[] byteArray = new byte[length];
+			unmarshaller.read(byteArray);
+			strReturn = new String(byteArray, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private void writeString(String str, DataOutputStream dos, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+	}
+
+	private void writeString(String str, DataOutputStream dos, ObjectOutputStream oos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+	}
+
+    public void readKeysData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+    
+    public void readKeysData(org.jboss.marshalling.Unmarshaller dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeKeysData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+    
+    public void writeKeysData(org.jboss.marshalling.Marshaller dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+
+    /**
+     * Fill Values data by reading ObjectInputStream.
+     */
+    public void readValuesData(DataInputStream dis, ObjectInputStream ois) {
+        try {
+
+			int length = 0;
+		
+						this.date_unix = readString(dis,ois);
+					
+						this.value = readString(dis,ois);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+    }
+    
+    public void readValuesData(DataInputStream dis, org.jboss.marshalling.Unmarshaller objectIn) {
+        try {
+			int length = 0;
+		
+						this.date_unix = readString(dis,objectIn);
+					
+						this.value = readString(dis,objectIn);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+    }
+
+    /**
+     * Return a byte array which represents Values data.
+     */
+    public void writeValuesData(DataOutputStream dos, ObjectOutputStream oos) {
+        try {
+
+		
+						writeString(this.date_unix, dos, oos);
+					
+						writeString(this.value, dos, oos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        	}
+
+    }
+    
+    public void writeValuesData(DataOutputStream dos, org.jboss.marshalling.Marshaller objectOut){
+                try {
+
+		
+						writeString(this.date_unix, dos, objectOut);
+					
+						writeString(this.value, dos, objectOut);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        	}
+    }
+
+
+    
+    public boolean supportMarshaller(){
+        return true;
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("player_id="+player_id);
+		sb.append(",date_unix="+date_unix);
+		sb.append(",value="+value);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row3Struct other) {
+
+		int returnValue = -1;
+		
+						returnValue = checkNullsAndCompare(this.player_id, other.player_id);
+						if(returnValue != 0) {
+							return returnValue;
+						}
+
+					
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+public void tMongoDBInput_2Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+	globalMap.put("tMongoDBInput_2_SUBPROCESS_STATE", 0);
+
+ final boolean execStat = this.execStat;
+	
+		String iterateId = "";
+	
+	
+	String currentComponent = "";
+	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+	try {
+			// TDI-39566 avoid throwing an useless Exception
+			boolean resumeIt = true;
+			if (globalResumeTicket == false && resumeEntryMethodName != null) {
+				String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
+				resumeIt = resumeEntryMethodName.equals(currentMethodName);
+			}
+			if (resumeIt || globalResumeTicket) { //start the resume
+				globalResumeTicket = true;
+
+
+
+		row3Struct row3 = new row3Struct();
+
+
+
+
+	
+	/**
+	 * [tAdvancedHash_row3 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tAdvancedHash_row3", false);
+		start_Hash.put("tAdvancedHash_row3", System.currentTimeMillis());
+		
+	
+	currentComponent="tAdvancedHash_row3";
+
+	
+					if(execStat) {
+						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"row3");
+					}
+				
+		int tos_count_tAdvancedHash_row3 = 0;
+		
+
+			   		// connection name:row3
+			   		// source node:tMongoDBInput_2 - inputs:(after_tMongoDBInput_1) outputs:(row3,row3) | target node:tAdvancedHash_row3 - inputs:(row3) outputs:()
+			   		// linked node: tMap_2 - inputs:(row2,row3,row4) outputs:(sortiee)
+			   
+			   		org.talend.designer.components.lookup.common.ICommonLookup.MATCHING_MODE matchingModeEnum_row3 = 
+			   			org.talend.designer.components.lookup.common.ICommonLookup.MATCHING_MODE.UNIQUE_MATCH;
+			   			
+			   
+	   			org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row3Struct> tHash_Lookup_row3 =org.talend.designer.components.lookup.memory.AdvancedMemoryLookup.
+	   						<row3Struct>getLookup(matchingModeEnum_row3);
+	   						   
+		   	   	   globalMap.put("tHash_Lookup_row3", tHash_Lookup_row3);
+		   	   	   
+				
+           
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row3 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMongoDBInput_2 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tMongoDBInput_2", false);
+		start_Hash.put("tMongoDBInput_2", System.currentTimeMillis());
+		
+	
+	currentComponent="tMongoDBInput_2";
+
+	
+		int tos_count_tMongoDBInput_2 = 0;
+		
+
+
+	
+
+final String applicationName_tMongoDBInput_2 = "Talend";
+
+	int nb_line_tMongoDBInput_2 = 0;
+	
+
+
+    // Declarations
+    com.mongodb.client.MongoClient mongo_tMongoDBInput_2=null;
+    com.mongodb.client.MongoDatabase db_tMongoDBInput_2=null;
+
+        // Internal declarations
+        List<com.mongodb.ServerAddress> addrs_tMongoDBInput_2 = new java.util.ArrayList<>();
+        com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_tMongoDBInput_2 = com.mongodb.MongoClientSettings.builder().applicationName(applicationName_tMongoDBInput_2);
+        com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_tMongoDBInput_2 = com.mongodb.connection.ClusterSettings.builder();
+        com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_tMongoDBInput_2 = com.mongodb.connection.SslSettings.builder();
+
+                // SSL
+
+                // Client Credentials
+                    addrs_tMongoDBInput_2.add(new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue()));
+                clusterSettingsBuilder_tMongoDBInput_2.hosts(addrs_tMongoDBInput_2);
+
+                clientSettingsBuilder_tMongoDBInput_2.applyToClusterSettings(builder -> builder.applySettings(clusterSettingsBuilder_tMongoDBInput_2.build()));
+
+
+
+        mongo_tMongoDBInput_2 = com.mongodb.client.MongoClients.create(clientSettingsBuilder_tMongoDBInput_2.build());
+        db_tMongoDBInput_2 = mongo_tMongoDBInput_2.getDatabase(context.mongo_database);
+
+
+				
+					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_2 = db_tMongoDBInput_2.getCollection(context.mongo_player_latest_market_value);
+				
+				
+				
+				try{
+					// Add warning if an index is not in the query.
+					boolean needIndexWarning = true;
+					String indexList = "";
+					java.lang.StringBuilder sb_tMongoDBInput_2 = new java.lang.StringBuilder();
+	                
+	                    for (com.mongodb.DBObject index: coll_tMongoDBInput_2.listIndexes(com.mongodb.DBObject.class)) {
+	                 
+	                        for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
+	                            // The regexp is:
+	                            // - contain the db DBcolumnName between two backslashed quotes
+	                            // - is followed at some point by a colon
+	                            // - there is no comma between the the DBcolumnName and the colon
+	                            if  (("{}").matches(".*" + key.replace("*","\\*") + "[^,]*:.*")) {
+	                                // We have an index, do not print error message
+	                                needIndexWarning = false;
+	                            } else {
+	                                // This index is not in the query, add it into the indexList
+	                                sb_tMongoDBInput_2.append(", ").append(key);
+	                            }
+	                        }
+	                        indexList = sb_tMongoDBInput_2.toString();
+	                    }
+	                if ((!"".equals(indexList)) && (needIndexWarning)) {
+	                    
+	                        System.err.println("tMongoDBInput_2 - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+	                        
+	                }
+	            }catch(com.mongodb.MongoException e){
+	            	// caught an exception after issuing the getIndexInfo()
+	            	// don't fail the whole job
+	            	// maybe due to authorization
+	            }
+
+						org.bson.Document myQuery_tMongoDBInput_2 = org.bson.Document.parse("{}");
+						
+							com.mongodb.client.FindIterable<org.bson.Document> findIterable_tMongoDBInput_2 = coll_tMongoDBInput_2.find(myQuery_tMongoDBInput_2).noCursorTimeout(false);
+							
+
+
+				
+				class DBObjectInputUtil_tMongoDBInput_2{
+					// Get the node value in embedded document, 
+					//If have no embedded document get root document node.
+					
+					public Object getValue(String parentNode,String currentName,org.bson.Document dbObject){
+						Object value=null;
+						if(dbObject==null){
+							return null;
+						}
+						if (parentNode == null || "".equals(parentNode)) {
+						    if ("*".equals(currentName)) {
+						        value = dbObject;
+						    } else if (dbObject.get(currentName)!=null){
+								value=dbObject.get(currentName);
+							}
+						}else{
+							String objNames[] = parentNode.split("\\.");
+							org.bson.Document currentObj=dbObject;
+							for(int i=0;i<objNames.length;i++){
+								currentObj=(org.bson.Document)currentObj.get(objNames[i]);
+								if(currentObj==null){
+									break;
+								}
+							}
+							if ("*".equals(currentName)) {
+                                value = currentObj;
+                            } else if(currentObj!=null){
+								value=currentObj.get(currentName);
+							}
+						}
+						
+						    if(value instanceof org.bson.Document){
+						        value = ((org.bson.Document)value).toJson();
+						    }else if (value instanceof java.util.List){
+
+						    java.util.List list = new java.util.ArrayList();
+						    ((java.util.List)value).stream().forEach(e -> {
+						    if(e instanceof org.bson.Document){
+						        list.add(((org.bson.Document)e).toJson());
+						    }else{
+						        list.add(e);
+						    }
+						    });
+						    value = list;
+						    }
+
+						
+						return value;
+					}
+				}
+				DBObjectInputUtil_tMongoDBInput_2 dbObjectInputUtil_tMongoDBInput_2=new DBObjectInputUtil_tMongoDBInput_2();
+				java.util.Map<String, String> pathMap_tMongoDBInput_2=new java.util.HashMap<>();
+				pathMap_tMongoDBInput_2.put("player_id","");
+				pathMap_tMongoDBInput_2.put("date_unix","");
+				pathMap_tMongoDBInput_2.put("value","");
+
+						
+					com.mongodb.client.MongoCursor<org.bson.Document> cursor_tMongoDBInput_2 = findIterable_tMongoDBInput_2.iterator();
+						
+				while (cursor_tMongoDBInput_2.hasNext()){
+				org.bson.Document o_tMongoDBInput_2 = cursor_tMongoDBInput_2.next();
+				nb_line_tMongoDBInput_2++;
+				Object valueObj_tMongoDBInput_2=null;
+                    valueObj_tMongoDBInput_2=dbObjectInputUtil_tMongoDBInput_2.getValue(pathMap_tMongoDBInput_2.get("player_id"),"player_id",o_tMongoDBInput_2);
+					
+				row3.player_id = valueObj_tMongoDBInput_2==null ? null : valueObj_tMongoDBInput_2.toString();
+				
+                    valueObj_tMongoDBInput_2=dbObjectInputUtil_tMongoDBInput_2.getValue(pathMap_tMongoDBInput_2.get("date_unix"),"date_unix",o_tMongoDBInput_2);
+					
+				row3.date_unix = valueObj_tMongoDBInput_2==null ? null : valueObj_tMongoDBInput_2.toString();
+				
+                    valueObj_tMongoDBInput_2=dbObjectInputUtil_tMongoDBInput_2.getValue(pathMap_tMongoDBInput_2.get("value"),"value",o_tMongoDBInput_2);
+					
+				row3.value = valueObj_tMongoDBInput_2==null ? null : valueObj_tMongoDBInput_2.toString();
+				
+
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_2 begin ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_2 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_2";
+
+	
+
+ 
+
+
+	tos_count_tMongoDBInput_2++;
+
+/**
+ * [tMongoDBInput_2 main ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_2 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_2 process_data_begin ] stop
+ */
+
+	
+	/**
+	 * [tAdvancedHash_row3 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row3";
+
+	
+					if(execStat){
+						runStat.updateStatOnConnection(iterateId,1,1
+						
+							,"row3"
+						
+						);
+					}
+					
+
+
+			   
+			   
+
+					row3Struct row3_HashRow = new row3Struct();
+		   	   	   
+				
+				row3_HashRow.player_id = row3.player_id;
+				
+				row3_HashRow.date_unix = row3.date_unix;
+				
+				row3_HashRow.value = row3.value;
+				
+			tHash_Lookup_row3.put(row3_HashRow);
+			
+            
+
+
+
+
+ 
+
+
+	tos_count_tAdvancedHash_row3++;
+
+/**
+ * [tAdvancedHash_row3 main ] stop
+ */
+	
+	/**
+	 * [tAdvancedHash_row3 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row3";
+
+	
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row3 process_data_begin ] stop
+ */
+	
+	/**
+	 * [tAdvancedHash_row3 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row3";
+
+	
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row3 process_data_end ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMongoDBInput_2 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_2";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_2 process_data_end ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_2 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_2";
+
+	
+
+            }
+                    if(mongo_tMongoDBInput_2 != null) {
+                        mongo_tMongoDBInput_2.close();
+                    }
+    globalMap.put("tMongoDBInput_2_NB_LINE", nb_line_tMongoDBInput_2);
+ 
+
+ok_Hash.put("tMongoDBInput_2", true);
+end_Hash.put("tMongoDBInput_2", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tMongoDBInput_2 end ] stop
+ */
+
+	
+	/**
+	 * [tAdvancedHash_row3 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row3";
+
+	
+
+tHash_Lookup_row3.endPut();
+
+				if(execStat){
+			  		runStat.updateStat(resourceMap,iterateId,2,0,"row3");
+			  	}
+			  	
+ 
+
+ok_Hash.put("tAdvancedHash_row3", true);
+end_Hash.put("tAdvancedHash_row3", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAdvancedHash_row3 end ] stop
+ */
 
 
 
@@ -2983,14 +5044,14 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
 					
 	
 	/**
-	 * [tMongoDBInput_1 finally ] start
+	 * [tMongoDBInput_2 finally ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMongoDBInput_1";
+	currentComponent="tMongoDBInput_2";
 
 	
 
@@ -2999,19 +5060,19 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
 
 
 /**
- * [tMongoDBInput_1 finally ] stop
+ * [tMongoDBInput_2 finally ] stop
  */
 
 	
 	/**
-	 * [tMap_1 finally ] start
+	 * [tAdvancedHash_row3 finally ] start
 	 */
 
 	
 
 	
 	
-	currentComponent="tMap_1";
+	currentComponent="tAdvancedHash_row3";
 
 	
 
@@ -3020,43 +5081,8 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
 
 
 /**
- * [tMap_1 finally ] stop
+ * [tAdvancedHash_row3 finally ] stop
  */
-
-	
-	/**
-	 * [tMongoDBOutput_1 finally ] start
-	 */
-
-	
-
-	
-	
-	currentComponent="tMongoDBOutput_1";
-
-	
-		if(resourceMap.get("finish_tMongoDBOutput_1") == null){
-			if(resourceMap.get("mongo_tMongoDBOutput_1") != null){
-
-		    
-		    			
-		    			       ((com.mongodb.MongoClient)resourceMap.get("mongo_tMongoDBOutput_1")).close();
-		    
-		    
-			
-			}
-		}
-
- 
-
-
-
-/**
- * [tMongoDBOutput_1 finally ] stop
- */
-
-
-
 
 
 
@@ -3069,7 +5095,1356 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
 			}
 		
 
-		globalMap.put("tMongoDBInput_1_SUBPROCESS_STATE", 1);
+		globalMap.put("tMongoDBInput_2_SUBPROCESS_STATE", 1);
+	}
+	
+
+
+public static class row4Struct implements routines.system.IPersistableComparableLookupRow<row4Struct> {
+    final static byte[] commonByteArrayLock_LOCAL_PROJECT_bronzetosilver = new byte[0];
+    static byte[] commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[0];
+	protected static final int DEFAULT_HASHCODE = 1;
+    protected static final int PRIME = 31;
+    protected int hashCode = DEFAULT_HASHCODE;
+    public boolean hashCodeDirty = true;
+
+    public String loopKey;
+
+
+
+	
+			    public String player_id;
+
+				public String getPlayer_id () {
+					return this.player_id;
+				}
+				
+			    public String season_name;
+
+				public String getSeason_name () {
+					return this.season_name;
+				}
+				
+			    public String competition_id;
+
+				public String getCompetition_id () {
+					return this.competition_id;
+				}
+				
+			    public String competition_name;
+
+				public String getCompetition_name () {
+					return this.competition_name;
+				}
+				
+			    public String team_id;
+
+				public String getTeam_id () {
+					return this.team_id;
+				}
+				
+			    public String team_name;
+
+				public String getTeam_name () {
+					return this.team_name;
+				}
+				
+			    public String nb_in_group;
+
+				public String getNb_in_group () {
+					return this.nb_in_group;
+				}
+				
+			    public String nb_on_pitch;
+
+				public String getNb_on_pitch () {
+					return this.nb_on_pitch;
+				}
+				
+			    public String goals;
+
+				public String getGoals () {
+					return this.goals;
+				}
+				
+			    public String assists;
+
+				public String getAssists () {
+					return this.assists;
+				}
+				
+			    public String own_goals;
+
+				public String getOwn_goals () {
+					return this.own_goals;
+				}
+				
+			    public String subed_in;
+
+				public String getSubed_in () {
+					return this.subed_in;
+				}
+				
+			    public String subed_out;
+
+				public String getSubed_out () {
+					return this.subed_out;
+				}
+				
+			    public String yellow_cards;
+
+				public String getYellow_cards () {
+					return this.yellow_cards;
+				}
+				
+			    public String second_yellow_cards;
+
+				public String getSecond_yellow_cards () {
+					return this.second_yellow_cards;
+				}
+				
+			    public String direct_red_cards;
+
+				public String getDirect_red_cards () {
+					return this.direct_red_cards;
+				}
+				
+			    public String penalty_goals;
+
+				public String getPenalty_goals () {
+					return this.penalty_goals;
+				}
+				
+			    public String minutes_played;
+
+				public String getMinutes_played () {
+					return this.minutes_played;
+				}
+				
+			    public String goals_conceded;
+
+				public String getGoals_conceded () {
+					return this.goals_conceded;
+				}
+				
+			    public String clean_sheets;
+
+				public String getClean_sheets () {
+					return this.clean_sheets;
+				}
+				
+
+
+	@Override
+	public int hashCode() {
+		if (this.hashCodeDirty) {
+			final int prime = PRIME;
+			int result = DEFAULT_HASHCODE;
+	
+						result = prime * result + ((this.player_id == null) ? 0 : this.player_id.hashCode());
+					
+    		this.hashCode = result;
+    		this.hashCodeDirty = false;
+		}
+		return this.hashCode;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		final row4Struct other = (row4Struct) obj;
+		
+						if (this.player_id == null) {
+							if (other.player_id != null)
+								return false;
+						
+						} else if (!this.player_id.equals(other.player_id))
+						
+							return false;
+					
+
+		return true;
+    }
+
+	public void copyDataTo(row4Struct other) {
+
+		other.player_id = this.player_id;
+	            other.season_name = this.season_name;
+	            other.competition_id = this.competition_id;
+	            other.competition_name = this.competition_name;
+	            other.team_id = this.team_id;
+	            other.team_name = this.team_name;
+	            other.nb_in_group = this.nb_in_group;
+	            other.nb_on_pitch = this.nb_on_pitch;
+	            other.goals = this.goals;
+	            other.assists = this.assists;
+	            other.own_goals = this.own_goals;
+	            other.subed_in = this.subed_in;
+	            other.subed_out = this.subed_out;
+	            other.yellow_cards = this.yellow_cards;
+	            other.second_yellow_cards = this.second_yellow_cards;
+	            other.direct_red_cards = this.direct_red_cards;
+	            other.penalty_goals = this.penalty_goals;
+	            other.minutes_played = this.minutes_played;
+	            other.goals_conceded = this.goals_conceded;
+	            other.clean_sheets = this.clean_sheets;
+	            
+	}
+
+	public void copyKeysDataTo(row4Struct other) {
+
+		other.player_id = this.player_id;
+	            	
+	}
+
+
+
+
+	private String readString(ObjectInputStream dis) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			dis.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			if(length > commonByteArray_LOCAL_PROJECT_bronzetosilver.length) {
+				if(length < 1024 && commonByteArray_LOCAL_PROJECT_bronzetosilver.length == 0) {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[1024];
+				} else {
+   					commonByteArray_LOCAL_PROJECT_bronzetosilver = new byte[2 * length];
+   				}
+			}
+			unmarshaller.readFully(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length);
+			strReturn = new String(commonByteArray_LOCAL_PROJECT_bronzetosilver, 0, length, utf8Charset);
+		}
+		return strReturn;
+	}
+
+    private void writeString(String str, ObjectOutputStream dos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+    }
+    
+    private void writeString(String str, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+    }
+	
+	private String readString(DataInputStream dis, ObjectInputStream ois) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = dis.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			byte[] byteArray = new byte[length];
+			dis.read(byteArray);
+			strReturn = new String(byteArray, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private String readString(DataInputStream dis, org.jboss.marshalling.Unmarshaller unmarshaller) throws IOException{
+		String strReturn = null;
+		int length = 0;
+        length = unmarshaller.readInt();
+		if (length == -1) {
+			strReturn = null;
+		} else {
+			byte[] byteArray = new byte[length];
+			unmarshaller.read(byteArray);
+			strReturn = new String(byteArray, utf8Charset);
+		}
+		return strReturn;
+	}
+	
+	private void writeString(String str, DataOutputStream dos, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(str == null) {
+			marshaller.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+            marshaller.writeInt(byteArray.length);
+            marshaller.write(byteArray);
+    	}
+	}
+
+	private void writeString(String str, DataOutputStream dos, ObjectOutputStream oos) throws IOException{
+		if(str == null) {
+            dos.writeInt(-1);
+		} else {
+            byte[] byteArray = str.getBytes(utf8Charset);
+	    	dos.writeInt(byteArray.length);
+			dos.write(byteArray);
+    	}
+	}
+
+    public void readKeysData(ObjectInputStream dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+    
+    public void readKeysData(org.jboss.marshalling.Unmarshaller dis) {
+
+		synchronized(commonByteArrayLock_LOCAL_PROJECT_bronzetosilver) {
+
+        	try {
+
+        		int length = 0;
+		
+					this.player_id = readString(dis);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+      }
+
+
+    }
+
+    public void writeKeysData(ObjectOutputStream dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+    
+    public void writeKeysData(org.jboss.marshalling.Marshaller dos) {
+        try {
+
+		
+					// String
+				
+						writeString(this.player_id,dos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+
+    /**
+     * Fill Values data by reading ObjectInputStream.
+     */
+    public void readValuesData(DataInputStream dis, ObjectInputStream ois) {
+        try {
+
+			int length = 0;
+		
+						this.season_name = readString(dis,ois);
+					
+						this.competition_id = readString(dis,ois);
+					
+						this.competition_name = readString(dis,ois);
+					
+						this.team_id = readString(dis,ois);
+					
+						this.team_name = readString(dis,ois);
+					
+						this.nb_in_group = readString(dis,ois);
+					
+						this.nb_on_pitch = readString(dis,ois);
+					
+						this.goals = readString(dis,ois);
+					
+						this.assists = readString(dis,ois);
+					
+						this.own_goals = readString(dis,ois);
+					
+						this.subed_in = readString(dis,ois);
+					
+						this.subed_out = readString(dis,ois);
+					
+						this.yellow_cards = readString(dis,ois);
+					
+						this.second_yellow_cards = readString(dis,ois);
+					
+						this.direct_red_cards = readString(dis,ois);
+					
+						this.penalty_goals = readString(dis,ois);
+					
+						this.minutes_played = readString(dis,ois);
+					
+						this.goals_conceded = readString(dis,ois);
+					
+						this.clean_sheets = readString(dis,ois);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+    }
+    
+    public void readValuesData(DataInputStream dis, org.jboss.marshalling.Unmarshaller objectIn) {
+        try {
+			int length = 0;
+		
+						this.season_name = readString(dis,objectIn);
+					
+						this.competition_id = readString(dis,objectIn);
+					
+						this.competition_name = readString(dis,objectIn);
+					
+						this.team_id = readString(dis,objectIn);
+					
+						this.team_name = readString(dis,objectIn);
+					
+						this.nb_in_group = readString(dis,objectIn);
+					
+						this.nb_on_pitch = readString(dis,objectIn);
+					
+						this.goals = readString(dis,objectIn);
+					
+						this.assists = readString(dis,objectIn);
+					
+						this.own_goals = readString(dis,objectIn);
+					
+						this.subed_in = readString(dis,objectIn);
+					
+						this.subed_out = readString(dis,objectIn);
+					
+						this.yellow_cards = readString(dis,objectIn);
+					
+						this.second_yellow_cards = readString(dis,objectIn);
+					
+						this.direct_red_cards = readString(dis,objectIn);
+					
+						this.penalty_goals = readString(dis,objectIn);
+					
+						this.minutes_played = readString(dis,objectIn);
+					
+						this.goals_conceded = readString(dis,objectIn);
+					
+						this.clean_sheets = readString(dis,objectIn);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+
+		
+
+        }
+
+		
+
+    }
+
+    /**
+     * Return a byte array which represents Values data.
+     */
+    public void writeValuesData(DataOutputStream dos, ObjectOutputStream oos) {
+        try {
+
+		
+						writeString(this.season_name, dos, oos);
+					
+						writeString(this.competition_id, dos, oos);
+					
+						writeString(this.competition_name, dos, oos);
+					
+						writeString(this.team_id, dos, oos);
+					
+						writeString(this.team_name, dos, oos);
+					
+						writeString(this.nb_in_group, dos, oos);
+					
+						writeString(this.nb_on_pitch, dos, oos);
+					
+						writeString(this.goals, dos, oos);
+					
+						writeString(this.assists, dos, oos);
+					
+						writeString(this.own_goals, dos, oos);
+					
+						writeString(this.subed_in, dos, oos);
+					
+						writeString(this.subed_out, dos, oos);
+					
+						writeString(this.yellow_cards, dos, oos);
+					
+						writeString(this.second_yellow_cards, dos, oos);
+					
+						writeString(this.direct_red_cards, dos, oos);
+					
+						writeString(this.penalty_goals, dos, oos);
+					
+						writeString(this.minutes_played, dos, oos);
+					
+						writeString(this.goals_conceded, dos, oos);
+					
+						writeString(this.clean_sheets, dos, oos);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        	}
+
+    }
+    
+    public void writeValuesData(DataOutputStream dos, org.jboss.marshalling.Marshaller objectOut){
+                try {
+
+		
+						writeString(this.season_name, dos, objectOut);
+					
+						writeString(this.competition_id, dos, objectOut);
+					
+						writeString(this.competition_name, dos, objectOut);
+					
+						writeString(this.team_id, dos, objectOut);
+					
+						writeString(this.team_name, dos, objectOut);
+					
+						writeString(this.nb_in_group, dos, objectOut);
+					
+						writeString(this.nb_on_pitch, dos, objectOut);
+					
+						writeString(this.goals, dos, objectOut);
+					
+						writeString(this.assists, dos, objectOut);
+					
+						writeString(this.own_goals, dos, objectOut);
+					
+						writeString(this.subed_in, dos, objectOut);
+					
+						writeString(this.subed_out, dos, objectOut);
+					
+						writeString(this.yellow_cards, dos, objectOut);
+					
+						writeString(this.second_yellow_cards, dos, objectOut);
+					
+						writeString(this.direct_red_cards, dos, objectOut);
+					
+						writeString(this.penalty_goals, dos, objectOut);
+					
+						writeString(this.minutes_played, dos, objectOut);
+					
+						writeString(this.goals_conceded, dos, objectOut);
+					
+						writeString(this.clean_sheets, dos, objectOut);
+					
+        	} catch (IOException e) {
+	            throw new RuntimeException(e);
+        	}
+    }
+
+
+    
+    public boolean supportMarshaller(){
+        return true;
+    }
+
+
+    public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("[");
+		sb.append("player_id="+player_id);
+		sb.append(",season_name="+season_name);
+		sb.append(",competition_id="+competition_id);
+		sb.append(",competition_name="+competition_name);
+		sb.append(",team_id="+team_id);
+		sb.append(",team_name="+team_name);
+		sb.append(",nb_in_group="+nb_in_group);
+		sb.append(",nb_on_pitch="+nb_on_pitch);
+		sb.append(",goals="+goals);
+		sb.append(",assists="+assists);
+		sb.append(",own_goals="+own_goals);
+		sb.append(",subed_in="+subed_in);
+		sb.append(",subed_out="+subed_out);
+		sb.append(",yellow_cards="+yellow_cards);
+		sb.append(",second_yellow_cards="+second_yellow_cards);
+		sb.append(",direct_red_cards="+direct_red_cards);
+		sb.append(",penalty_goals="+penalty_goals);
+		sb.append(",minutes_played="+minutes_played);
+		sb.append(",goals_conceded="+goals_conceded);
+		sb.append(",clean_sheets="+clean_sheets);
+	    sb.append("]");
+
+	    return sb.toString();
+    }
+
+    /**
+     * Compare keys
+     */
+    public int compareTo(row4Struct other) {
+
+		int returnValue = -1;
+		
+						returnValue = checkNullsAndCompare(this.player_id, other.player_id);
+						if(returnValue != 0) {
+							return returnValue;
+						}
+
+					
+	    return returnValue;
+    }
+
+
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        return string1.compareTo(string2);
+    }
+
+
+}
+public void tMongoDBInput_3Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+	globalMap.put("tMongoDBInput_3_SUBPROCESS_STATE", 0);
+
+ final boolean execStat = this.execStat;
+	
+		String iterateId = "";
+	
+	
+	String currentComponent = "";
+	java.util.Map<String, Object> resourceMap = new java.util.HashMap<String, Object>();
+
+	try {
+			// TDI-39566 avoid throwing an useless Exception
+			boolean resumeIt = true;
+			if (globalResumeTicket == false && resumeEntryMethodName != null) {
+				String currentMethodName = new java.lang.Exception().getStackTrace()[0].getMethodName();
+				resumeIt = resumeEntryMethodName.equals(currentMethodName);
+			}
+			if (resumeIt || globalResumeTicket) { //start the resume
+				globalResumeTicket = true;
+
+
+
+		row4Struct row4 = new row4Struct();
+
+
+
+
+	
+	/**
+	 * [tAdvancedHash_row4 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tAdvancedHash_row4", false);
+		start_Hash.put("tAdvancedHash_row4", System.currentTimeMillis());
+		
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+					if(execStat) {
+						runStat.updateStatOnConnection(resourceMap,iterateId,0,0,"row4");
+					}
+				
+		int tos_count_tAdvancedHash_row4 = 0;
+		
+
+			   		// connection name:row4
+			   		// source node:tMongoDBInput_3 - inputs:(after_tMongoDBInput_1) outputs:(row4,row4) | target node:tAdvancedHash_row4 - inputs:(row4) outputs:()
+			   		// linked node: tMap_2 - inputs:(row2,row3,row4) outputs:(sortiee)
+			   
+			   		org.talend.designer.components.lookup.common.ICommonLookup.MATCHING_MODE matchingModeEnum_row4 = 
+			   			org.talend.designer.components.lookup.common.ICommonLookup.MATCHING_MODE.UNIQUE_MATCH;
+			   			
+			   
+	   			org.talend.designer.components.lookup.memory.AdvancedMemoryLookup<row4Struct> tHash_Lookup_row4 =org.talend.designer.components.lookup.memory.AdvancedMemoryLookup.
+	   						<row4Struct>getLookup(matchingModeEnum_row4);
+	   						   
+		   	   	   globalMap.put("tHash_Lookup_row4", tHash_Lookup_row4);
+		   	   	   
+				
+           
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row4 begin ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMongoDBInput_3 begin ] start
+	 */
+
+	
+
+	
+		
+		ok_Hash.put("tMongoDBInput_3", false);
+		start_Hash.put("tMongoDBInput_3", System.currentTimeMillis());
+		
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+		int tos_count_tMongoDBInput_3 = 0;
+		
+
+
+	
+
+final String applicationName_tMongoDBInput_3 = "Talend";
+
+	int nb_line_tMongoDBInput_3 = 0;
+	
+
+
+    // Declarations
+    com.mongodb.client.MongoClient mongo_tMongoDBInput_3=null;
+    com.mongodb.client.MongoDatabase db_tMongoDBInput_3=null;
+
+        // Internal declarations
+        List<com.mongodb.ServerAddress> addrs_tMongoDBInput_3 = new java.util.ArrayList<>();
+        com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_tMongoDBInput_3 = com.mongodb.MongoClientSettings.builder().applicationName(applicationName_tMongoDBInput_3);
+        com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_tMongoDBInput_3 = com.mongodb.connection.ClusterSettings.builder();
+        com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_tMongoDBInput_3 = com.mongodb.connection.SslSettings.builder();
+
+                // SSL
+
+                // Client Credentials
+                    addrs_tMongoDBInput_3.add(new com.mongodb.ServerAddress(context.mongo_server, Integer.valueOf(context.mongo_port).intValue()));
+                clusterSettingsBuilder_tMongoDBInput_3.hosts(addrs_tMongoDBInput_3);
+
+                clientSettingsBuilder_tMongoDBInput_3.applyToClusterSettings(builder -> builder.applySettings(clusterSettingsBuilder_tMongoDBInput_3.build()));
+
+
+
+        mongo_tMongoDBInput_3 = com.mongodb.client.MongoClients.create(clientSettingsBuilder_tMongoDBInput_3.build());
+        db_tMongoDBInput_3 = mongo_tMongoDBInput_3.getDatabase(context.mongo_database);
+
+
+				
+					com.mongodb.client.MongoCollection<org.bson.Document> coll_tMongoDBInput_3 = db_tMongoDBInput_3.getCollection(context.mongo_player_performances);
+				
+				
+				
+				try{
+					// Add warning if an index is not in the query.
+					boolean needIndexWarning = true;
+					String indexList = "";
+					java.lang.StringBuilder sb_tMongoDBInput_3 = new java.lang.StringBuilder();
+	                
+	                    for (com.mongodb.DBObject index: coll_tMongoDBInput_3.listIndexes(com.mongodb.DBObject.class)) {
+	                 
+	                        for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
+	                            // The regexp is:
+	                            // - contain the db DBcolumnName between two backslashed quotes
+	                            // - is followed at some point by a colon
+	                            // - there is no comma between the the DBcolumnName and the colon
+	                            if  (("{}").matches(".*" + key.replace("*","\\*") + "[^,]*:.*")) {
+	                                // We have an index, do not print error message
+	                                needIndexWarning = false;
+	                            } else {
+	                                // This index is not in the query, add it into the indexList
+	                                sb_tMongoDBInput_3.append(", ").append(key);
+	                            }
+	                        }
+	                        indexList = sb_tMongoDBInput_3.toString();
+	                    }
+	                if ((!"".equals(indexList)) && (needIndexWarning)) {
+	                    
+	                        System.err.println("tMongoDBInput_3 - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+	                        
+	                }
+	            }catch(com.mongodb.MongoException e){
+	            	// caught an exception after issuing the getIndexInfo()
+	            	// don't fail the whole job
+	            	// maybe due to authorization
+	            }
+
+						org.bson.Document myQuery_tMongoDBInput_3 = org.bson.Document.parse("{}");
+						
+							com.mongodb.client.FindIterable<org.bson.Document> findIterable_tMongoDBInput_3 = coll_tMongoDBInput_3.find(myQuery_tMongoDBInput_3).noCursorTimeout(false);
+							
+
+
+				
+				class DBObjectInputUtil_tMongoDBInput_3{
+					// Get the node value in embedded document, 
+					//If have no embedded document get root document node.
+					
+					public Object getValue(String parentNode,String currentName,org.bson.Document dbObject){
+						Object value=null;
+						if(dbObject==null){
+							return null;
+						}
+						if (parentNode == null || "".equals(parentNode)) {
+						    if ("*".equals(currentName)) {
+						        value = dbObject;
+						    } else if (dbObject.get(currentName)!=null){
+								value=dbObject.get(currentName);
+							}
+						}else{
+							String objNames[] = parentNode.split("\\.");
+							org.bson.Document currentObj=dbObject;
+							for(int i=0;i<objNames.length;i++){
+								currentObj=(org.bson.Document)currentObj.get(objNames[i]);
+								if(currentObj==null){
+									break;
+								}
+							}
+							if ("*".equals(currentName)) {
+                                value = currentObj;
+                            } else if(currentObj!=null){
+								value=currentObj.get(currentName);
+							}
+						}
+						
+						    if(value instanceof org.bson.Document){
+						        value = ((org.bson.Document)value).toJson();
+						    }else if (value instanceof java.util.List){
+
+						    java.util.List list = new java.util.ArrayList();
+						    ((java.util.List)value).stream().forEach(e -> {
+						    if(e instanceof org.bson.Document){
+						        list.add(((org.bson.Document)e).toJson());
+						    }else{
+						        list.add(e);
+						    }
+						    });
+						    value = list;
+						    }
+
+						
+						return value;
+					}
+				}
+				DBObjectInputUtil_tMongoDBInput_3 dbObjectInputUtil_tMongoDBInput_3=new DBObjectInputUtil_tMongoDBInput_3();
+				java.util.Map<String, String> pathMap_tMongoDBInput_3=new java.util.HashMap<>();
+				pathMap_tMongoDBInput_3.put("player_id","");
+				pathMap_tMongoDBInput_3.put("season_name","");
+				pathMap_tMongoDBInput_3.put("competition_id","");
+				pathMap_tMongoDBInput_3.put("competition_name","");
+				pathMap_tMongoDBInput_3.put("team_id","");
+				pathMap_tMongoDBInput_3.put("team_name","");
+				pathMap_tMongoDBInput_3.put("nb_in_group","");
+				pathMap_tMongoDBInput_3.put("nb_on_pitch","");
+				pathMap_tMongoDBInput_3.put("goals","");
+				pathMap_tMongoDBInput_3.put("assists","");
+				pathMap_tMongoDBInput_3.put("own_goals","");
+				pathMap_tMongoDBInput_3.put("subed_in","");
+				pathMap_tMongoDBInput_3.put("subed_out","");
+				pathMap_tMongoDBInput_3.put("yellow_cards","");
+				pathMap_tMongoDBInput_3.put("second_yellow_cards","");
+				pathMap_tMongoDBInput_3.put("direct_red_cards","");
+				pathMap_tMongoDBInput_3.put("penalty_goals","");
+				pathMap_tMongoDBInput_3.put("minutes_played","");
+				pathMap_tMongoDBInput_3.put("goals_conceded","");
+				pathMap_tMongoDBInput_3.put("clean_sheets","");
+
+						
+					com.mongodb.client.MongoCursor<org.bson.Document> cursor_tMongoDBInput_3 = findIterable_tMongoDBInput_3.iterator();
+						
+				while (cursor_tMongoDBInput_3.hasNext()){
+				org.bson.Document o_tMongoDBInput_3 = cursor_tMongoDBInput_3.next();
+				nb_line_tMongoDBInput_3++;
+				Object valueObj_tMongoDBInput_3=null;
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("player_id"),"player_id",o_tMongoDBInput_3);
+					
+				row4.player_id = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("season_name"),"season_name",o_tMongoDBInput_3);
+					
+				row4.season_name = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("competition_id"),"competition_id",o_tMongoDBInput_3);
+					
+				row4.competition_id = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("competition_name"),"competition_name",o_tMongoDBInput_3);
+					
+				row4.competition_name = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("team_id"),"team_id",o_tMongoDBInput_3);
+					
+				row4.team_id = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("team_name"),"team_name",o_tMongoDBInput_3);
+					
+				row4.team_name = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("nb_in_group"),"nb_in_group",o_tMongoDBInput_3);
+					
+				row4.nb_in_group = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("nb_on_pitch"),"nb_on_pitch",o_tMongoDBInput_3);
+					
+				row4.nb_on_pitch = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("goals"),"goals",o_tMongoDBInput_3);
+					
+				row4.goals = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("assists"),"assists",o_tMongoDBInput_3);
+					
+				row4.assists = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("own_goals"),"own_goals",o_tMongoDBInput_3);
+					
+				row4.own_goals = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("subed_in"),"subed_in",o_tMongoDBInput_3);
+					
+				row4.subed_in = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("subed_out"),"subed_out",o_tMongoDBInput_3);
+					
+				row4.subed_out = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("yellow_cards"),"yellow_cards",o_tMongoDBInput_3);
+					
+				row4.yellow_cards = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("second_yellow_cards"),"second_yellow_cards",o_tMongoDBInput_3);
+					
+				row4.second_yellow_cards = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("direct_red_cards"),"direct_red_cards",o_tMongoDBInput_3);
+					
+				row4.direct_red_cards = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("penalty_goals"),"penalty_goals",o_tMongoDBInput_3);
+					
+				row4.penalty_goals = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("minutes_played"),"minutes_played",o_tMongoDBInput_3);
+					
+				row4.minutes_played = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("goals_conceded"),"goals_conceded",o_tMongoDBInput_3);
+					
+				row4.goals_conceded = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+                    valueObj_tMongoDBInput_3=dbObjectInputUtil_tMongoDBInput_3.getValue(pathMap_tMongoDBInput_3.get("clean_sheets"),"clean_sheets",o_tMongoDBInput_3);
+					
+				row4.clean_sheets = valueObj_tMongoDBInput_3==null ? null : valueObj_tMongoDBInput_3.toString();
+				
+
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_3 begin ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_3 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+
+ 
+
+
+	tos_count_tMongoDBInput_3++;
+
+/**
+ * [tMongoDBInput_3 main ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_3 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_3 process_data_begin ] stop
+ */
+
+	
+	/**
+	 * [tAdvancedHash_row4 main ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+					if(execStat){
+						runStat.updateStatOnConnection(iterateId,1,1
+						
+							,"row4"
+						
+						);
+					}
+					
+
+
+			   
+			   
+
+					row4Struct row4_HashRow = new row4Struct();
+		   	   	   
+				
+				row4_HashRow.player_id = row4.player_id;
+				
+				row4_HashRow.season_name = row4.season_name;
+				
+				row4_HashRow.competition_id = row4.competition_id;
+				
+				row4_HashRow.competition_name = row4.competition_name;
+				
+				row4_HashRow.team_id = row4.team_id;
+				
+				row4_HashRow.team_name = row4.team_name;
+				
+				row4_HashRow.nb_in_group = row4.nb_in_group;
+				
+				row4_HashRow.nb_on_pitch = row4.nb_on_pitch;
+				
+				row4_HashRow.goals = row4.goals;
+				
+				row4_HashRow.assists = row4.assists;
+				
+				row4_HashRow.own_goals = row4.own_goals;
+				
+				row4_HashRow.subed_in = row4.subed_in;
+				
+				row4_HashRow.subed_out = row4.subed_out;
+				
+				row4_HashRow.yellow_cards = row4.yellow_cards;
+				
+				row4_HashRow.second_yellow_cards = row4.second_yellow_cards;
+				
+				row4_HashRow.direct_red_cards = row4.direct_red_cards;
+				
+				row4_HashRow.penalty_goals = row4.penalty_goals;
+				
+				row4_HashRow.minutes_played = row4.minutes_played;
+				
+				row4_HashRow.goals_conceded = row4.goals_conceded;
+				
+				row4_HashRow.clean_sheets = row4.clean_sheets;
+				
+			tHash_Lookup_row4.put(row4_HashRow);
+			
+            
+
+
+
+
+ 
+
+
+	tos_count_tAdvancedHash_row4++;
+
+/**
+ * [tAdvancedHash_row4 main ] stop
+ */
+	
+	/**
+	 * [tAdvancedHash_row4 process_data_begin ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row4 process_data_begin ] stop
+ */
+	
+	/**
+	 * [tAdvancedHash_row4 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row4 process_data_end ] stop
+ */
+
+
+
+	
+	/**
+	 * [tMongoDBInput_3 process_data_end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_3 process_data_end ] stop
+ */
+	
+	/**
+	 * [tMongoDBInput_3 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+
+            }
+                    if(mongo_tMongoDBInput_3 != null) {
+                        mongo_tMongoDBInput_3.close();
+                    }
+    globalMap.put("tMongoDBInput_3_NB_LINE", nb_line_tMongoDBInput_3);
+ 
+
+ok_Hash.put("tMongoDBInput_3", true);
+end_Hash.put("tMongoDBInput_3", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tMongoDBInput_3 end ] stop
+ */
+
+	
+	/**
+	 * [tAdvancedHash_row4 end ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+
+tHash_Lookup_row4.endPut();
+
+				if(execStat){
+			  		runStat.updateStat(resourceMap,iterateId,2,0,"row4");
+			  	}
+			  	
+ 
+
+ok_Hash.put("tAdvancedHash_row4", true);
+end_Hash.put("tAdvancedHash_row4", System.currentTimeMillis());
+
+
+
+
+/**
+ * [tAdvancedHash_row4 end ] stop
+ */
+
+
+
+				}//end the resume
+
+				
+
+
+
+	
+			}catch(java.lang.Exception e){	
+				
+				TalendException te = new TalendException(e, currentComponent, globalMap);
+				
+				throw te;
+			}catch(java.lang.Error error){	
+				
+					runStat.stopThreadStat();
+				
+				throw error;
+			}finally{
+				
+				try{
+					
+	
+	/**
+	 * [tMongoDBInput_3 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tMongoDBInput_3";
+
+	
+
+ 
+
+
+
+/**
+ * [tMongoDBInput_3 finally ] stop
+ */
+
+	
+	/**
+	 * [tAdvancedHash_row4 finally ] start
+	 */
+
+	
+
+	
+	
+	currentComponent="tAdvancedHash_row4";
+
+	
+
+ 
+
+
+
+/**
+ * [tAdvancedHash_row4 finally ] stop
+ */
+
+
+
+				}catch(java.lang.Exception e){	
+					//ignore
+				}catch(java.lang.Error error){
+					//ignore
+				}
+				resourceMap = null;
+			}
+		
+
+		globalMap.put("tMongoDBInput_3_SUBPROCESS_STATE", 1);
 	}
 	
     public String resuming_logs_dir_path = null;
@@ -3245,6 +6620,30 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                         } else {
                             context.mongo_database=(String) context.getProperty("mongo_database");
                         }
+                        context.setContextType("mongo_player_injuries", "id_String");
+                        if(context.getStringValue("mongo_player_injuries") == null) {
+                            context.mongo_player_injuries = null;
+                        } else {
+                            context.mongo_player_injuries=(String) context.getProperty("mongo_player_injuries");
+                        }
+                        context.setContextType("mongo_player_latest_market_value", "id_String");
+                        if(context.getStringValue("mongo_player_latest_market_value") == null) {
+                            context.mongo_player_latest_market_value = null;
+                        } else {
+                            context.mongo_player_latest_market_value=(String) context.getProperty("mongo_player_latest_market_value");
+                        }
+                        context.setContextType("mongo_player_performances", "id_String");
+                        if(context.getStringValue("mongo_player_performances") == null) {
+                            context.mongo_player_performances = null;
+                        } else {
+                            context.mongo_player_performances=(String) context.getProperty("mongo_player_performances");
+                        }
+                        context.setContextType("mongo_player_profiles", "id_String");
+                        if(context.getStringValue("mongo_player_profiles") == null) {
+                            context.mongo_player_profiles = null;
+                        } else {
+                            context.mongo_player_profiles=(String) context.getProperty("mongo_player_profiles");
+                        }
                         context.setContextType("mongo_port", "id_String");
                         if(context.getStringValue("mongo_port") == null) {
                             context.mongo_port = null;
@@ -3256,6 +6655,18 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                             context.mongo_server = null;
                         } else {
                             context.mongo_server=(String) context.getProperty("mongo_server");
+                        }
+                        context.setContextType("mongo_team_details", "id_String");
+                        if(context.getStringValue("mongo_team_details") == null) {
+                            context.mongo_team_details = null;
+                        } else {
+                            context.mongo_team_details=(String) context.getProperty("mongo_team_details");
+                        }
+                        context.setContextType("mongo_transfer_history", "id_String");
+                        if(context.getStringValue("mongo_transfer_history") == null) {
+                            context.mongo_transfer_history = null;
+                        } else {
+                            context.mongo_transfer_history=(String) context.getProperty("mongo_transfer_history");
                         }
                         context.setContextType("postgres_database", "id_String");
                         if(context.getStringValue("postgres_database") == null) {
@@ -3287,17 +6698,17 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                         } else {
                             context.postgres_server=(String) context.getProperty("postgres_server");
                         }
+                        context.setContextType("postgres_table_bodytype", "id_String");
+                        if(context.getStringValue("postgres_table_bodytype") == null) {
+                            context.postgres_table_bodytype = null;
+                        } else {
+                            context.postgres_table_bodytype=(String) context.getProperty("postgres_table_bodytype");
+                        }
                         context.setContextType("postgres_table_players", "id_String");
                         if(context.getStringValue("postgres_table_players") == null) {
                             context.postgres_table_players = null;
                         } else {
                             context.postgres_table_players=(String) context.getProperty("postgres_table_players");
-                        }
-                        context.setContextType("postgres_table_nationality", "id_String");
-                        if(context.getStringValue("postgres_table_nationality") == null) {
-                            context.postgres_table_nationality = null;
-                        } else {
-                            context.postgres_table_nationality=(String) context.getProperty("postgres_table_nationality");
                         }
                         context.setContextType("postgres_user", "id_String");
                         if(context.getStringValue("postgres_user") == null) {
@@ -3310,6 +6721,42 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                             context.source = null;
                         } else {
                             context.source=(String) context.getProperty("source");
+                        }
+                        context.setContextType("source_player_injuries", "id_String");
+                        if(context.getStringValue("source_player_injuries") == null) {
+                            context.source_player_injuries = null;
+                        } else {
+                            context.source_player_injuries=(String) context.getProperty("source_player_injuries");
+                        }
+                        context.setContextType("source_player_latest_market_value", "id_String");
+                        if(context.getStringValue("source_player_latest_market_value") == null) {
+                            context.source_player_latest_market_value = null;
+                        } else {
+                            context.source_player_latest_market_value=(String) context.getProperty("source_player_latest_market_value");
+                        }
+                        context.setContextType("source_player_performances", "id_String");
+                        if(context.getStringValue("source_player_performances") == null) {
+                            context.source_player_performances = null;
+                        } else {
+                            context.source_player_performances=(String) context.getProperty("source_player_performances");
+                        }
+                        context.setContextType("source_player_profiles", "id_String");
+                        if(context.getStringValue("source_player_profiles") == null) {
+                            context.source_player_profiles = null;
+                        } else {
+                            context.source_player_profiles=(String) context.getProperty("source_player_profiles");
+                        }
+                        context.setContextType("source_team_details", "id_String");
+                        if(context.getStringValue("source_team_details") == null) {
+                            context.source_team_details = null;
+                        } else {
+                            context.source_team_details=(String) context.getProperty("source_team_details");
+                        }
+                        context.setContextType("source_transfer_history", "id_String");
+                        if(context.getStringValue("source_transfer_history") == null) {
+                            context.source_transfer_history = null;
+                        } else {
+                            context.source_transfer_history=(String) context.getProperty("source_transfer_history");
                         }
                 } 
                 public void processAllContext() {
@@ -3330,10 +6777,22 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                 context.mongo_collection_silver = (String) parentContextMap.get("mongo_collection_silver");
             }if (parentContextMap.containsKey("mongo_database")) {
                 context.mongo_database = (String) parentContextMap.get("mongo_database");
+            }if (parentContextMap.containsKey("mongo_player_injuries")) {
+                context.mongo_player_injuries = (String) parentContextMap.get("mongo_player_injuries");
+            }if (parentContextMap.containsKey("mongo_player_latest_market_value")) {
+                context.mongo_player_latest_market_value = (String) parentContextMap.get("mongo_player_latest_market_value");
+            }if (parentContextMap.containsKey("mongo_player_performances")) {
+                context.mongo_player_performances = (String) parentContextMap.get("mongo_player_performances");
+            }if (parentContextMap.containsKey("mongo_player_profiles")) {
+                context.mongo_player_profiles = (String) parentContextMap.get("mongo_player_profiles");
             }if (parentContextMap.containsKey("mongo_port")) {
                 context.mongo_port = (String) parentContextMap.get("mongo_port");
             }if (parentContextMap.containsKey("mongo_server")) {
                 context.mongo_server = (String) parentContextMap.get("mongo_server");
+            }if (parentContextMap.containsKey("mongo_team_details")) {
+                context.mongo_team_details = (String) parentContextMap.get("mongo_team_details");
+            }if (parentContextMap.containsKey("mongo_transfer_history")) {
+                context.mongo_transfer_history = (String) parentContextMap.get("mongo_transfer_history");
             }if (parentContextMap.containsKey("postgres_database")) {
                 context.postgres_database = (String) parentContextMap.get("postgres_database");
             }if (parentContextMap.containsKey("postgres_password")) {
@@ -3344,14 +6803,26 @@ end_Hash.put("tMongoDBOutput_1", System.currentTimeMillis());
                 context.postgres_schema = (String) parentContextMap.get("postgres_schema");
             }if (parentContextMap.containsKey("postgres_server")) {
                 context.postgres_server = (String) parentContextMap.get("postgres_server");
+            }if (parentContextMap.containsKey("postgres_table_bodytype")) {
+                context.postgres_table_bodytype = (String) parentContextMap.get("postgres_table_bodytype");
             }if (parentContextMap.containsKey("postgres_table_players")) {
                 context.postgres_table_players = (String) parentContextMap.get("postgres_table_players");
-            }if (parentContextMap.containsKey("postgres_table_nationality")) {
-                context.postgres_table_nationality = (String) parentContextMap.get("postgres_table_nationality");
             }if (parentContextMap.containsKey("postgres_user")) {
                 context.postgres_user = (String) parentContextMap.get("postgres_user");
             }if (parentContextMap.containsKey("source")) {
                 context.source = (String) parentContextMap.get("source");
+            }if (parentContextMap.containsKey("source_player_injuries")) {
+                context.source_player_injuries = (String) parentContextMap.get("source_player_injuries");
+            }if (parentContextMap.containsKey("source_player_latest_market_value")) {
+                context.source_player_latest_market_value = (String) parentContextMap.get("source_player_latest_market_value");
+            }if (parentContextMap.containsKey("source_player_performances")) {
+                context.source_player_performances = (String) parentContextMap.get("source_player_performances");
+            }if (parentContextMap.containsKey("source_player_profiles")) {
+                context.source_player_profiles = (String) parentContextMap.get("source_player_profiles");
+            }if (parentContextMap.containsKey("source_team_details")) {
+                context.source_team_details = (String) parentContextMap.get("source_team_details");
+            }if (parentContextMap.containsKey("source_transfer_history")) {
+                context.source_transfer_history = (String) parentContextMap.get("source_transfer_history");
             }
         }
 
@@ -3581,6 +7052,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     104573 characters generated by Talend Open Studio for Big Data 
- *     on the 4 décembre 2025 à 18:35:10 CET
+ *     188450 characters generated by Talend Open Studio for Big Data 
+ *     on the 23 février 2026 à 02:51:34 CET
  ************************************************************************************************/
