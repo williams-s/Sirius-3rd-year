@@ -2,7 +2,7 @@
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd">
   <talendfile:ContextType xmi:id="_pzhZYNCjEfCgDOCaZzuFFA" confirmationNeeded="false" name="Default">
     <contextParameter xmi:id="_2TGfgNCjEfCgDOCaZzuFFA" comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv"/>
-    <contextParameter xmi:id="_-mx0MNEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162"/>
+    <contextParameter xmi:id="_-mx0MNEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.32"/>
     <contextParameter xmi:id="_4b9bQNEYEfCI_a0scet84w" comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata"/>
     <contextParameter xmi:id="_4b9bQdEYEfCI_a0scet84w" comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="27017"/>
     <contextParameter xmi:id="_4b9bQtEYEfCI_a0scet84w" comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="bronze"/>
@@ -27,10 +27,11 @@
     <contextParameter xmi:id="_a92QtQteEfGKHbJEEjjBrQ" comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="transfer_history"/>
     <contextParameter xmi:id="_a92QtgteEfGKHbJEEjjBrQ" comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/data/data_raw/team_details.csv"/>
     <contextParameter xmi:id="_a92QtwteEfGKHbJEEjjBrQ" comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="team_details"/>
+    <contextParameter xmi:id="_W3zWABC8EfGytNrCYe-vQw" comment="" name="mongo_collection_kpia" prompt="mongo_collection_kpia?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="kpia"/>
   </talendfile:ContextType>
   <talendfile:ContextType xmi:id="_2t1TsNCjEfCgDOCaZzuFFA" confirmationNeeded="false" name="dev">
     <contextParameter xmi:id="_2t1TsdCjEfCgDOCaZzuFFA" comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv"/>
-    <contextParameter xmi:id="_-mx0MdEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162"/>
+    <contextParameter xmi:id="_-mx0MdEXEfCI_a0scet84w" comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.32"/>
     <contextParameter xmi:id="_4b9bR9EYEfCI_a0scet84w" comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="playersdata"/>
     <contextParameter xmi:id="_4b9bSNEYEfCI_a0scet84w" comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="27017"/>
     <contextParameter xmi:id="_4b9bSdEYEfCI_a0scet84w" comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="bronze"/>
@@ -55,6 +56,7 @@
     <contextParameter xmi:id="_a92QvQteEfGKHbJEEjjBrQ" comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="transfer_history"/>
     <contextParameter xmi:id="_a92QvgteEfGKHbJEEjjBrQ" comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="/data/data_raw/team_details.csv"/>
     <contextParameter xmi:id="_a92QvwteEfGKHbJEEjjBrQ" comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="team_details"/>
+    <contextParameter xmi:id="_W3zWARC8EfGytNrCYe-vQw" comment="" name="mongo_collection_kpia" prompt="mongo_collection_kpia?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="kpia"/>
   </talendfile:ContextType>
   <talendfile:ContextType xmi:id="__Gq1MNEXEfCI_a0scet84w" confirmationNeeded="false" name="local">
     <contextParameter xmi:id="__Gq1MdEXEfCI_a0scet84w" comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="C:\Users\perso\Downloads\archive\fifa_players.csv"/>
@@ -83,5 +85,6 @@
     <contextParameter xmi:id="_a92QxQteEfGKHbJEEjjBrQ" comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="transfer_history"/>
     <contextParameter xmi:id="_a92QxgteEfGKHbJEEjjBrQ" comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\team_details\team_details.csv"/>
     <contextParameter xmi:id="_a92QxwteEfGKHbJEEjjBrQ" comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="team_details"/>
+    <contextParameter xmi:id="_W3zWAhC8EfGytNrCYe-vQw" comment="" name="mongo_collection_kpia" prompt="mongo_collection_kpia?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="kpia"/>
   </talendfile:ContextType>
 </xmi:XMI>

@@ -126,7 +126,7 @@
     <elementParameter field="TEXT" name="PROPERTIES_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:QNDab7ej4H/9Ml/T7RBDDAF63EXD6ktRKGcjDtoX" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:pvCzdlb1YY5yylbGMICdeF95ZsEjmVV5V4Hs4os5" show="false"/>
     <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
@@ -161,7 +161,7 @@
     <elementParameter field="TEXT" name="PROPERTIES" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:tcyZymMH5hNZ5aqeMCMy90oFc4rDdPM2pMeqOX9g" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:nNAhtjJBLHmxBUMfqpgShFToQ9BJn08dgbfnjuKC" show="false"/>
     <elementParameter field="FILE" name="DBFILE" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_STATS" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_LOGS" value="&quot;&quot;" show="false"/>
@@ -297,7 +297,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:QfMP2m3IIQ9cja+0cOVH8Oo9JTx5jmV/LHATknMp" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:et2XSwrT3Dt4/rlUhw3Xx416Ik2FnwtapH6mbUsD" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -382,7 +382,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:B9JLIZ1VdPiDATA7sWfbyuWigrO/5oFYoK671QyD" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:S4n2XnccHi9kkiZrdA6TPJnv4tuad0KVsbeaS5jZ" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -478,7 +478,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:2y1HxEgg269lJjsICgsiqWBy10h/AFUSE4KjzM7J" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:IU30jlTGkM5iIPgTMylptye43sphHAWjhy2SOg7f" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -650,7 +650,7 @@
       <column comment="" key="false" length="-1" name="team_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_in_group" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_on_pitch" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="assists" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="own_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="subed_in" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
@@ -659,7 +659,7 @@
       <column comment="" key="false" length="-1" name="second_yellow_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="direct_red_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="penalty_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="goals_conceded" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="clean_sheets" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
     </metadata>
@@ -672,7 +672,7 @@
       <column comment="" key="false" length="-1" name="team_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_in_group" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_on_pitch" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="assists" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="own_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="subed_in" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
@@ -681,7 +681,7 @@
       <column comment="" key="false" length="-1" name="second_yellow_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="direct_red_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="penalty_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="goals_conceded" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="clean_sheets" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
@@ -710,7 +710,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:k9GL/bXEo+M9eCL3w04wTv89xHaOt4/ZVpbOfT5C" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:ptnMTbC0k/uE59eiRF7JK1b7dMQ6pI47aRhOXB1B" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -845,7 +845,7 @@
       <column comment="" key="false" length="-1" name="team_name" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_in_group" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="nb_on_pitch" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="assists" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="own_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="subed_in" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
@@ -854,7 +854,7 @@
       <column comment="" key="false" length="-1" name="second_yellow_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="direct_red_cards" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="penalty_goals" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="minutes_played" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="goals_conceded" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="clean_sheets" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
     </metadata>
@@ -1122,7 +1122,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:0E6PdM07Uw2nYtjDJRJWEQ/70Bjezn9YQVa+4r/x" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:ZLUZ6QtJgpf56UtXh4kxnly1uxqdsdefm9Ac1rvT" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1480,7 +1480,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:nUyLgqbKu1feN6rVUi1eh1atlIklIZPbSsBu8vPS" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:5In81UQ+BTjr1mMbxBM+NqGpt4d8rCtMTc4XqmJw" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1700,7 +1700,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:DzJ7LiSj8o06HiUDK1uHA8ys69X6wjrMsAOxFYn0" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:xuMF7jUQzOS225rmX+wG96yzaSdVtbjYHMUmVL14" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>

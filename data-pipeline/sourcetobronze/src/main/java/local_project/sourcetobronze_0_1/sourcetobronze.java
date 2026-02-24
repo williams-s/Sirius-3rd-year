@@ -2851,9 +2851,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					return this.nb_on_pitch;
 				}
 				
-			    public Integer goals;
+			    public String goals;
 
-				public Integer getGoals () {
+				public String getGoals () {
 					return this.goals;
 				}
 				
@@ -2905,9 +2905,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					return this.penalty_goals;
 				}
 				
-			    public Integer minutes_played;
+			    public String minutes_played;
 
-				public Integer getMinutes_played () {
+				public String getMinutes_played () {
 					return this.minutes_played;
 				}
 				
@@ -3051,7 +3051,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 						this.nb_on_pitch = readInteger(dis);
 					
-						this.goals = readInteger(dis);
+					this.goals = readString(dis);
 					
 						this.assists = readInteger(dis);
 					
@@ -3069,7 +3069,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 						this.penalty_goals = readInteger(dis);
 					
-						this.minutes_played = readInteger(dis);
+					this.minutes_played = readString(dis);
 					
 						this.goals_conceded = readInteger(dis);
 					
@@ -3113,7 +3113,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 						this.nb_on_pitch = readInteger(dis);
 					
-						this.goals = readInteger(dis);
+					this.goals = readString(dis);
 					
 						this.assists = readInteger(dis);
 					
@@ -3131,7 +3131,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 						this.penalty_goals = readInteger(dis);
 					
-						this.minutes_played = readInteger(dis);
+					this.minutes_played = readString(dis);
 					
 						this.goals_conceded = readInteger(dis);
 					
@@ -3187,9 +3187,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeInteger(this.nb_on_pitch,dos);
 					
-					// Integer
+					// String
 				
-						writeInteger(this.goals,dos);
+						writeString(this.goals,dos);
 					
 					// Integer
 				
@@ -3223,9 +3223,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeInteger(this.penalty_goals,dos);
 					
-					// Integer
+					// String
 				
-						writeInteger(this.minutes_played,dos);
+						writeString(this.minutes_played,dos);
 					
 					// Integer
 				
@@ -3278,9 +3278,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeInteger(this.nb_on_pitch,dos);
 					
-					// Integer
+					// String
 				
-						writeInteger(this.goals,dos);
+						writeString(this.goals,dos);
 					
 					// Integer
 				
@@ -3314,9 +3314,9 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeInteger(this.penalty_goals,dos);
 					
-					// Integer
+					// String
 				
-						writeInteger(this.minutes_played,dos);
+						writeString(this.minutes_played,dos);
 					
 					// Integer
 				
@@ -3347,7 +3347,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 		sb.append(",team_name="+team_name);
 		sb.append(",nb_in_group="+String.valueOf(nb_in_group));
 		sb.append(",nb_on_pitch="+String.valueOf(nb_on_pitch));
-		sb.append(",goals="+String.valueOf(goals));
+		sb.append(",goals="+goals);
 		sb.append(",assists="+String.valueOf(assists));
 		sb.append(",own_goals="+String.valueOf(own_goals));
 		sb.append(",subed_in="+String.valueOf(subed_in));
@@ -3356,7 +3356,7 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 		sb.append(",second_yellow_cards="+String.valueOf(second_yellow_cards));
 		sb.append(",direct_red_cards="+String.valueOf(direct_red_cards));
 		sb.append(",penalty_goals="+String.valueOf(penalty_goals));
-		sb.append(",minutes_played="+String.valueOf(minutes_played));
+		sb.append(",minutes_played="+minutes_played);
 		sb.append(",goals_conceded="+String.valueOf(goals_conceded));
 		sb.append(",clean_sheets="+String.valueOf(clean_sheets));
 	    sb.append("]");
@@ -3722,27 +3722,8 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.get
 				
 					columnIndexWithD_tFileInputDelimited_3 = 8;
 					
-						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						if(temp.length() > 0) {
-							
-								try {
-								
-    								row3.goals = ParserUtils.parseTo_Integer(temp);
-    							
-    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
-globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
-									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
-										"goals", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
-								}
-    							
-						} else {						
-							
-								
-									row3.goals = null;
-								
-							
-						}
-					
+							row3.goals = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						
 				
 					columnIndexWithD_tFileInputDelimited_3 = 9;
 					
@@ -3938,27 +3919,8 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.get
 				
 					columnIndexWithD_tFileInputDelimited_3 = 17;
 					
-						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						if(temp.length() > 0) {
-							
-								try {
-								
-    								row3.minutes_played = ParserUtils.parseTo_Integer(temp);
-    							
-    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
-globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
-									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
-										"minutes_played", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
-								}
-    							
-						} else {						
-							
-								
-									row3.minutes_played = null;
-								
-							
-						}
-					
+							row3.minutes_played = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						
 				
 					columnIndexWithD_tFileInputDelimited_3 = 18;
 					
@@ -8598,6 +8560,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     235840 characters generated by Talend Open Studio for Big Data 
- *     on the 23 février 2026 à 02:52:08 CET
+ *     234434 characters generated by Talend Open Studio for Big Data 
+ *     on the 24 février 2026 à 02:34:09 CET
  ************************************************************************************************/
