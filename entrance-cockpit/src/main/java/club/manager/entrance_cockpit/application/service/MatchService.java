@@ -4,6 +4,7 @@ import club.manager.common_library.dto.ClubResponseDTO;
 import club.manager.common_library.dto.MatchResponseDTO;
 import club.manager.common_library.dto.TeamResponseDTO;
 import club.manager.entrance_cockpit.application.mapper.MatchMapper;
+import club.manager.entrance_cockpit.application.mapper.TeamMapper;
 import club.manager.entrance_cockpit.domain.entity.Club;
 import club.manager.entrance_cockpit.domain.entity.Match;
 import club.manager.entrance_cockpit.domain.entity.Team;
@@ -24,6 +25,7 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
     private final MatchMapper matchMapper;
+    private final TeamMapper teamMapper;
 
     public MatchResponseDTO getMatch(Long matchId){
         Optional<Match> match = matchRepository.findById(matchId);
@@ -62,6 +64,15 @@ public class MatchService {
             return new Pair<>(null,HttpStatus.FORBIDDEN);
         }
         return new Pair<>(null,HttpStatus.NOT_FOUND);
+    }
+
+    public Pair<TeamResponseDTO, HttpStatus> getTeamFromClubThatPlayMatch(Long clubId, Long matchId){
+        Team team = matchRepository.findHomeTeamByClubAndMatch(clubId, matchId);
+        if (team == null) team = matchRepository.findAwayTeamByClubAndMatch(clubId, matchId);
+        if (team == null){
+            return new Pair<>(null, HttpStatus.FORBIDDEN);
+        }
+        return new Pair<>(teamMapper.toDTO(team), HttpStatus.OK);
     }
 }
 

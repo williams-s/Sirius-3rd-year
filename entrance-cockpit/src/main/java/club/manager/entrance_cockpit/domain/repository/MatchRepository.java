@@ -24,6 +24,13 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
             "JOIN team on match.id_team_away = team.id_team or match.id_team_home = team.id_team " +
             "where team.id_team = :teamId ORDER BY match.date_time", nativeQuery = true)
     Optional<List<Match>> findMatchesByTeamId(@Param("teamId") Long teamId);
+
+
+    @Query("SELECT m.teamHome FROM Match m WHERE m.matchId = :matchId AND m.teamHome.club.clubId = :clubId")
+    Team findHomeTeamByClubAndMatch(@Param("clubId") Long clubId, @Param("matchId") Long matchId);
+
+    @Query("SELECT m.teamAway FROM Match m WHERE m.matchId = :matchId AND m.teamAway.club.clubId = :clubId")
+    Team findAwayTeamByClubAndMatch(@Param("clubId") Long clubId, @Param("matchId") Long matchId);
 }
 
 

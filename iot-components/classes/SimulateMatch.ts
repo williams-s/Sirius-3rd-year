@@ -9,7 +9,7 @@ import {
     getOptionsForPosition,
     GOAL_END_Y,
     GOAL_START_Y,
-    INTERCEPTION_RADIUS,
+    INTERCEPTION_RADIUS, PENALTY_LEFT, PENALTY_RIGHT,
     SUCCESS_RATES,
     TeamSimulate
 } from "../utils/Constants";
@@ -20,6 +20,7 @@ import {getPlacementByPosition} from "../utils/Positions";
 import {MatchStateEnum} from "../enums/generated/MatchStateEnum";
 import {TeamScore} from "../types/generated/TeamScore";
 import {Score} from "../types/generated/Score";
+import {Coordinates3D} from "../types/generated/Coordinates3D";
 
 
 class SimulateMatch {
@@ -184,10 +185,24 @@ class SimulateMatch {
                 this.mqttPublish.publishGoalEvent(shooter, this.matchId, this.matchTime90minutes, this.score, lastPasser);
                 await this.resetAllPlacements(teamThatScored.teamId === this.teamA.teamId ? this.teamB : this.teamA);
             } else {
-                if (goalkeeper) {
+                if (pendingOwner && goalkeeper) {
                     this.mqttPublish.publishActionEvent(goalkeeper, EventTypeEnum.SHOT_SAVED, this.matchId, false);
                     this.ballOwner = goalkeeper;
                     goalkeeper.getPlayerPosition().hasBall = true;
+                } else {
+                    if (goalkeeper) {
+                        const team = this.getTeamFromPlayer(goalkeeper);
+                        const penaltySpot = team.side === "LEFT" ? PENALTY_LEFT : PENALTY_RIGHT;
+                        goalkeeper.getPlayerPosition().playerCoordinates.x = penaltySpot.x;
+                        goalkeeper.getPlayerPosition().playerCoordinates.y = penaltySpot.y;
+                        await this.resetAllPlacements(team, { ...penaltySpot, z: 0 }, false);
+                        goalkeeper.getPlayerPosition().playerCoordinates.x = penaltySpot.x;
+                        goalkeeper.getPlayerPosition().playerCoordinates.y = penaltySpot.y;
+                        this.ball.ballCoordinates.x = penaltySpot.x;
+                        this.ball.ballCoordinates.y = penaltySpot.y;
+                        this.ballOwner = goalkeeper;
+                        goalkeeper.getPlayerPosition().hasBall = true;
+                    }
                 }
                 this.lastPasser = null;
             }
@@ -204,7 +219,7 @@ class SimulateMatch {
         const opponentGoalX = this.getOpponentGoalCoords(player).x;
         const distanceToGoal = Math.abs(player.getPlayerPosition().playerCoordinates.x - opponentGoalX);
 
-        if (distanceToGoal <= 20) return 3.0;
+        if (distanceToGoal <= 20) return 4.0;
         if (distanceToGoal <= 35) return 0.4;
         if (distanceToGoal <= 50) return 0.08;
         return 0.05;
@@ -386,7 +401,7 @@ class SimulateMatch {
                     : GOAL_END_Y + Math.random() * (FIELD_HEIGHT - GOAL_END_Y);
                 this.mqttPublish.publishActionEvent(player, EventTypeEnum.SHOT_MISS, this.matchId, false);
                 this.ballFlightGoal = false;
-                this.launchBall(BallFlightType.SHOT, { x: opponentGoalCoords.x, y: missY }, 35, goalkeeper, player);
+                this.launchBall(BallFlightType.SHOT, { x: opponentGoalCoords.x, y: missY }, 35, null, player);
             } else {
                 const shotSuccessRate = (SUCCESS_RATES[position]?.["shot"]) || 0.5;
                 this.ballFlightGoal = Math.random() < shotSuccessRate;
@@ -562,9 +577,9 @@ class SimulateMatch {
         }
     }
 
-    async resetAllPlacements(teamThatKickoff : TeamSimulate) {
+    async resetAllPlacements(teamThatKickoff : TeamSimulate, ballCoords : Coordinates3D = { x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, z: 0 }, kickoff = true) {
         this.matchPause = true;
-        this.ball.ballCoordinates = { x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, z: 0 };
+        this.ball.ballCoordinates = ballCoords;
         this.ball.speed = 0;
         this.ballOwner = null;
         this.flight.active = false;
@@ -576,7 +591,10 @@ class SimulateMatch {
         this.mqttPublish.publishPlayersPosition([...this.teamA.players, ...this.teamB.players], this.matchId);
         console.log('Reseting positions');
         await new Promise(resolve => setTimeout(resolve, 5000));
-        this.kickoff(teamThatKickoff);
+        if (kickoff)
+            this.kickoff(teamThatKickoff);
+        else
+            this.matchPause = false;
     }
 
     kickoff(team : TeamSimulate = null) {

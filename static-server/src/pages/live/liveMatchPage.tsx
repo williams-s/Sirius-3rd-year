@@ -18,6 +18,7 @@ import {PlayerHeatMap} from "../../components/heatmap/PlayerHeatMap.tsx";
 import {getPlayer} from "../../api/playerApi.ts";
 import {PlayerStats} from "../../components/stats/PlayerStats.tsx";
 import {PlayerHealthStatsComponent} from "../../components/health/PlayerHealthStats.tsx";
+import {TeamStats} from "../../components/stats/TeamStats.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -31,9 +32,12 @@ export const LiveMatchPage : React.FC = () => {
     const [authorized,setAuthorized] = useState(false);
     const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | null>(null);
     const [showStats, setShowStats] = useState(false);
+    const [showTeamStats, setShowTeamStats] = useState(false);
     const [showHeatMap, setShowHeatMap] = useState(false);
     const [showHealth, setShowHealth] = useState(false);
+    const [showTeamHealth, setShowTeamHealth] = useState(false);
     const [authorizedToSeePlayer, setAuthorizedToSeePlayer] = useState(false);
+    const [showTeamDetailsLive, setShowTeamDetailsLive] = useState(false);
     useEffect(() => {
         if (!matchId) {
             return;
@@ -177,9 +181,16 @@ export const LiveMatchPage : React.FC = () => {
                         <Scoreboard matchState={matchState}/>
                     </div>
                 )}
+                <div className="flex justify-between mr-8 ml-4">
+                    <button className="text-white rounded hover:bg-slate-700" onClick={() => {setShowTeamDetailsLive(true); setShowTeamStats(true)}}>
+                        Voir stats équipe
+                    </button>
+                    <button className="text-white rounded hover:bg-slate-700" onClick={() => {setShowTeamDetailsLive(true); setShowTeamHealth(true)}}>
+                        Voir santé des joueurs
+                    </button>
+                </div>
 
                 <div className="flex flex-1 gap-4 mt-4 overflow-hidden">
-
                     <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
                             {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
@@ -238,7 +249,7 @@ export const LiveMatchPage : React.FC = () => {
                                 setShowStats(false);
                                 setShowHealth(true);
                             }}
-                            >Health</button>
+                            >Santé</button>
                         </div>
 
                         <h2 className="text-white text-xl font-bold mb-4 text-center">
@@ -266,6 +277,22 @@ export const LiveMatchPage : React.FC = () => {
                     </div>
                 </div>
                 )
+            )}
+            {showTeamDetailsLive && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <div className="bg-slate-800 p-6 w-[80vw] h-[90vh]">
+                        <button
+                            onClick={() => {
+                                setShowTeamHealth(false);
+                                setShowTeamStats(false);
+                                setShowTeamDetailsLive(false);
+                            }}>
+                            ✕
+                        </button>
+                        {showTeamStats && <TeamStats matchId={matchId}/>}
+                        {showTeamHealth && <h2>La santé tu connais</h2>}
+                    </div>
+                </div>
             )}
         </div>
     );

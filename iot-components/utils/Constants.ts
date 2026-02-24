@@ -45,6 +45,8 @@ export const FIELD_HEIGHT = 68;
 export const GOAL_WIDTH = 7.32;
 export const GOAL_START_Y = (FIELD_HEIGHT - GOAL_WIDTH) / 2;
 export const GOAL_END_Y = GOAL_START_Y + GOAL_WIDTH;
+export const PENALTY_LEFT = { x: 11, y: FIELD_HEIGHT / 2, z: 0 };
+export const PENALTY_RIGHT = { x: FIELD_WIDTH - 11, y: FIELD_HEIGHT / 2, z:0};
 
 export interface TeamSimulate {
     players : Player[],
