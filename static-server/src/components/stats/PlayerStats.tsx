@@ -28,7 +28,7 @@ export const PlayerStats = ({ matchId, playerId }: Props) => {
 
         client.onConnect = () => {
             client.subscribe(
-                liveMatchTopic(matchId, `stats-player-position/${playerId}`),
+                liveMatchTopic(matchId, `stats-player-live/${playerId}`),
                 (message) => {
                     try {
                         setStats(JSON.parse(message.body));

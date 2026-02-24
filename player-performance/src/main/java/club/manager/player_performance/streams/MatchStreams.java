@@ -68,14 +68,17 @@ public class MatchStreams {
                         })
                         .mapValues((k, v) -> getStatsPlayers(v));
 
-        positionByPlayer.to("heat-map-player-position", Produced.with(Serdes.String(), payloadSerde()));
-        statsByPlayer.to("stats-player-position", Produced.with(Serdes.String(), payloadSerde()));
-
-        KStream<String, PlayerHealthDTO> healthByPlayer =
+        KStream<String, PayloadDTO> healthByPlayer =
                 playerHealth
-                        .flatMapValues(l -> l)
-                        .selectKey((k, v) -> v.getMatchId() + "|" + v.getPlayerId());
+                        .selectKey((k, v) ->  {
+                            return v.isEmpty() ? "unknown" : String.valueOf(v.getFirst().getMatchId());
+                        })
+                        .mapValues((k, v ) -> updatePlayerHealthStats(v));
 
+
+        positionByPlayer.to("heat-map-player-live", Produced.with(Serdes.String(), payloadSerde()));
+        statsByPlayer.to("stats-player-live", Produced.with(Serdes.String(), payloadSerde()));
+        healthByPlayer.to("health-player-live", Produced.with(Serdes.String(), payloadSerde()));
         Serde<PlayerLiveMatchDetailDTO> playerSerde = playerSerde();
 
         StreamJoined<String, PlayerLiveMatchDetailDTO, PlayerLiveMatchDetailDTO> joined =
@@ -161,4 +164,11 @@ public class MatchStreams {
         List<StatsDTO> stats =  positions.stream().map(p -> playerService.getPlayerStats(new PlayerKey(p.getMatchId(), p.getPlayerId()))).toList();
         return new PayloadDTO(stats);
     }
+
+    private PayloadDTO updatePlayerHealthStats(List<PlayerHealthDTO> healths){
+        healths.forEach(playerService::updatePlayerHealth);
+        List<PlayerHealthStatsDTO> statsHealths =  healths.stream().map(p -> playerService.getPlayerHealthStats(new PlayerKey(p.getMatchId(), p.getPlayerId()))).toList();
+        return new PayloadDTO(statsHealths);
+    }
+
 }

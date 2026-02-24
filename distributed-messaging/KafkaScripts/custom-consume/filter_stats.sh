@@ -15,5 +15,5 @@ fi
 
 /opt/kafka/bin/kafka-console-consumer.sh \
   --bootstrap-server localhost:9092 \
-  --topic stats-player-position | \
+  --topic stats-player-live | \
 jq -R "try fromjson catch . | select(type == \"object\") | $JQ_FILTER"

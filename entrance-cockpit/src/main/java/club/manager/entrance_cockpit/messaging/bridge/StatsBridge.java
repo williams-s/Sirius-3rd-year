@@ -23,7 +23,7 @@ public class StatsBridge {
     private final ConcurrentHashMap<Long, List<StatsDTO>> statsPlayers = new ConcurrentHashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
     private final LiveMatchStateService liveMatchStateService;
-    @KafkaListener(topics = "stats-player-position", groupId = "entrance-cockpit-stats-player-position")
+    @KafkaListener(topics = "stats-player-live", groupId = "entrance-cockpit-stats-player-live")
     public void consumeHeatMapEvents(String message) {
         PayloadDTO payloadDTO = mapper.readValue(message, PayloadDTO.class);
         List<StatsDTO> statsDtos = payloadDTO.getPayloadAsList(StatsDTO.class);
@@ -33,14 +33,14 @@ public class StatsBridge {
         }
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 3000)
     public void sendStatsDTOs() {
         statsPlayers.forEach((matchId, statsDTOS) -> {
             if (liveMatchStateService.isMatchNotRunning(matchId)) {
                 return;
             }
             statsDTOS.forEach(elem -> {
-                webSocketService.sendObjectToTopic(elem, "live-match/" + elem.getMatchId() + "/stats-player-position/" + elem.getPlayerId());
+                webSocketService.sendObjectToTopic(elem, "live-match/" + elem.getMatchId() + "/stats-player-live/" + elem.getPlayerId());
             });
         });
     }

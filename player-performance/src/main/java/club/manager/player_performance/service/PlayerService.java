@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -17,7 +19,9 @@ public class PlayerService {
     public final PositionInMatch positionInMatch;
     public final ConcurrentHashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new ConcurrentHashMap<>();
     public final ConcurrentHashMap<PlayerKey, StatsDTO> playersStats = new ConcurrentHashMap<>();
-   /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
+    public final ConcurrentHashMap<PlayerKey, HealthMesures> playerHealthStats = new ConcurrentHashMap<>();
+
+    /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
         PlayerLiveMatchDetailDTO res = null;
         if (p1 == null) {
             res = merge(getPlayerInMatch(p2),p2);
@@ -131,4 +135,51 @@ public class PlayerService {
     public int[][] updatePositionInMatch(PlayerPositionDTO playerPositionDTO) {
         return positionInMatch.updatePosition(playerPositionDTO);
     }
+
+    public void updatePlayerHealth(PlayerHealthDTO playerHealthDTO){
+        PlayerKey playerKey = new PlayerKey(playerHealthDTO.getMatchId(), playerHealthDTO.getPlayerId());
+
+        HealthMesures healthMesures = getHealthMesures(playerKey);
+        Integer heartRate = playerHealthDTO.getHeartRate();
+        Double stamina = playerHealthDTO.getStamina();
+        Double temperature = playerHealthDTO.getTemperature();
+
+        PlayerHealthStatsDTO healthStatsDTO = healthMesures.playerHealthStatsDTO;
+
+        healthStatsDTO.setCurrentStamina(stamina);
+        healthStatsDTO.setCurrentHeartRate(heartRate);
+        healthStatsDTO.setCurrentTemperature(temperature);
+
+        healthMesures.allHeartRates.add(heartRate);
+        healthMesures.allTemperatues.add(temperature);
+
+        var heartRateStats = healthMesures.allHeartRates.stream().mapToInt(Integer::intValue).summaryStatistics();
+        var temperatureStats = healthMesures.allTemperatues.stream().mapToDouble(Double::doubleValue).summaryStatistics();
+
+        healthStatsDTO.setAvgHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getAverage() : 0.0);
+        healthStatsDTO.setMinHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getMin() : 0);
+        healthStatsDTO.setMaxHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getMax() : 0);
+
+        healthStatsDTO.setAvgTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getAverage() : 0.0);
+        healthStatsDTO.setMinTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMin() : 0.0);
+        healthStatsDTO.setMaxTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMax() : 0.0);
+
+
+    }
+
+    public PlayerHealthStatsDTO getPlayerHealthStats(PlayerKey playerKey){
+        return getHealthMesures(playerKey).playerHealthStatsDTO;
+    }
+
+    private HealthMesures getHealthMesures(PlayerKey playerKey){
+        if (!playerHealthStats.containsKey(playerKey)) {
+            PlayerHealthStatsDTO playerHealthStatsDTO = new PlayerHealthStatsDTO();
+            playerHealthStatsDTO.setPlayerId(playerKey.playerId());
+            playerHealthStatsDTO.setMatchId(playerKey.matchId());
+            playerHealthStats.put(playerKey, new HealthMesures(playerHealthStatsDTO, new ArrayList<>(), new ArrayList<>()));
+        }
+        return playerHealthStats.get(playerKey);
+    }
+
+    public record HealthMesures(PlayerHealthStatsDTO playerHealthStatsDTO, List<Integer> allHeartRates, List<Double> allTemperatues){}
 }

@@ -17,6 +17,7 @@ import {PlayerCardForMatch} from "../../components/players/PlayerCardForMatch.ts
 import {PlayerHeatMap} from "../../components/heatmap/PlayerHeatMap.tsx";
 import {getPlayer} from "../../api/playerApi.ts";
 import {PlayerStats} from "../../components/stats/PlayerStats.tsx";
+import {PlayerHealthStatsComponent} from "../../components/health/PlayerHealthStats.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -31,6 +32,7 @@ export const LiveMatchPage : React.FC = () => {
     const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | null>(null);
     const [showStats, setShowStats] = useState(false);
     const [showHeatMap, setShowHeatMap] = useState(false);
+    const [showHealth, setShowHealth] = useState(false);
     const [authorizedToSeePlayer, setAuthorizedToSeePlayer] = useState(false);
     useEffect(() => {
         if (!matchId) {
@@ -111,12 +113,14 @@ export const LiveMatchPage : React.FC = () => {
                     setAuthorizedToSeePlayer(true);
                     setShowStats(true);
                     setShowHeatMap(false);
+                    setShowHealth(false);
                 }
             } catch (error) {
                 console.error("Erreur getPlayer:", error);
                 //setAuthorizedToSeePlayer(true);
                 setShowStats(false);
                 setShowHeatMap(false);
+                setShowHealth(false);
                 setAuthorizedToSeePlayer(false);
                 setSelectedPlayer(null);
             }
@@ -213,19 +217,28 @@ export const LiveMatchPage : React.FC = () => {
                                     setSelectedPlayer(null);
                                     setShowHeatMap(false);
                                     setShowStats(false);
+                                    setShowHealth(false);
                                 }}>
                                 ✕
                             </button>
                             <button onClick={() => {
-                                setShowStats(true)
-                                setShowHeatMap(false)
+                                setShowStats(true);
+                                setShowHeatMap(false);
+                                setShowHealth(false);
                             }}
                             >Stats</button>
                             <button onClick={() => {
-                                setShowHeatMap(true)
-                                setShowStats(false)
+                                setShowHeatMap(true);
+                                setShowStats(false);
+                                setShowHealth(false);
                             }}
                             >Heatmap</button>
+                            <button onClick={() => {
+                                setShowHeatMap(false);
+                                setShowStats(false);
+                                setShowHealth(true);
+                            }}
+                            >Health</button>
                         </div>
 
                         <h2 className="text-white text-xl font-bold mb-4 text-center">
@@ -243,6 +256,10 @@ export const LiveMatchPage : React.FC = () => {
                             {
                                 showStats &&
                                 <PlayerStats matchId={matchId} playerId={selectedPlayer.playerId}/>
+                            }
+                            {
+                                showHealth &&
+                                <PlayerHealthStatsComponent matchId={matchId} playerId={selectedPlayer.playerId}/>
                             }
                         </div>
 
