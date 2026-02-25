@@ -39,6 +39,9 @@ export const LiveMatchPage : React.FC = () => {
     const [showTeamHealth, setShowTeamHealth] = useState(false);
     const [authorizedToSeePlayer, setAuthorizedToSeePlayer] = useState(false);
     const [showTeamDetailsLive, setShowTeamDetailsLive] = useState(false);
+    const [homeTeam, setHomeTeam] = useState<PlayerResponse[]>([]);
+    const [awayTeam, setAwayTeam] = useState<PlayerResponse[]>([]);
+
     useEffect(() => {
         if (!matchId) {
             return;
@@ -161,7 +164,13 @@ export const LiveMatchPage : React.FC = () => {
     const teamIds = players ? [...new Set(playersPosition.map(p => p.teamId))].sort() : [];
     const teamA = players?.filter(p => p.teamId === teamIds[0]) ?? [];
     const teamB = players?.filter(p => p.teamId === teamIds[1]) ?? [];
-
+    if (teamIds[0] === matchState?.score.homeTeam.teamId){
+        setHomeTeam(teamA);
+        setAwayTeam(teamB);
+    } else {
+        setHomeTeam(teamB);
+        setAwayTeam(teamA);
+    }
 
     return (
         matchId &&
@@ -196,7 +205,7 @@ export const LiveMatchPage : React.FC = () => {
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
                             {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
                         </h2>
-                        {teamA.map(p => (
+                        {homeTeam.map(p => (
                             <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
                                 <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
                             </div>
@@ -210,7 +219,7 @@ export const LiveMatchPage : React.FC = () => {
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
                             {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
                         </h2>
-                        {teamB.map(p => (
+                        {awayTeam.map(p => (
                             <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
                                 <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
                             </div>
