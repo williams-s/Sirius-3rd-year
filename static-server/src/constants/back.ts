@@ -10,6 +10,7 @@ export const LIVE_MATCH_TOPIC = "/topic/live-match";
 
 export const PLAYER_API = API_URL + "/player";
 export const TEAM_API = API_URL + "/team";
+export const CLUB_API = API_URL + "/club";
 
 export const TEST_API = API_URL + "/test";
 

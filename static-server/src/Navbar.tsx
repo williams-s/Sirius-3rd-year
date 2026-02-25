@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {ConnectToWebSocketSTOMP} from "./utils/websocketConnection.ts";
+import {getMyClub} from "./api/clubApi.ts";
+import type {MatchResponse} from "./types/generated/MatchResponse.ts";
+import toast from "react-hot-toast";
 
 const NAV_ITEMS = [
     { label: "Club", path: "/club" },
@@ -18,6 +22,42 @@ export const Navbar = () => {
             .then(() => setIsAuthenticated(true))
             .catch(() => setIsAuthenticated(false));
     }, []);
+
+    useEffect(() => {
+        if (isAuthenticated){
+            const subForNotif = async () => {
+                const clubData = await getMyClub();
+                //const clubData = {clubId : 2};
+                if (clubData) {
+                    const client = ConnectToWebSocketSTOMP();
+                    client.onConnect = () => {
+                        client.subscribe(`/topic/notif-live-match/${clubData.clubId}`,(message) => {
+                            try {
+                                const match : MatchResponse = JSON.parse(message.body);
+                                toast.custom((t) => (
+                                    <div
+                                        onClick={() => {
+                                            window.location.href = `/live/${match.idMatch}`;
+                                            toast.dismiss(t.id);
+                                        }}
+                                        className={`cursor-pointer flex flex-col gap-1 px-4 py-3 rounded-lg border border-blue-500 bg-slate-800 text-white`}
+                                    >
+                                        <span className="font-bold">Match en direct !</span>
+                                        <span>{match.homeTeam.name} vs {match.awayTeam.name}</span>
+                                        <span className="text-slate-400 text-xs">{match.competition} - {match.matchDay}</span>
+                                    </div>
+                                ), { duration: 6000 });
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        });
+                    }
+                    client.activate();
+                }
+            }
+            subForNotif();
+        }
+    }, [isAuthenticated]);
 
     const LogInOut = async () => {
         if (isAuthenticated) {
