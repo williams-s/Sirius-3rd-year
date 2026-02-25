@@ -1,6 +1,7 @@
 package club.manager.team_performance.service;
 
 import club.manager.common_library.dto.*;
+import club.manager.common_library.keys.PlayerKey;
 import club.manager.common_library.keys.TeamKey;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TeamService {
 
     public final ConcurrentHashMap<TeamKey, StatsDTO> teamStats = new ConcurrentHashMap<>();
-    public final ConcurrentHashMap<TeamKey, HealthMesures> playerHealthStats = new ConcurrentHashMap<>();
-    
+    public final ConcurrentHashMap<PlayerKey, HealthMesures> playerHealthStats = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<TeamKey, TeamHealthMesures> teamHealthStats = new ConcurrentHashMap<>();
+
 
     public StatsDTO getTeamStats(TeamKey teamKey) {
         addStatsIfNotExist(teamKey);
@@ -86,10 +88,32 @@ public class TeamService {
 
     }
 
-    public void updatePlayerHealth(PlayerHealthDTO playerHealthDTO){
-        TeamKey teamKey = new TeamKey(playerHealthDTO.getMatchId(), playerHealthDTO.getTeamId());
+    public void updateTeamHealth(List<PlayerHealthDTO> playerHealthDTOS){
+        TeamKey teamKey = new TeamKey(playerHealthDTOS.getFirst().getMatchId(),playerHealthDTOS.getFirst().getTeamId());
+        var teamHealthMesures = getTeamHealthMesures(teamKey);
+        for (PlayerHealthDTO p : playerHealthDTOS){
+            updatePlayerHealth(p);
+            teamHealthMesures.allHeartRates.add(p.getHeartRate());
+            teamHealthMesures.allStamina.add(p.getStamina());
+            teamHealthMesures.allTemperatues.add(p.getTemperature());
+        }
+        teamHealthMesures.teamHealthStatsDTO.setPlayerHealthStatsDTOList(playerHealthDTOS.stream().map(p -> getPlayerHealthStats(new PlayerKey(p.getMatchId(), p.getPlayerId()))).toList());
+        teamHealthMesures.teamHealthStatsDTO.setAvgTemperature(teamHealthMesures.allTemperatues.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
+        teamHealthMesures.teamHealthStatsDTO.setAvgHeartRate(teamHealthMesures.allHeartRates.stream().mapToInt(Integer::intValue).average().orElse(0.0));
+        teamHealthMesures.teamHealthStatsDTO.setAvgStamina(teamHealthMesures.allStamina.stream().mapToDouble(Double::doubleValue).average().orElse(0.0));
+        teamHealthMesures.allStamina.clear();
+        teamHealthMesures.allHeartRates.clear();
+        teamHealthMesures.allTemperatues.clear();
 
-        HealthMesures healthMesures = getHealthMesures(teamKey);
+    }
+
+    public TeamHealthStatsDTO getTeamHealthStats(TeamKey teamKey){
+        return getTeamHealthMesures(teamKey).teamHealthStatsDTO;
+    }
+
+    public void updatePlayerHealth(PlayerHealthDTO playerHealthDTO){
+        PlayerKey playerKey = new PlayerKey(playerHealthDTO.getMatchId(), playerHealthDTO.getPlayerId());
+        HealthMesures healthMesures = getHealthMesures(playerKey);
         Integer heartRate = playerHealthDTO.getHeartRate();
         Double stamina = playerHealthDTO.getStamina();
         Double temperature = playerHealthDTO.getTemperature();
@@ -114,21 +138,32 @@ public class TeamService {
         healthStatsDTO.setMinTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMin() : 0.0);
         healthStatsDTO.setMaxTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMax() : 0.0);
 
-
     }
 
-    public PlayerHealthStatsDTO getPlayerHealthStats(TeamKey teamKey){
-        return getHealthMesures(teamKey).playerHealthStatsDTO;
+    public PlayerHealthStatsDTO getPlayerHealthStats(PlayerKey playerKey){
+        return getHealthMesures(playerKey).playerHealthStatsDTO;
     }
 
-    private HealthMesures getHealthMesures(TeamKey teamKey){
-        if (!playerHealthStats.containsKey(teamKey)) {
+    private HealthMesures getHealthMesures(PlayerKey playerKey){
+        if (!playerHealthStats.containsKey(playerKey)) {
             PlayerHealthStatsDTO playerHealthStatsDTO = new PlayerHealthStatsDTO();
-            playerHealthStatsDTO.setMatchId(teamKey.matchId());
-            playerHealthStats.put(teamKey, new HealthMesures(playerHealthStatsDTO, new ArrayList<>(), new ArrayList<>()));
+            playerHealthStatsDTO.setMatchId(playerKey.matchId());
+            playerHealthStatsDTO.setPlayerId(playerKey.playerId());
+            playerHealthStats.put(playerKey, new HealthMesures(playerHealthStatsDTO, new ArrayList<>(), new ArrayList<>()));
         }
-        return playerHealthStats.get(teamKey);
+        return playerHealthStats.get(playerKey);
     }
+    private TeamHealthMesures getTeamHealthMesures(TeamKey teamKey){
+        if (!teamHealthStats.containsKey(teamKey)) {
+            TeamHealthStatsDTO teamHealthStatsDTO = new TeamHealthStatsDTO();
+            teamHealthStatsDTO.setMatchId(teamKey.matchId());
+            teamHealthStatsDTO.setTeamId(teamKey.teamId());
+            teamHealthStats.put(teamKey, new TeamHealthMesures(teamHealthStatsDTO, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+        }
+        return teamHealthStats.get(teamKey);
+    }
+
 
     public record HealthMesures(PlayerHealthStatsDTO playerHealthStatsDTO, List<Integer> allHeartRates, List<Double> allTemperatues){}
+    public record TeamHealthMesures(TeamHealthStatsDTO teamHealthStatsDTO, List<Integer> allHeartRates, List<Double> allTemperatues, List<Double> allStamina){}
 }

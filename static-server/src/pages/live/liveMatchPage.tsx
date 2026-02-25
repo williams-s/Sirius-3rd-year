@@ -19,6 +19,7 @@ import {getPlayer} from "../../api/playerApi.ts";
 import {PlayerStats} from "../../components/stats/PlayerStats.tsx";
 import {PlayerHealthStatsComponent} from "../../components/health/PlayerHealthStats.tsx";
 import {TeamStats} from "../../components/stats/TeamStats.tsx";
+import {TeamHealthStatsComponent} from "../../components/health/TeamHealthStats.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -290,7 +291,7 @@ export const LiveMatchPage : React.FC = () => {
                             ✕
                         </button>
                         {showTeamStats && <TeamStats matchId={matchId}/>}
-                        {showTeamHealth && <h2>La santé tu connais</h2>}
+                        {showTeamHealth && <TeamHealthStatsComponent matchId={matchId}/>}
                     </div>
                 </div>
             )}

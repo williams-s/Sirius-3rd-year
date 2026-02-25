@@ -48,7 +48,8 @@ export const TeamStats = ({ matchId }: Props) => {
         return <div>Loading...</div>
     return (
         <div>
-            <h2>{team.name}</h2>
+            <h2 className={"text-center"}>{team.name}</h2>
+            <br/>
             <StatsComponent stats={stats}/>
         </div>
     )

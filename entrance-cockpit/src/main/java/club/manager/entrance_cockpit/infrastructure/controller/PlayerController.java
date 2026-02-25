@@ -49,7 +49,7 @@ public class PlayerController {
 
     }
 
-    @GetMapping("{teamId}/all")
+    @GetMapping("/{teamId}/all")
     public ResponseEntity<List<PlayerAttributesDTO>> getPlayersFromTeam(
             @RequestHeader("X-Auth-Request-Email") String email,
             @PathVariable Long teamId)

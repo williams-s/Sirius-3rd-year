@@ -66,7 +66,7 @@ public class MatchStreams {
                         .selectKey((k, v) ->  {
                             return v.isEmpty() ? "unknown" : String.valueOf(v.getFirst().getMatchId());
                         })
-                        .mapValues((k, v ) -> updatePlayerHealthStats(v));
+                        .mapValues((k, v ) -> getTeamHealthStats(v));
 
 
         statsByTeam.to("stats-team-live", Produced.with(Serdes.String(), payloadSerde()));
@@ -111,9 +111,13 @@ public class MatchStreams {
         return new PayloadDTO(stats);
     }
 
-    private PayloadDTO updatePlayerHealthStats(List<PlayerHealthDTO> healths){
-        healths.forEach(teamService::updatePlayerHealth);
-        List<PlayerHealthStatsDTO> statsHealths =  healths.stream().map(p -> teamService.getPlayerHealthStats(new TeamKey(p.getMatchId(), p.getTeamId()))).toList();
+    private PayloadDTO getTeamHealthStats(List<PlayerHealthDTO> healths){
+        var healthByTeam = healths.stream().collect(Collectors.groupingBy(p -> new TeamKey(p.getMatchId(), p.getTeamId())));
+        List<TeamHealthStatsDTO> statsHealths = new ArrayList<>();
+        healthByTeam.forEach((k,v) -> {
+            teamService.updateTeamHealth(v);
+            statsHealths.add(teamService.getTeamHealthStats(k));
+        });
         return new PayloadDTO(statsHealths);
     }
 
