@@ -16,7 +16,7 @@ import {
 import {PositionEnum} from "../enums/generated/PositionEnum";
 import {MqttPublish} from "./MqttPublish";
 import {EventTypeEnum} from "../enums/generated/EventTypeEnum";
-import {getPlacementByPosition} from "../utils/Positions";
+import {getPlacementByPosition, getPositionsWithPlacement} from "../utils/Positions";
 import {MatchStateEnum} from "../enums/generated/MatchStateEnum";
 import {TeamScore} from "../types/generated/TeamScore";
 import {Score} from "../types/generated/Score";
@@ -643,18 +643,21 @@ class SimulateMatch {
     }
 
     resetPositionOfPlayers(allPlayers: Player[]) {
+        const positionsLeft = getPositionsWithPlacement("LEFT", FIELD_WIDTH, FIELD_HEIGHT).map(p => ({ ...p }));
+        const positionsRight = getPositionsWithPlacement("RIGHT", FIELD_WIDTH, FIELD_HEIGHT).map(p => ({ ...p }));
+
         for (const player of allPlayers) {
-            const placement = getPlacementByPosition(
-                this.getTeamFromPlayer(player).side,
-                FIELD_WIDTH,
-                FIELD_HEIGHT,
-                player.getPlayerPosition().position
-            );
-            player.getPlayerPosition().playerCoordinates.x = placement.x;
-            player.getPlayerPosition().playerCoordinates.y = placement.y;
+            const side = this.getTeamFromPlayer(player).side;
+            const positions = side === "LEFT" ? positionsLeft : positionsRight;
+
+            const index = positions.findIndex(p => p.position === player.getPlayerPosition().position);
+            if (index !== -1) {
+                const placement = positions.splice(index, 1)[0];
+                player.getPlayerPosition().playerCoordinates.x = placement.x;
+                player.getPlayerPosition().playerCoordinates.y = placement.y;
+            }
         }
     }
-
     async startSimulation(duration = 90, actionsPerSecond = 3) {
         console.log(`Début du match! Durée: ${duration} secondes`);
         this.mqttPublish.publishMatchState(MatchStateEnum.KICK_OFF, this.matchId, this.matchTime90minutes, this.score);

@@ -51,17 +51,19 @@ const getLines = (players : PlayerTeamInfo[]) => {
 
 const addPlayer = (team: TeamSimulate, players: PlayerTeamInfo[], position : PositionEnum, amount : number) => {
     const playersToAdd = getExactAmountOfPlayers(players, position, amount);
+    let positions = team.side === "LEFT"
+        ? positions_left.map(p => ({ ...p }))
+        : positions_right.map(p => ({ ...p }));
+
     for (const player of playersToAdd){
-        let placement :  {
-            position: PositionEnum
-            x: number
-            y: number
+        const index = positions.findIndex(p => p.position === player.position);
+        if (index !== -1) {
+            const placement = positions[index];
+            positions.splice(index, 1);
+            team.players.push(new Player(matchId,player.playerId, player.teamId, player.position,placement.x,placement.y))
+        } else {
+            console.warn("No position : ", player.position);
         }
-        if (team.side === "LEFT")
-            placement = positions_left.find(p => p.position === player.position);
-        else
-            placement = positions_right.find(p => p.position === player.position);
-        team.players.push(new Player(matchId,player.playerId, player.teamId, player.position,placement.x,placement.y))
     }
 }
 
