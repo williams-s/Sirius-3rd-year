@@ -60,6 +60,24 @@ jobs:
           tags: |
             clubmanagersirius/entrance-cockpit-backend:latest
 
+      - name: Build & Push player-performance
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: player-performance/Dockerfile
+          push: true
+          tags: |
+            clubmanagersirius/player-performance-backend:latest
+
+      - name: Build & Push team-performance
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: team-performance/Dockerfile
+          push: true
+          tags: |
+            clubmanagersirius/team-performance-backend:latest
+
       - name: Build & Push bridge-messaging
         uses: docker/build-push-action@v4
         with:
