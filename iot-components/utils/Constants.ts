@@ -52,7 +52,8 @@ export interface TeamSimulate {
     players : Player[],
     side : string,
     teamId : number,
-    name : string
+    name : string,
+    homeOrAway : string,
 }
 
 export const getOptionsForPosition = (position: PositionEnum)=> {

@@ -1,5 +1,6 @@
 package club.manager.entrance_cockpit.domain.repository;
 
+import club.manager.common_library.enums.MatchStatusEnum;
 import club.manager.entrance_cockpit.domain.entity.Match;
 import club.manager.entrance_cockpit.domain.entity.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,6 +32,18 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     @Query("SELECT m.teamAway FROM Match m WHERE m.matchId = :matchId AND m.teamAway.club.clubId = :clubId")
     Team findAwayTeamByClubAndMatch(@Param("clubId") Long clubId, @Param("matchId") Long matchId);
+
+    @Query("SELECT m FROM Match m WHERE m.status = :status AND (m.teamHome.club.clubId = :clubId OR m.teamAway.club.clubId = :clubId)")
+    List<Match> findMatchesByClubIdAndStatus(@Param("clubId") Long clubId, @Param("status") MatchStatusEnum status);
+
+    @Query("SELECT COUNT(m) > 0 FROM Match m WHERE m.matchId = :matchId AND m.teamHome.teamId = :teamId")
+    boolean isHomeTeam(@Param("matchId") Long matchId,
+                       @Param("teamId") Long teamId);
+
+    @Query("SELECT COUNT(m) > 0 FROM Match m WHERE m.matchId = :matchId AND m.teamAway.teamId = :teamId")
+    boolean isAwayTeam(@Param("matchId") Long matchId,
+                       @Param("teamId") Long teamId);
+
 }
 
 

@@ -6,6 +6,7 @@ import type {HeatMapPlayer} from "../types/generated/HeatMapPlayer.ts";
 import type {PlayerHealthStats} from "../types/generated/PlayerHealthStats.ts";
 import type {TeamResponse} from "../types/generated/TeamResponse.ts";
 import type {TeamHealthStats} from "../types/generated/TeamHealthStats.ts";
+import type {MatchResponse} from "../types/generated/MatchResponse.ts";
 
 export const getCurrentLiveMatchDetails = async (matchId : number) => {
     const url = `${LIVE_MATCH_API}/${matchId}`;
@@ -52,6 +53,13 @@ export const getCurrentTeamHealth = async (matchId : number, teamId : number) =>
 export const getMyTeam = async (matchId : number) => {
     const url = `${LIVE_MATCH_API}/${matchId}/myTeam`;
     const response = await axios.get<TeamResponse>(url);
+    console.log("Response:", response.data);
+    return response.data;
+}
+
+export const getMyLiveMatches = async () => {
+    const url = `${LIVE_MATCH_API}/me/all`;
+    const response = await axios.get<MatchResponse[]>(url);
     console.log("Response:", response.data);
     return response.data;
 }

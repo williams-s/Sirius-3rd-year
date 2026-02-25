@@ -17,55 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerService {
 
     public final PositionInMatch positionInMatch;
-    public final ConcurrentHashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new ConcurrentHashMap<>();
     public final ConcurrentHashMap<PlayerKey, StatsDTO> playersStats = new ConcurrentHashMap<>();
     public final ConcurrentHashMap<PlayerKey, HealthMesures> playerHealthStats = new ConcurrentHashMap<>();
-
-    /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
-        PlayerLiveMatchDetailDTO res = null;
-        if (p1 == null) {
-            res = merge(getPlayerInMatch(p2),p2);
-        }
-        if (p2 == null) {
-            res = merge(getPlayerInMatch(p1),p1);
-        }
-        if (p1 != null && p2 != null) {
-            res = merge(merge(getPlayerInMatch(p1),p1),p2);
-        }
-        return res;
-    }*/
-
-    /*private PlayerLiveMatchDetailDTO merge(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
-
-        PlayerLiveMatchDetailDTO.PlayerLiveMatchDetailDTOBuilder merge = PlayerLiveMatchDetailDTO.builder()
-                .matchId(p1.getMatchId())
-                .timestamp(p1.getTimestamp())
-                .playerId(p1.getPlayerId())
-                .playerPosition(p1.getPlayerPosition())
-                .playerHealth(p1.getPlayerHealth())
-                .matchEvent(p1.getMatchEvent())
-                .statsDTO(p1.getStatsDTO());
-
-
-        if (p2.getPlayerPosition() != null) merge.playerPosition(p2.getPlayerPosition());
-        if (p2.getPlayerHealth() != null) merge.playerHealth(p2.getPlayerHealth());
-        if (p2.getMatchEvent() != null) merge.matchEvent(p2.getMatchEvent());
-
-        return merge.build();
-    }*/
-
-    public PlayerLiveMatchDetailDTO getPlayerInMatch(PlayerLiveMatchDetailDTO p) {
-        addPlayerInMatchIfNotExist(p);
-        return playersInMatch.get(new PlayerKey(p.getMatchId(), p.getPlayerId()));
-    }
-
-    public void addPlayerInMatchIfNotExist(PlayerLiveMatchDetailDTO p) {
-        if (!playersInMatch.containsKey(new PlayerKey(p.getMatchId(), p.getPlayerId()))) {
-            p.setStatsDTO(new StatsDTO());
-            playersInMatch.put(new PlayerKey(p.getMatchId(), p.getPlayerId()), p);
-            log.debug(p.toString());
-        }
-    }
 
     public StatsDTO getPlayerStats(PlayerKey playerKey) {
         addStatsIfNotExist(playerKey);

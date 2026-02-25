@@ -17,4 +17,8 @@ export class Requests {
         return await axios.get<PlayerTeamInfo[]>(`${this.server}/api/mock/playerBelongsTeam/${teamId}`)
     }
 
+    async getSideForTeam(matchId : number, teamId : number){
+        return await axios.get<string>(`${this.server}/api/mock/match/${matchId}/team/${teamId}/side`)
+    }
+
 }

@@ -22,13 +22,15 @@ const teamA : TeamSimulate = {
     teamId : 0,
     players : [],
     side : "LEFT",
-    name: ""
+    name: "",
+    homeOrAway: ""
 }
 const teamB : TeamSimulate = {
     teamId : 0,
     players : [],
     side : "RIGHT",
-    name: ""
+    name: "",
+    homeOrAway: ""
 }
 
 const request = new Requests(API_URL);
@@ -108,6 +110,12 @@ const main = async () => {
 
             teamB.teamId = data[1].teamId;
             teamB.name = data[1].name;
+
+            const homeOrAwayA = await request.getSideForTeam(matchId, data[0].teamId)
+            const homeOrAwayB = await request.getSideForTeam(matchId, data[1].teamId)
+
+            teamA.homeOrAway = homeOrAwayA.data;
+            teamB.homeOrAway = homeOrAwayB.data;
 
             const playersA = await request.getPlayersFromThatTeam(data[0].teamId);
             const playersB = await request.getPlayersFromThatTeam(data[1].teamId);

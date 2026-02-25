@@ -223,4 +223,20 @@ public class LiveMatchController {
         return ResponseEntity.ok(requestedStats);
     }
 
+
+    @GetMapping("/me/all")
+    public ResponseEntity<List<MatchResponseDTO>> getAllLiveMatches(
+            @RequestHeader("X-Auth-Request-Email") String email)
+    {
+        var club = clubService.getClub(email);
+        if (club == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        var res = matchService.getAllMatchesLive(club.clubId());
+        if (res.a == null){
+            return ResponseEntity.status(res.b).build();
+        }
+        return ResponseEntity.ok(res.a);
+    }
+
 }

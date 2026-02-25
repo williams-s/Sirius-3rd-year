@@ -68,18 +68,20 @@ class SimulateMatch {
         let scoreTeamA: TeamScore = {
             teamId: this.teamA.teamId,
             name: this.teamA.name,
-            score: 0
+            score: 0,
+            side: this.teamA.homeOrAway
         };
 
         let scoreTeamB: TeamScore = {
             teamId: this.teamB.teamId,
             name: this.teamB.name,
-            score: 0
+            score: 0,
+            side: this.teamB.homeOrAway
         };
 
         this.score = {
-            homeTeam: scoreTeamA,
-            awayTeam: scoreTeamB
+            homeTeam: scoreTeamA.side === "HOME" ? scoreTeamA : scoreTeamB,
+            awayTeam: scoreTeamB.side === "AWAY" ? scoreTeamB : scoreTeamA
         };
     }
 
