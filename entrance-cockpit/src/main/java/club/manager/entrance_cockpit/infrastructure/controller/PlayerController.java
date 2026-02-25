@@ -65,4 +65,21 @@ public class PlayerController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+
+    @GetMapping("/{playerId}/inMatch")
+    public ResponseEntity<PlayerResponseDTO> getPlayerInMatch(
+            @RequestHeader("X-Auth-Request-Email") String email,
+            @PathVariable Long playerId)
+    {
+        var club = clubService.getClub(email);
+        if (club == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        PlayerResponseDTO playerResponseDTO = playerService.getPlayerInMatchById(playerId);
+        if (playerResponseDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(playerResponseDTO);
+    }
 }

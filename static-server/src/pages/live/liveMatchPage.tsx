@@ -137,6 +137,24 @@ export const LiveMatchPage : React.FC = () => {
 
     }, [selectedPlayer]);
 
+    useEffect(() => {
+        if (!players || !playersPosition || !matchState || players.length === 0 || playersPosition.length === 0) return;
+
+        const teamIds = [...new Set(playersPosition.map(p => p.teamId))].sort();
+        const teamA = players.filter(p => p.teamId === teamIds[0]);
+        const teamB = players.filter(p => p.teamId === teamIds[1]);
+
+        const newHome = teamIds[0] === matchState.score.homeTeam.teamId ? teamA : teamB;
+        const newAway = teamIds[0] === matchState.score.homeTeam.teamId ? teamB : teamA;
+
+        setHomeTeam(prev =>
+            prev.length === newHome.length ? prev : newHome
+        );
+        setAwayTeam(prev =>
+            prev.length === newAway.length ? prev : newAway
+        );
+    }, [players]);
+
 
     if (isLoading) {
         return <div>Loading match data...</div>;
@@ -160,16 +178,6 @@ export const LiveMatchPage : React.FC = () => {
         return (
             <div>Pas de données pour l'instant</div>
         )
-    }
-    const teamIds = players ? [...new Set(playersPosition.map(p => p.teamId))].sort() : [];
-    const teamA = players?.filter(p => p.teamId === teamIds[0]) ?? [];
-    const teamB = players?.filter(p => p.teamId === teamIds[1]) ?? [];
-    if (teamIds[0] === matchState?.score.homeTeam.teamId){
-        setHomeTeam(teamA);
-        setAwayTeam(teamB);
-    } else {
-        setHomeTeam(teamB);
-        setAwayTeam(teamA);
     }
 
     return (
@@ -203,11 +211,11 @@ export const LiveMatchPage : React.FC = () => {
                 <div className="flex flex-1 gap-4 mt-4 overflow-hidden">
                     <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
-                            {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
+                            {matchState?.score.homeTeam.name ?? `Equipe 1`}
                         </h2>
                         {homeTeam.map(p => (
-                            <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
-                                <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
+                            <div key={p.playerId} onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch player={p} color="blue" />
                             </div>
                         ))}
                     </div>
@@ -217,11 +225,11 @@ export const LiveMatchPage : React.FC = () => {
 
                     <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
-                            {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
+                            {matchState?.score.awayTeam.name ?? `Equipe 2`}
                         </h2>
                         {awayTeam.map(p => (
-                            <div onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
-                                <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
+                            <div key={p.playerId} onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch player={p} color="red" />
                             </div>
                         ))}
                     </div>
