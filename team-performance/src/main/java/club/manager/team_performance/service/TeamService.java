@@ -45,9 +45,11 @@ public class TeamService {
         //statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getPlayerPosition().getDistanceCovered());
     }
 
-    public void addDistanceCovered(List<PlayerPositionDTO> playerPositionDTOS) {
+    public void addDistanceCoveredAndTouches(List<PlayerPositionDTO> playerPositionDTOS) {
         for (PlayerPositionDTO p : playerPositionDTOS){
             StatsDTO statsDTO = getTeamStats(new TeamKey(p.getMatchId(), p.getTeamId()));
+            if (p.getHasBall())
+                statsDTO.setTouches(statsDTO.getTouches() + 1);
             statsDTO.setDistanceCovered(statsDTO.getDistanceCovered() + p.getDistanceCovered());
         }
     }

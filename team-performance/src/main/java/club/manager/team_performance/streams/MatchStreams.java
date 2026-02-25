@@ -99,7 +99,7 @@ public class MatchStreams {
 
 
     private PayloadDTO getStatsTeam(List<PlayerPositionDTO> positions) {
-        teamService.addDistanceCovered(positions);
+        teamService.addDistanceCoveredAndTouches(positions);
         var statsByTeam = positions.stream().collect(Collectors.groupingBy(p -> new TeamKey(p.getMatchId(), p.getTeamId())));
         List<StatsDTO> stats = new ArrayList<>();
         statsByTeam.forEach((k,v) -> {

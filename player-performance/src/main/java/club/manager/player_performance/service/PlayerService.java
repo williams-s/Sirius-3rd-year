@@ -181,5 +181,18 @@ public class PlayerService {
         return playerHealthStats.get(playerKey);
     }
 
+    private void addTouch(PlayerKey playerKey){
+        StatsDTO stats = getPlayerStats(playerKey);
+        stats.setTouches(stats.getTouches() + 1);
+    }
+
+    public void addTouchesPlayers(List<PlayerPositionDTO> playerPositionDTOS){
+        for (var p : playerPositionDTOS){
+            if (p.getHasBall()){
+                addTouch(new PlayerKey(p.getMatchId(), p.getPlayerId()));
+            }
+        }
+    }
+
     public record HealthMesures(PlayerHealthStatsDTO playerHealthStatsDTO, List<Integer> allHeartRates, List<Double> allTemperatues){}
 }
