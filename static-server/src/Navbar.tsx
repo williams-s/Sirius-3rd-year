@@ -43,7 +43,9 @@ export const Navbar = () => {
                                         }}
                                         className={`cursor-pointer flex flex-col gap-1 px-4 py-3 rounded-lg border border-blue-500 bg-slate-800 text-white`}
                                     >
-                                        <MatchCardHeader matchStatus={match.status}/>
+                                        <div className="flex items-center gap-2">
+                                            <MatchCardHeader matchStatus={match.status}/>
+                                        </div>
                                         <span>{match.homeTeam.name} vs {match.awayTeam.name}</span>
                                         <span>{match.homeScore} - {match.awayScore}</span>
                                         <span className="text-slate-400 text-xs">{match.competition} - {match.matchDay}</span>
