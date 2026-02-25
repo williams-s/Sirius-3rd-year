@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMapper="http://www.talend.org/mapper" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="local" jobType="Standard">
   <context confirmationNeeded="false" name="Default">
-    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162" internalId="_0uceiRDQEfGytNrCYe-vQw"/>
-    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_2k_DQBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_2k_DQRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_DQhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_2k_DQxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_2k_DRBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_2k_DRRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_2k_DRhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_2k_DRxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_2k_DSBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_2k_DSRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_2k_DShKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_2k_DSxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_2k_DTBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_2k_DTRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_2k_DThKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_2k_DTxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_2k_DUBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_DURKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_2k_DUhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_2k_DUxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_2k_DVBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.33 " internalId="_2k_DVRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_2k_DVhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_2k_DVxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_2k_DWBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_2k_DWRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_injuries.csv" internalId="_2k_DWhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_latest_market_value.csv" internalId="_2k_DWxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_performances.csv" internalId="_2k_DXBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_profiles.csv" internalId="_2k_DXRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/team_details.csv" internalId="_2k_DXhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/transfer_history.csv" internalId="_2k_DXxKaEfGvoPDUqFce9A"/>
+    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.31" internalId="_0uceiRDQEfGytNrCYe-vQw"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_PG318BKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_PG318RKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG318hKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_PG318xKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_PG319BKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_PG319RKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_PG319hKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_PG319xKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_PG31-BKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_PG31-RKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_PG31-hKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_PG31-xKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_PG4dABKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_PG4dARKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_PG4dAhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_PG4dAxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_PG4dBBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG4dBRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_PG4dBhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_PG4dBxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_PG4dCBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.33 " internalId="_PG4dCRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_PG4dChKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_PG4dCxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_PG4dDBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_PG4dDRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_injuries.csv" internalId="_PG4dDhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_latest_market_value.csv" internalId="_PG4dDxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_performances.csv" internalId="_PG4dEBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_profiles.csv" internalId="_PG4dERKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/team_details.csv" internalId="_PG4dEhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/transfer_history.csv" internalId="_PG4dExKhEfGxXpxiI_Lr1A"/>
   </context>
   <context confirmationNeeded="false" name="dev">
-    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="172.31.249.162" internalId="_0ucepBDQEfGytNrCYe-vQw"/>
-    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_2k_DYBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_2k_DYRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_DYhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_2k_DYxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_2k_DZBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_2k_DZRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_2k_DZhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_2k_DZxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_2k_DaBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_2k_DaRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_2k_DahKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_2k_qUBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_2k_qURKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_2k_qUhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_2k_qUxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_2k_qVBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_2k_qVRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_qVhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_2k_qVxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_2k_qWBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_2k_qWRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.33" internalId="_2k_qWhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_2k_qWxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_2k_qXBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_2k_qXRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_2k_qXhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_injuries.csv" internalId="_2k_qXxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_latest_market_value.csv" internalId="_2k_qYBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_performances.csv" internalId="_2k_qYRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_profiles.csv" internalId="_2k_qYhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/team_details.csv" internalId="_2k_qYxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/transfer_history.csv" internalId="_2k_qZBKaEfGvoPDUqFce9A"/>
+    <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="192.168.0.31" internalId="_0ucepBDQEfGytNrCYe-vQw"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_PG4dFBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_PG4dFRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG4dFhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_PG4dFxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_PG4dGBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_PG4dGRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_PG4dGhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_PG4dGxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_PG4dHBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_PG4dHRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_PG4dHhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_PG4dHxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_PG4dIBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_PG4dIRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_PG4dIhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_PG4dIxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_PG4dJBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG4dJRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_PG4dJhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_PG4dJxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_PG4dKBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="192.168.0.33" internalId="_PG4dKRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_PG4dKhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_PG4dKxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="admin" internalId="_PG4dLBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/home/usercm/data-pipeline/fifa_players.csv" internalId="_PG4dLRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_injuries.csv" internalId="_PG4dLhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_latest_market_value.csv" internalId="_PG4dLxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_performances.csv" internalId="_PG4dMBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/player_profiles.csv" internalId="_PG4dMRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/team_details.csv" internalId="_PG4dMhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="/data/data_raw/transfer_history.csv" internalId="_PG4dMxKhEfGxXpxiI_Lr1A"/>
   </context>
   <context confirmationNeeded="false" name="local">
     <contextParameter comment="" name="mongo_server" prompt="mongo_server?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="localhost" internalId="_0ucevxDQEfGytNrCYe-vQw"/>
-    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_2k_qZRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_2k_qZhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_qZxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_2k_qaBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_2k_qaRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_2k_qahKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_2k_qaxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_2k_qbBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_2k_qbRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_2k_qbhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_2k_qbxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_2k_qcBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_2k_qcRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_2k_qchKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_2k_qcxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_2k_qdBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_2k_qdRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_2k_qdhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_2k_qdxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_2k_qeBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_2k_qeRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="localhost" internalId="_2k_qehKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_2k_qexKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_2k_qfBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="postgres" internalId="_2k_qfRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\archive\fifa_players.csv" internalId="_2k_qfhKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_injuries\player_injuries.csv" internalId="_2k_qfxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_latest_market_value\player_latest_market_value.csv" internalId="_2k_qgBKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_performances\player_performances.csv" internalId="_2k_qgRKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_profiles\player_profiles.csv" internalId="_2k_qghKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\team_details\team_details.csv" internalId="_2k_qgxKaEfGvoPDUqFce9A"/>
-    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\transfer_history\transfer_history.csv" internalId="_2k_qhBKaEfGvoPDUqFce9A"/>
+    <contextParameter comment="" name="mongo_collection_bronze" prompt="mongo_collection_bronze?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bronze" internalId="_PG4dNBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_collection_silver" prompt="mongo_collection_silver?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="silver" internalId="_PG4dNRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_database" prompt="mongo_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG4dNhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_kpia" prompt="mongo_kpia?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_kpia" internalId="_PG4dNxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries" prompt="mongo_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries" internalId="_PG4dOBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_injuries_modifie" prompt="mongo_player_injuries_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_injuries_modifie" internalId="_PG4dORKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value" prompt="mongo_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value" internalId="_PG4dOhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_latest_market_value_modifie" prompt="mongo_player_latest_market_value_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_latest_market_value_modifie" internalId="_PG4dOxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances" prompt="mongo_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances" internalId="_PG4dPBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_performances_modifie" prompt="mongo_player_performances_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_performances_modifie" internalId="_PG4dPRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles" prompt="mongo_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles" internalId="_PG4dPhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_player_profiles_modifie" prompt="mongo_player_profiles_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="player_profiles_modifie" internalId="_PG4dPxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_port" prompt="mongo_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="27017" internalId="_PG4dQBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details" prompt="mongo_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details" internalId="_PG4dQRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_team_details_modifie" prompt="mongo_team_details_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="team_details_modifie" internalId="_PG4dQhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history" prompt="mongo_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="transfer_history" internalId="_PG4dQxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="mongo_transfer_history_modifie" prompt="mongo_transfer_history_modifie?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="mongo_transfer_history_modifie" internalId="_PG4dRBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_database" prompt="postgres_database?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="playersdata" internalId="_PG4dRRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_password" prompt="postgres_password?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="Ravus77!" internalId="_PG4dRhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_port" prompt="postgres_port?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="5432" internalId="_PG4dRxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_schema" prompt="postgres_schema?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="gold" internalId="_PG4dSBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_server" prompt="postgres_server?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="localhost" internalId="_PG4dSRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_bodytype" prompt="postgres_table_bodytype?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="bodytype" internalId="_PG4dShKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_table_players" prompt="postgres_table_players?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="players" internalId="_PG4dSxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="postgres_user" prompt="postgres_user?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="postgres" internalId="_PG4dTBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source" prompt="source?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\archive\fifa_players.csv" internalId="_PG4dTRKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_injuries" prompt="source_player_injuries?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_injuries\player_injuries.csv" internalId="_PG4dThKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_latest_market_value" prompt="source_player_latest_market_value?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_latest_market_value\player_latest_market_value.csv" internalId="_PG4dTxKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_performances" prompt="source_player_performances?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_performances\player_performances.csv" internalId="_PG4dUBKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_player_profiles" prompt="source_player_profiles?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\player_profiles\player_profiles.csv" internalId="_PG4dURKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_team_details" prompt="source_team_details?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\team_details\team_details.csv" internalId="_PG4dUhKhEfGxXpxiI_Lr1A"/>
+    <contextParameter comment="" name="source_transfer_history" prompt="source_transfer_history?" promptNeeded="false" repositoryContextId="_py7jgNCjEfCgDOCaZzuFFA" type="id_String" value="C:\Users\perso\Downloads\football-datasets-main\football-datasets-main\datalake\transfermarkt\transfer_history\transfer_history.csv" internalId="_PG4dUxKhEfGxXpxiI_Lr1A"/>
   </context>
   <parameters>
     <elementParameter field="CLOSED_LIST" name="LOG4J_RUN_LEVEL" value="Info" show="false"/>
@@ -147,7 +147,7 @@
     <elementParameter field="TEXT" name="PROPERTIES_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:MkrjOtBcW79lABgWEGv8r5Bublx4e9aKsx3EkUGA" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS_IMPLICIT_CONTEXT" value="enc:system.encryption.key.v1:sEXP4QITMAMedHhM5Y7/E9wWYIaexz5lxzoSNxEP" show="false"/>
     <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="&quot;&quot;" show="false"/>
@@ -182,7 +182,7 @@
     <elementParameter field="TEXT" name="PROPERTIES" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="SCHEMA_DB" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USER" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:eoxXqrtvZLnJyi7gs9Id/FZWFdhpNIYYdfpEKxgH" show="false"/>
+    <elementParameter field="PASSWORD" name="PASS" value="enc:system.encryption.key.v1:eGS2yRJe+Cb0jJYiRYr0ATvO15WBvvXrWDGUCt4W" show="false"/>
     <elementParameter field="FILE" name="DBFILE" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_STATS" value="&quot;&quot;" show="false"/>
     <elementParameter field="DBTABLE" name="TABLE_LOGS" value="&quot;&quot;" show="false"/>
@@ -230,7 +230,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:MkIbaVSw2TUvuac0jzJwhiSlUm/JFAol5uvGQtCd" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:x4S7B4KK5rLQVtaxuWCNUHMoQcGKE35IlDGmXtQJ" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -325,7 +325,7 @@
       <column comment="" defaultValue="" key="false" length="-1" name="score_players" nullable="true" pattern="" precision="-1" sourceType="" type="id_Double" originalLength="-1" usefulColumn="true"/>
     </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
-      <uiProperties/>
+      <uiProperties shellMaximized="true"/>
       <varTables sizeState="INTERMEDIATE" name="Var">
         <mapperTableEntries name="days_missed" expression="row8.days_missed == null || row8.days_missed.trim().isEmpty() ? 0.0 : Double.parseDouble(row8.days_missed) " type="id_Double"/>
         <mapperTableEntries name="assist_tot" expression="row7.assists == null ? 0.0 : Double.valueOf(row7.assists)" type="id_Double"/>
@@ -487,7 +487,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:DDXNKZtfe3HBiWCjagXzmE0h896p2U6nO5H6TiCA" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:XU7V8x39pMVws9tYcifB82GDR7MLDGiYb4QHPJww" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -631,7 +631,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:emkmEkhuURIWL26qxWNZZ0cTUvyLN/4NAzjYNDVA" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:nhsmHCEeXhLvMwsr8h5ep/SBD1L1hHtU8GFzSKfU" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -721,7 +721,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:f15vhEcONZ2Bj4yhCXnonKegEncr6rFG796+oYUM" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:bY5tsMB+MD1j0rgjTq2ClOMQh7qxI7hTUtW6Fwoi" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -823,7 +823,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:nZpTq6nCGOEw9upAx8VKfsmqcR1JnDEDfOpiNAgW" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:TUYMrV+69A/B/GKUjuFQW2eHDUahxWd1i/iMCDNh" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1031,7 +1031,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:JevknxYWu+l5fn+7gi8eCxjeDTDuYCv+xFnFeHIa" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:jpvbvEnDLeRVzSy/PqPPCO2zMvfOPYSuZs01d2m/" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1091,7 +1091,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:cSN4aQtueW6VCAjkPtQU+bcyDJbke2u2FTj4tGsI" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:yA9S0HdG6jd6Ib3ZUQvpy7WEEMyC7OWfwqsOE7gs" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1237,7 +1237,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:9vQ+5exD8a+7hLiXl4v0xeKknPRH3QKF/5Ep2gT8" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:uCnc6jhkZihjWmfKWO+YFX0tmxsOVlN8wjlpG1li" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1375,7 +1375,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:kqx5hWufIEEJNT0G0L29NwU8rb7HODlb5S4lnFo5" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:S3W4Ah5bQPCwyncq7JIqVItMRQoI/cJ/oVyglZQ2" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1473,7 +1473,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:n9J07DA/QvSDWpP3wCBk2Z3zbjE/W3F4Bs211RTS" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:lgVwsgpf5IOKoxHrNfhhXYizAMlPNkkTOZRpPg5l" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1557,7 +1557,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:/ZAt2s+zaRG+mIJJZVVzn7Jn/+T3ZyiCjc1Srjln" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:uEMxc/sYtVkhPjdkeYNEprnReJhFctDYEZuvk+V8" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1678,7 +1678,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:msiw3OKsKX9XF2PQ1TvAgxjSdg4lANKSTp4PJKzo" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:p4a/qc8w7gFBUJJ+PA7Lti35o0RzEbcW0mOZNSaJ" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -1780,7 +1780,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:19pyhgw/ogAI4IFbHqtvbjLA3B/SqP3r95wVtLDS" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:y35mzljbduyPRyk7RNG6jwczejbG/Ut3xslyGAh+" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -2001,7 +2001,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:gSTd6e6flK7yMH/EVKuSNfzmeGy9qbp4sO2h4Tyj" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:Fuw1jMXsa5m6FOxyr85sqvVIkzJN9tDk3i8uXLN0" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -2229,7 +2229,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:/GdBlYyX3c9nDj7MAgw9C0RJIm/ndfY6Umy5LISe" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:vMFZjtOsJMqB8lPEHCA3c28xwzwiNLTpsAPW8A5P" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
@@ -2351,7 +2351,7 @@
     <elementParameter field="CHECK" name="SET_AUTHENTICATION_DATABASE" value="false" show="false"/>
     <elementParameter field="TEXT" name="AUTHENTICATION_DATABASE" value="&quot;&quot;" show="false"/>
     <elementParameter field="TEXT" name="USERNAME" value="&quot;&quot;" show="false"/>
-    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:tB+APnz59v3rg2zDAqJFQ3ahdTHzvdBAL/53yujB" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="enc:system.encryption.key.v1:fADTBJnzAAiokdoF7dWEoodwnizeY28OKw6ZBHxn" show="false"/>
     <elementParameter field="TEXT" name="KRB_USER_PRINCIPAL" value="&quot;mongouser@EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_REALM" value="&quot;EXAMPLE.COM&quot;" show="false"/>
     <elementParameter field="TEXT" name="KRB_KDC" value="&quot;kdc.example.com&quot;" show="false"/>
