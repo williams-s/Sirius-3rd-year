@@ -127,6 +127,18 @@ protected static void logIgnoredError(String message, Throwable cause) {
 				
 			}
 			
+			if(mongo_player_profiles_modifie != null){
+				
+					this.setProperty("mongo_player_profiles_modifie", mongo_player_profiles_modifie.toString());
+				
+			}
+			
+			if(mongo_transfer_history_modifie != null){
+				
+					this.setProperty("mongo_transfer_history_modifie", mongo_transfer_history_modifie.toString());
+				
+			}
+			
 			if(mongo_collection_silver != null){
 				
 					this.setProperty("mongo_collection_silver", mongo_collection_silver.toString());
@@ -291,6 +303,14 @@ protected static void logIgnoredError(String message, Throwable cause) {
 public String mongo_collection_bronze;
 public String getMongo_collection_bronze(){
 	return this.mongo_collection_bronze;
+}
+public String mongo_player_profiles_modifie;
+public String getMongo_player_profiles_modifie(){
+	return this.mongo_player_profiles_modifie;
+}
+public String mongo_transfer_history_modifie;
+public String getMongo_transfer_history_modifie(){
+	return this.mongo_transfer_history_modifie;
 }
 public String mongo_collection_silver;
 public String getMongo_collection_silver(){
@@ -1996,9 +2016,9 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					return this.date_unix;
 				}
 				
-			    public String value;
+			    public Double value;
 
-				public String getValue () {
+				public Double getValue () {
 					return this.value;
 				}
 				
@@ -2077,7 +2097,12 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					
 					this.date_unix = readString(dis);
 					
-					this.value = readString(dis);
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.value = null;
+           				} else {
+           			    	this.value = dis.readDouble();
+           				}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2105,7 +2130,12 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					
 					this.date_unix = readString(dis);
 					
-					this.value = readString(dis);
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.value = null;
+           				} else {
+           			    	this.value = dis.readDouble();
+           				}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2133,9 +2163,14 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.date_unix,dos);
 					
-					// String
+					// Double
 				
-						writeString(this.value,dos);
+						if(this.value == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeDouble(this.value);
+		            	}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2156,9 +2191,14 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.date_unix,dos);
 					
-					// String
+					// Double
 				
-						writeString(this.value,dos);
+						if(this.value == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeDouble(this.value);
+		            	}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2175,7 +2215,7 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		sb.append("[");
 		sb.append("player_id="+player_id);
 		sb.append(",date_unix="+date_unix);
-		sb.append(",value="+value);
+		sb.append(",value="+String.valueOf(value));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -2440,6 +2480,8 @@ globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_2 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_2 = 0;
 					
 							row2.player_id = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
@@ -2452,8 +2494,27 @@ globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_2 = 2;
 					
-							row2.value = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
-						
+						temp = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row2.value = ParserUtils.parseTo_Double(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_2) {
+globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",ex_tFileInputDelimited_2.getMessage());
+									rowstate_tFileInputDelimited_2.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"value", "row2", temp, ex_tFileInputDelimited_2), ex_tFileInputDelimited_2));
+								}
+    							
+						} else {						
+							
+								
+									row2.value = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -7009,15 +7070,15 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					return this.transfer_type;
 				}
 				
-			    public String value_at_transfer;
+			    public Integer value_at_transfer;
 
-				public String getValue_at_transfer () {
+				public Integer getValue_at_transfer () {
 					return this.value_at_transfer;
 				}
 				
-			    public String transfer_fee;
+			    public Integer transfer_fee;
 
-				public String getTransfer_fee () {
+				public Integer getTransfer_fee () {
 					return this.transfer_fee;
 				}
 				
@@ -7083,6 +7144,47 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
             marshaller.write(byteArray);
     	}
     }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
 
     public void readData(ObjectInputStream dis) {
 
@@ -7108,9 +7210,9 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					
 					this.transfer_type = readString(dis);
 					
-					this.value_at_transfer = readString(dis);
+						this.value_at_transfer = readInteger(dis);
 					
-					this.transfer_fee = readString(dis);
+						this.transfer_fee = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -7150,9 +7252,9 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					
 					this.transfer_type = readString(dis);
 					
-					this.value_at_transfer = readString(dis);
+						this.value_at_transfer = readInteger(dis);
 					
-					this.transfer_fee = readString(dis);
+						this.transfer_fee = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -7204,13 +7306,13 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 				
 						writeString(this.transfer_type,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.value_at_transfer,dos);
+						writeInteger(this.value_at_transfer,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.transfer_fee,dos);
+						writeInteger(this.transfer_fee,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -7255,13 +7357,13 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 				
 						writeString(this.transfer_type,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.value_at_transfer,dos);
+						writeInteger(this.value_at_transfer,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.transfer_fee,dos);
+						writeInteger(this.transfer_fee,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -7284,8 +7386,8 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 		sb.append(",to_team_id="+to_team_id);
 		sb.append(",to_team_name="+to_team_name);
 		sb.append(",transfer_type="+transfer_type);
-		sb.append(",value_at_transfer="+value_at_transfer);
-		sb.append(",transfer_fee="+transfer_fee);
+		sb.append(",value_at_transfer="+String.valueOf(value_at_transfer));
+		sb.append(",transfer_fee="+String.valueOf(transfer_fee));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -7557,6 +7659,8 @@ globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_6 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_6 = 0;
 					
 							row6.player_id = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
@@ -7599,13 +7703,51 @@ globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_6 = 8;
 					
-							row6.value_at_transfer = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
-						
+						temp = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row6.value_at_transfer = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_6) {
+globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",ex_tFileInputDelimited_6.getMessage());
+									rowstate_tFileInputDelimited_6.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"value_at_transfer", "row6", temp, ex_tFileInputDelimited_6), ex_tFileInputDelimited_6));
+								}
+    							
+						} else {						
+							
+								
+									row6.value_at_transfer = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_6 = 9;
 					
-							row6.transfer_fee = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
-						
+						temp = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row6.transfer_fee = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_6) {
+globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",ex_tFileInputDelimited_6.getMessage());
+									rowstate_tFileInputDelimited_6.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"transfer_fee", "row6", temp, ex_tFileInputDelimited_6), ex_tFileInputDelimited_6));
+								}
+    							
+						} else {						
+							
+								
+									row6.transfer_fee = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -8116,6 +8258,18 @@ end_Hash.put("tMongoDBOutput_6", System.currentTimeMillis());
                         } else {
                             context.mongo_collection_bronze=(String) context.getProperty("mongo_collection_bronze");
                         }
+                        context.setContextType("mongo_player_profiles_modifie", "id_String");
+                        if(context.getStringValue("mongo_player_profiles_modifie") == null) {
+                            context.mongo_player_profiles_modifie = null;
+                        } else {
+                            context.mongo_player_profiles_modifie=(String) context.getProperty("mongo_player_profiles_modifie");
+                        }
+                        context.setContextType("mongo_transfer_history_modifie", "id_String");
+                        if(context.getStringValue("mongo_transfer_history_modifie") == null) {
+                            context.mongo_transfer_history_modifie = null;
+                        } else {
+                            context.mongo_transfer_history_modifie=(String) context.getProperty("mongo_transfer_history_modifie");
+                        }
                         context.setContextType("mongo_collection_silver", "id_String");
                         if(context.getStringValue("mongo_collection_silver") == null) {
                             context.mongo_collection_silver = null;
@@ -8281,6 +8435,10 @@ end_Hash.put("tMongoDBOutput_6", System.currentTimeMillis());
         // get context value from parent directly
         if (parentContextMap != null && !parentContextMap.isEmpty()) {if (parentContextMap.containsKey("mongo_collection_bronze")) {
                 context.mongo_collection_bronze = (String) parentContextMap.get("mongo_collection_bronze");
+            }if (parentContextMap.containsKey("mongo_player_profiles_modifie")) {
+                context.mongo_player_profiles_modifie = (String) parentContextMap.get("mongo_player_profiles_modifie");
+            }if (parentContextMap.containsKey("mongo_transfer_history_modifie")) {
+                context.mongo_transfer_history_modifie = (String) parentContextMap.get("mongo_transfer_history_modifie");
             }if (parentContextMap.containsKey("mongo_collection_silver")) {
                 context.mongo_collection_silver = (String) parentContextMap.get("mongo_collection_silver");
             }if (parentContextMap.containsKey("mongo_database")) {
@@ -8560,6 +8718,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     234434 characters generated by Talend Open Studio for Big Data 
- *     on the 24 février 2026 à 02:34:09 CET
+ *     240270 characters generated by Talend Open Studio for Big Data 
+ *     on the 26 février 2026 à 00:08:59 CET
  ************************************************************************************************/
