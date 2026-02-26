@@ -127,6 +127,18 @@ protected static void logIgnoredError(String message, Throwable cause) {
 				
 			}
 			
+			if(mongo_player_profiles_modifie != null){
+				
+					this.setProperty("mongo_player_profiles_modifie", mongo_player_profiles_modifie.toString());
+				
+			}
+			
+			if(mongo_transfer_history_modifie != null){
+				
+					this.setProperty("mongo_transfer_history_modifie", mongo_transfer_history_modifie.toString());
+				
+			}
+			
 			if(mongo_collection_silver != null){
 				
 					this.setProperty("mongo_collection_silver", mongo_collection_silver.toString());
@@ -291,6 +303,14 @@ protected static void logIgnoredError(String message, Throwable cause) {
 public String mongo_collection_bronze;
 public String getMongo_collection_bronze(){
 	return this.mongo_collection_bronze;
+}
+public String mongo_player_profiles_modifie;
+public String getMongo_player_profiles_modifie(){
+	return this.mongo_player_profiles_modifie;
+}
+public String mongo_transfer_history_modifie;
+public String getMongo_transfer_history_modifie(){
+	return this.mongo_transfer_history_modifie;
 }
 public String mongo_collection_silver;
 public String getMongo_collection_silver(){
@@ -1035,9 +1055,9 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 					return this.days_missed;
 				}
 				
-			    public String games_missed;
+			    public Integer games_missed;
 
-				public String getGames_missed () {
+				public Integer getGames_missed () {
 					return this.games_missed;
 				}
 				
@@ -1103,6 +1123,47 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
             marshaller.write(byteArray);
     	}
     }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
 
     public void readData(ObjectInputStream dis) {
 
@@ -1124,7 +1185,7 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 					
 					this.days_missed = readString(dis);
 					
-					this.games_missed = readString(dis);
+						this.games_missed = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1160,7 +1221,7 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 					
 					this.days_missed = readString(dis);
 					
-					this.games_missed = readString(dis);
+						this.games_missed = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1204,9 +1265,9 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 				
 						writeString(this.days_missed,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.games_missed,dos);
+						writeInteger(this.games_missed,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1243,9 +1304,9 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 				
 						writeString(this.days_missed,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.games_missed,dos);
+						writeInteger(this.games_missed,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -1266,7 +1327,7 @@ public static class row1Struct implements routines.system.IPersistableRow<row1St
 		sb.append(",from_date="+from_date);
 		sb.append(",end_date="+end_date);
 		sb.append(",days_missed="+days_missed);
-		sb.append(",games_missed="+games_missed);
+		sb.append(",games_missed="+String.valueOf(games_missed));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -1535,6 +1596,8 @@ globalMap.put("tFileInputDelimited_1_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_1 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_1 = 0;
 					
 							row1.player_id = fid_tFileInputDelimited_1.get(columnIndexWithD_tFileInputDelimited_1);
@@ -1567,8 +1630,27 @@ globalMap.put("tFileInputDelimited_1_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_1 = 6;
 					
-							row1.games_missed = fid_tFileInputDelimited_1.get(columnIndexWithD_tFileInputDelimited_1);
-						
+						temp = fid_tFileInputDelimited_1.get(columnIndexWithD_tFileInputDelimited_1);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row1.games_missed = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_1) {
+globalMap.put("tFileInputDelimited_1_ERROR_MESSAGE",ex_tFileInputDelimited_1.getMessage());
+									rowstate_tFileInputDelimited_1.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"games_missed", "row1", temp, ex_tFileInputDelimited_1), ex_tFileInputDelimited_1));
+								}
+    							
+						} else {						
+							
+								
+									row1.games_missed = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -1934,9 +2016,9 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					return this.date_unix;
 				}
 				
-			    public String value;
+			    public Double value;
 
-				public String getValue () {
+				public Double getValue () {
 					return this.value;
 				}
 				
@@ -2015,7 +2097,12 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					
 					this.date_unix = readString(dis);
 					
-					this.value = readString(dis);
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.value = null;
+           				} else {
+           			    	this.value = dis.readDouble();
+           				}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2043,7 +2130,12 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 					
 					this.date_unix = readString(dis);
 					
-					this.value = readString(dis);
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			this.value = null;
+           				} else {
+           			    	this.value = dis.readDouble();
+           				}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2071,9 +2163,14 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.date_unix,dos);
 					
-					// String
+					// Double
 				
-						writeString(this.value,dos);
+						if(this.value == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeDouble(this.value);
+		            	}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2094,9 +2191,14 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 				
 						writeString(this.date_unix,dos);
 					
-					// String
+					// Double
 				
-						writeString(this.value,dos);
+						if(this.value == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.writeDouble(this.value);
+		            	}
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -2113,7 +2215,7 @@ public static class row2Struct implements routines.system.IPersistableRow<row2St
 		sb.append("[");
 		sb.append("player_id="+player_id);
 		sb.append(",date_unix="+date_unix);
-		sb.append(",value="+value);
+		sb.append(",value="+String.valueOf(value));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -2378,6 +2480,8 @@ globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_2 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_2 = 0;
 					
 							row2.player_id = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
@@ -2390,8 +2494,27 @@ globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_2 = 2;
 					
-							row2.value = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
-						
+						temp = fid_tFileInputDelimited_2.get(columnIndexWithD_tFileInputDelimited_2);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row2.value = ParserUtils.parseTo_Double(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_2) {
+globalMap.put("tFileInputDelimited_2_ERROR_MESSAGE",ex_tFileInputDelimited_2.getMessage());
+									rowstate_tFileInputDelimited_2.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"value", "row2", temp, ex_tFileInputDelimited_2), ex_tFileInputDelimited_2));
+								}
+    							
+						} else {						
+							
+								
+									row2.value = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -2777,15 +2900,15 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					return this.team_name;
 				}
 				
-			    public String nb_in_group;
+			    public Integer nb_in_group;
 
-				public String getNb_in_group () {
+				public Integer getNb_in_group () {
 					return this.nb_in_group;
 				}
 				
-			    public String nb_on_pitch;
+			    public Integer nb_on_pitch;
 
-				public String getNb_on_pitch () {
+				public Integer getNb_on_pitch () {
 					return this.nb_on_pitch;
 				}
 				
@@ -2795,51 +2918,51 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					return this.goals;
 				}
 				
-			    public String assists;
+			    public Integer assists;
 
-				public String getAssists () {
+				public Integer getAssists () {
 					return this.assists;
 				}
 				
-			    public String own_goals;
+			    public Integer own_goals;
 
-				public String getOwn_goals () {
+				public Integer getOwn_goals () {
 					return this.own_goals;
 				}
 				
-			    public String subed_in;
+			    public Integer subed_in;
 
-				public String getSubed_in () {
+				public Integer getSubed_in () {
 					return this.subed_in;
 				}
 				
-			    public String subed_out;
+			    public Integer subed_out;
 
-				public String getSubed_out () {
+				public Integer getSubed_out () {
 					return this.subed_out;
 				}
 				
-			    public String yellow_cards;
+			    public Integer yellow_cards;
 
-				public String getYellow_cards () {
+				public Integer getYellow_cards () {
 					return this.yellow_cards;
 				}
 				
-			    public String second_yellow_cards;
+			    public Integer second_yellow_cards;
 
-				public String getSecond_yellow_cards () {
+				public Integer getSecond_yellow_cards () {
 					return this.second_yellow_cards;
 				}
 				
-			    public String direct_red_cards;
+			    public Integer direct_red_cards;
 
-				public String getDirect_red_cards () {
+				public Integer getDirect_red_cards () {
 					return this.direct_red_cards;
 				}
 				
-			    public String penalty_goals;
+			    public Integer penalty_goals;
 
-				public String getPenalty_goals () {
+				public Integer getPenalty_goals () {
 					return this.penalty_goals;
 				}
 				
@@ -2849,15 +2972,15 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					return this.minutes_played;
 				}
 				
-			    public String goals_conceded;
+			    public Integer goals_conceded;
 
-				public String getGoals_conceded () {
+				public Integer getGoals_conceded () {
 					return this.goals_conceded;
 				}
 				
-			    public String clean_sheets;
+			    public Integer clean_sheets;
 
-				public String getClean_sheets () {
+				public Integer getClean_sheets () {
 					return this.clean_sheets;
 				}
 				
@@ -2923,6 +3046,47 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
             marshaller.write(byteArray);
     	}
     }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
 
     public void readData(ObjectInputStream dis) {
 
@@ -2944,33 +3108,33 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 					this.team_name = readString(dis);
 					
-					this.nb_in_group = readString(dis);
+						this.nb_in_group = readInteger(dis);
 					
-					this.nb_on_pitch = readString(dis);
+						this.nb_on_pitch = readInteger(dis);
 					
 					this.goals = readString(dis);
 					
-					this.assists = readString(dis);
+						this.assists = readInteger(dis);
 					
-					this.own_goals = readString(dis);
+						this.own_goals = readInteger(dis);
 					
-					this.subed_in = readString(dis);
+						this.subed_in = readInteger(dis);
 					
-					this.subed_out = readString(dis);
+						this.subed_out = readInteger(dis);
 					
-					this.yellow_cards = readString(dis);
+						this.yellow_cards = readInteger(dis);
 					
-					this.second_yellow_cards = readString(dis);
+						this.second_yellow_cards = readInteger(dis);
 					
-					this.direct_red_cards = readString(dis);
+						this.direct_red_cards = readInteger(dis);
 					
-					this.penalty_goals = readString(dis);
+						this.penalty_goals = readInteger(dis);
 					
 					this.minutes_played = readString(dis);
 					
-					this.goals_conceded = readString(dis);
+						this.goals_conceded = readInteger(dis);
 					
-					this.clean_sheets = readString(dis);
+						this.clean_sheets = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -3006,33 +3170,33 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 					
 					this.team_name = readString(dis);
 					
-					this.nb_in_group = readString(dis);
+						this.nb_in_group = readInteger(dis);
 					
-					this.nb_on_pitch = readString(dis);
+						this.nb_on_pitch = readInteger(dis);
 					
 					this.goals = readString(dis);
 					
-					this.assists = readString(dis);
+						this.assists = readInteger(dis);
 					
-					this.own_goals = readString(dis);
+						this.own_goals = readInteger(dis);
 					
-					this.subed_in = readString(dis);
+						this.subed_in = readInteger(dis);
 					
-					this.subed_out = readString(dis);
+						this.subed_out = readInteger(dis);
 					
-					this.yellow_cards = readString(dis);
+						this.yellow_cards = readInteger(dis);
 					
-					this.second_yellow_cards = readString(dis);
+						this.second_yellow_cards = readInteger(dis);
 					
-					this.direct_red_cards = readString(dis);
+						this.direct_red_cards = readInteger(dis);
 					
-					this.penalty_goals = readString(dis);
+						this.penalty_goals = readInteger(dis);
 					
 					this.minutes_played = readString(dis);
 					
-					this.goals_conceded = readString(dis);
+						this.goals_conceded = readInteger(dis);
 					
-					this.clean_sheets = readString(dis);
+						this.clean_sheets = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -3076,61 +3240,61 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeString(this.team_name,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.nb_in_group,dos);
+						writeInteger(this.nb_in_group,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.nb_on_pitch,dos);
+						writeInteger(this.nb_on_pitch,dos);
 					
 					// String
 				
 						writeString(this.goals,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.assists,dos);
+						writeInteger(this.assists,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.own_goals,dos);
+						writeInteger(this.own_goals,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.subed_in,dos);
+						writeInteger(this.subed_in,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.subed_out,dos);
+						writeInteger(this.subed_out,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.yellow_cards,dos);
+						writeInteger(this.yellow_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.second_yellow_cards,dos);
+						writeInteger(this.second_yellow_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.direct_red_cards,dos);
+						writeInteger(this.direct_red_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.penalty_goals,dos);
+						writeInteger(this.penalty_goals,dos);
 					
 					// String
 				
 						writeString(this.minutes_played,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.goals_conceded,dos);
+						writeInteger(this.goals_conceded,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.clean_sheets,dos);
+						writeInteger(this.clean_sheets,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -3167,61 +3331,61 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 				
 						writeString(this.team_name,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.nb_in_group,dos);
+						writeInteger(this.nb_in_group,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.nb_on_pitch,dos);
+						writeInteger(this.nb_on_pitch,dos);
 					
 					// String
 				
 						writeString(this.goals,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.assists,dos);
+						writeInteger(this.assists,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.own_goals,dos);
+						writeInteger(this.own_goals,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.subed_in,dos);
+						writeInteger(this.subed_in,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.subed_out,dos);
+						writeInteger(this.subed_out,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.yellow_cards,dos);
+						writeInteger(this.yellow_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.second_yellow_cards,dos);
+						writeInteger(this.second_yellow_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.direct_red_cards,dos);
+						writeInteger(this.direct_red_cards,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.penalty_goals,dos);
+						writeInteger(this.penalty_goals,dos);
 					
 					// String
 				
 						writeString(this.minutes_played,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.goals_conceded,dos);
+						writeInteger(this.goals_conceded,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.clean_sheets,dos);
+						writeInteger(this.clean_sheets,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -3242,20 +3406,20 @@ public static class row3Struct implements routines.system.IPersistableRow<row3St
 		sb.append(",competition_name="+competition_name);
 		sb.append(",team_id="+team_id);
 		sb.append(",team_name="+team_name);
-		sb.append(",nb_in_group="+nb_in_group);
-		sb.append(",nb_on_pitch="+nb_on_pitch);
+		sb.append(",nb_in_group="+String.valueOf(nb_in_group));
+		sb.append(",nb_on_pitch="+String.valueOf(nb_on_pitch));
 		sb.append(",goals="+goals);
-		sb.append(",assists="+assists);
-		sb.append(",own_goals="+own_goals);
-		sb.append(",subed_in="+subed_in);
-		sb.append(",subed_out="+subed_out);
-		sb.append(",yellow_cards="+yellow_cards);
-		sb.append(",second_yellow_cards="+second_yellow_cards);
-		sb.append(",direct_red_cards="+direct_red_cards);
-		sb.append(",penalty_goals="+penalty_goals);
+		sb.append(",assists="+String.valueOf(assists));
+		sb.append(",own_goals="+String.valueOf(own_goals));
+		sb.append(",subed_in="+String.valueOf(subed_in));
+		sb.append(",subed_out="+String.valueOf(subed_out));
+		sb.append(",yellow_cards="+String.valueOf(yellow_cards));
+		sb.append(",second_yellow_cards="+String.valueOf(second_yellow_cards));
+		sb.append(",direct_red_cards="+String.valueOf(direct_red_cards));
+		sb.append(",penalty_goals="+String.valueOf(penalty_goals));
 		sb.append(",minutes_played="+minutes_played);
-		sb.append(",goals_conceded="+goals_conceded);
-		sb.append(",clean_sheets="+clean_sheets);
+		sb.append(",goals_conceded="+String.valueOf(goals_conceded));
+		sb.append(",clean_sheets="+String.valueOf(clean_sheets));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -3537,6 +3701,8 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_3 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_3 = 0;
 					
 							row3.player_id = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
@@ -3569,13 +3735,51 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_3 = 6;
 					
-							row3.nb_in_group = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.nb_in_group = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"nb_in_group", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.nb_in_group = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 7;
 					
-							row3.nb_on_pitch = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.nb_on_pitch = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"nb_on_pitch", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.nb_on_pitch = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 8;
 					
@@ -3584,43 +3788,195 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_3 = 9;
 					
-							row3.assists = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.assists = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"assists", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.assists = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 10;
 					
-							row3.own_goals = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.own_goals = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"own_goals", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.own_goals = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 11;
 					
-							row3.subed_in = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.subed_in = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"subed_in", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.subed_in = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 12;
 					
-							row3.subed_out = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.subed_out = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"subed_out", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.subed_out = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 13;
 					
-							row3.yellow_cards = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.yellow_cards = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"yellow_cards", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.yellow_cards = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 14;
 					
-							row3.second_yellow_cards = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.second_yellow_cards = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"second_yellow_cards", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.second_yellow_cards = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 15;
 					
-							row3.direct_red_cards = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.direct_red_cards = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"direct_red_cards", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.direct_red_cards = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 16;
 					
-							row3.penalty_goals = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.penalty_goals = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"penalty_goals", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.penalty_goals = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 17;
 					
@@ -3629,13 +3985,51 @@ globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_3 = 18;
 					
-							row3.goals_conceded = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.goals_conceded = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"goals_conceded", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.goals_conceded = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_3 = 19;
 					
-							row3.clean_sheets = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
-						
+						temp = fid_tFileInputDelimited_3.get(columnIndexWithD_tFileInputDelimited_3);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row3.clean_sheets = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_3) {
+globalMap.put("tFileInputDelimited_3_ERROR_MESSAGE",ex_tFileInputDelimited_3.getMessage());
+									rowstate_tFileInputDelimited_3.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"clean_sheets", "row3", temp, ex_tFileInputDelimited_3), ex_tFileInputDelimited_3));
+								}
+    							
+						} else {						
+							
+								
+									row3.clean_sheets = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -6676,15 +7070,15 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					return this.transfer_type;
 				}
 				
-			    public String value_at_transfer;
+			    public Integer value_at_transfer;
 
-				public String getValue_at_transfer () {
+				public Integer getValue_at_transfer () {
 					return this.value_at_transfer;
 				}
 				
-			    public String transfer_fee;
+			    public Integer transfer_fee;
 
-				public String getTransfer_fee () {
+				public Integer getTransfer_fee () {
 					return this.transfer_fee;
 				}
 				
@@ -6750,6 +7144,47 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
             marshaller.write(byteArray);
     	}
     }
+	private Integer readInteger(ObjectInputStream dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+	
+	private Integer readInteger(org.jboss.marshalling.Unmarshaller dis) throws IOException{
+		Integer intReturn;
+        int length = 0;
+        length = dis.readByte();
+		if (length == -1) {
+			intReturn = null;
+		} else {
+	    	intReturn = dis.readInt();
+		}
+		return intReturn;
+	}
+
+	private void writeInteger(Integer intNum, ObjectOutputStream dos) throws IOException{
+		if(intNum == null) {
+            dos.writeByte(-1);
+		} else {
+			dos.writeByte(0);
+	    	dos.writeInt(intNum);
+    	}
+	}
+	
+	private void writeInteger(Integer intNum, org.jboss.marshalling.Marshaller marshaller) throws IOException{
+		if(intNum == null) {
+			marshaller.writeByte(-1);
+		} else {
+			marshaller.writeByte(0);
+			marshaller.writeInt(intNum);
+    	}
+	}
 
     public void readData(ObjectInputStream dis) {
 
@@ -6775,9 +7210,9 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					
 					this.transfer_type = readString(dis);
 					
-					this.value_at_transfer = readString(dis);
+						this.value_at_transfer = readInteger(dis);
 					
-					this.transfer_fee = readString(dis);
+						this.transfer_fee = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -6817,9 +7252,9 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 					
 					this.transfer_type = readString(dis);
 					
-					this.value_at_transfer = readString(dis);
+						this.value_at_transfer = readInteger(dis);
 					
-					this.transfer_fee = readString(dis);
+						this.transfer_fee = readInteger(dis);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -6871,13 +7306,13 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 				
 						writeString(this.transfer_type,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.value_at_transfer,dos);
+						writeInteger(this.value_at_transfer,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.transfer_fee,dos);
+						writeInteger(this.transfer_fee,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -6922,13 +7357,13 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 				
 						writeString(this.transfer_type,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.value_at_transfer,dos);
+						writeInteger(this.value_at_transfer,dos);
 					
-					// String
+					// Integer
 				
-						writeString(this.transfer_fee,dos);
+						writeInteger(this.transfer_fee,dos);
 					
         	} catch (IOException e) {
 	            throw new RuntimeException(e);
@@ -6951,8 +7386,8 @@ public static class row6Struct implements routines.system.IPersistableRow<row6St
 		sb.append(",to_team_id="+to_team_id);
 		sb.append(",to_team_name="+to_team_name);
 		sb.append(",transfer_type="+transfer_type);
-		sb.append(",value_at_transfer="+value_at_transfer);
-		sb.append(",transfer_fee="+transfer_fee);
+		sb.append(",value_at_transfer="+String.valueOf(value_at_transfer));
+		sb.append(",transfer_fee="+String.valueOf(transfer_fee));
 	    sb.append("]");
 
 	    return sb.toString();
@@ -7224,6 +7659,8 @@ globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",e.getMessage());
 										
 				int columnIndexWithD_tFileInputDelimited_6 = 0;
 				
+					String temp = ""; 
+				
 					columnIndexWithD_tFileInputDelimited_6 = 0;
 					
 							row6.player_id = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
@@ -7266,13 +7703,51 @@ globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",e.getMessage());
 				
 					columnIndexWithD_tFileInputDelimited_6 = 8;
 					
-							row6.value_at_transfer = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
-						
+						temp = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row6.value_at_transfer = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_6) {
+globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",ex_tFileInputDelimited_6.getMessage());
+									rowstate_tFileInputDelimited_6.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"value_at_transfer", "row6", temp, ex_tFileInputDelimited_6), ex_tFileInputDelimited_6));
+								}
+    							
+						} else {						
+							
+								
+									row6.value_at_transfer = null;
+								
+							
+						}
+					
 				
 					columnIndexWithD_tFileInputDelimited_6 = 9;
 					
-							row6.transfer_fee = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
-						
+						temp = fid_tFileInputDelimited_6.get(columnIndexWithD_tFileInputDelimited_6);
+						if(temp.length() > 0) {
+							
+								try {
+								
+    								row6.transfer_fee = ParserUtils.parseTo_Integer(temp);
+    							
+    							} catch(java.lang.Exception ex_tFileInputDelimited_6) {
+globalMap.put("tFileInputDelimited_6_ERROR_MESSAGE",ex_tFileInputDelimited_6.getMessage());
+									rowstate_tFileInputDelimited_6.setException(new RuntimeException(String.format("Couldn't parse value for column '%s' in '%s', value is '%s'. Details: %s",
+										"transfer_fee", "row6", temp, ex_tFileInputDelimited_6), ex_tFileInputDelimited_6));
+								}
+    							
+						} else {						
+							
+								
+									row6.transfer_fee = null;
+								
+							
+						}
+					
 				
 				
 										
@@ -7783,6 +8258,18 @@ end_Hash.put("tMongoDBOutput_6", System.currentTimeMillis());
                         } else {
                             context.mongo_collection_bronze=(String) context.getProperty("mongo_collection_bronze");
                         }
+                        context.setContextType("mongo_player_profiles_modifie", "id_String");
+                        if(context.getStringValue("mongo_player_profiles_modifie") == null) {
+                            context.mongo_player_profiles_modifie = null;
+                        } else {
+                            context.mongo_player_profiles_modifie=(String) context.getProperty("mongo_player_profiles_modifie");
+                        }
+                        context.setContextType("mongo_transfer_history_modifie", "id_String");
+                        if(context.getStringValue("mongo_transfer_history_modifie") == null) {
+                            context.mongo_transfer_history_modifie = null;
+                        } else {
+                            context.mongo_transfer_history_modifie=(String) context.getProperty("mongo_transfer_history_modifie");
+                        }
                         context.setContextType("mongo_collection_silver", "id_String");
                         if(context.getStringValue("mongo_collection_silver") == null) {
                             context.mongo_collection_silver = null;
@@ -7948,6 +8435,10 @@ end_Hash.put("tMongoDBOutput_6", System.currentTimeMillis());
         // get context value from parent directly
         if (parentContextMap != null && !parentContextMap.isEmpty()) {if (parentContextMap.containsKey("mongo_collection_bronze")) {
                 context.mongo_collection_bronze = (String) parentContextMap.get("mongo_collection_bronze");
+            }if (parentContextMap.containsKey("mongo_player_profiles_modifie")) {
+                context.mongo_player_profiles_modifie = (String) parentContextMap.get("mongo_player_profiles_modifie");
+            }if (parentContextMap.containsKey("mongo_transfer_history_modifie")) {
+                context.mongo_transfer_history_modifie = (String) parentContextMap.get("mongo_transfer_history_modifie");
             }if (parentContextMap.containsKey("mongo_collection_silver")) {
                 context.mongo_collection_silver = (String) parentContextMap.get("mongo_collection_silver");
             }if (parentContextMap.containsKey("mongo_database")) {
@@ -8227,6 +8718,6 @@ if (execStat) {
     ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- *     223088 characters generated by Talend Open Studio for Big Data 
- *     on the 17 février 2026 à 20:41:25 CET
+ *     240270 characters generated by Talend Open Studio for Big Data 
+ *     on the 26 février 2026 à 00:08:59 CET
  ************************************************************************************************/
