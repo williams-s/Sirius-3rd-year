@@ -43,6 +43,7 @@ services:
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
       - POSTGRES_SERVER=192.168.0.33:5432
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_ENTRANCE}
     networks:
       - front-network
     deploy:
@@ -139,8 +140,8 @@ services:
     environment:
       - OAUTH2_PROXY_PROVIDER=keycloak-oidc
       - OAUTH2_PROXY_CLIENT_ID=portal
-      - OAUTH2_PROXY_CLIENT_SECRET=kylsNSnaDEtMkZIU8JBANZ24pWMo0pCA
-      - OAUTH2_PROXY_COOKIE_SECRET=abcdefghijklmnopabcdefghijklmnop
+      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
+      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
       - OAUTH2_PROXY_EMAIL_DOMAINS=*
       - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
       - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
@@ -210,7 +211,24 @@ services:
         constraints:
           - node.labels.role == idp
 
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == etl
+
+
+
 
 volumes:
   mqtt_data:
   mqtt_log:
+  grafana_data:
