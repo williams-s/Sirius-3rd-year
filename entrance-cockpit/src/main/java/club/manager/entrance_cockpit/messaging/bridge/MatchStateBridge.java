@@ -37,6 +37,8 @@ public class MatchStateBridge {
             if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.SECOND_HALF_KICK_OFF)) {
                 liveMatchStateService.setHalfTime(matchId, false);
             }
+            if (matchStateDTO.getMatchStateEnum().equals(MatchStateEnum.SCORE_UPDATE))
+                liveMatchStateService.updateScore(matchId, matchStateDTO);
             sendMatchState(matchStateDTO);
         }
     }

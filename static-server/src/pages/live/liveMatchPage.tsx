@@ -14,6 +14,12 @@ import type {MatchResponse} from "../../types/generated/MatchResponse.ts";
 import {MatchCard} from "../../components/MatchDetailsComponent.tsx";
 import type {PlayerResponse} from "../../types/generated/PlayerResponse.ts";
 import {PlayerCardForMatch} from "../../components/players/PlayerCardForMatch.tsx";
+import {PlayerHeatMap} from "../../components/heatmap/PlayerHeatMap.tsx";
+import {getPlayer} from "../../api/playerApi.ts";
+import {PlayerStats} from "../../components/stats/PlayerStats.tsx";
+import {PlayerHealthStatsComponent} from "../../components/health/PlayerHealthStats.tsx";
+import {TeamStats} from "../../components/stats/TeamStats.tsx";
+import {TeamHealthStatsComponent} from "../../components/health/TeamHealthStats.tsx";
 
 
 export const LiveMatchPage : React.FC = () => {
@@ -25,6 +31,17 @@ export const LiveMatchPage : React.FC = () => {
     const [players, setPlayers] = useState<PlayerResponse[]>();
     const matchId = useParams().matchId;
     const [authorized,setAuthorized] = useState(false);
+    const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | null>(null);
+    const [showStats, setShowStats] = useState(false);
+    const [showTeamStats, setShowTeamStats] = useState(false);
+    const [showHeatMap, setShowHeatMap] = useState(false);
+    const [showHealth, setShowHealth] = useState(false);
+    const [showTeamHealth, setShowTeamHealth] = useState(false);
+    const [authorizedToSeePlayer, setAuthorizedToSeePlayer] = useState(false);
+    const [showTeamDetailsLive, setShowTeamDetailsLive] = useState(false);
+    const [homeTeam, setHomeTeam] = useState<PlayerResponse[]>([]);
+    const [awayTeam, setAwayTeam] = useState<PlayerResponse[]>([]);
+
     useEffect(() => {
         if (!matchId) {
             return;
@@ -91,6 +108,54 @@ export const LiveMatchPage : React.FC = () => {
     }, []);
 
 
+
+    useEffect(() => {
+        if (!selectedPlayer) {
+            return;
+        }
+
+        const fetchPlayer = async () => {
+            try {
+                const data = await getPlayer(selectedPlayer.playerId);
+                if (data) {
+                    setAuthorizedToSeePlayer(true);
+                    setShowStats(true);
+                    setShowHeatMap(false);
+                    setShowHealth(false);
+                }
+            } catch (error) {
+                console.error("Erreur getPlayer:", error);
+                //setAuthorizedToSeePlayer(true);
+                setShowStats(false);
+                setShowHeatMap(false);
+                setShowHealth(false);
+                setAuthorizedToSeePlayer(false);
+                setSelectedPlayer(null);
+            }
+        }
+        fetchPlayer();
+
+    }, [selectedPlayer]);
+
+    useEffect(() => {
+        if (!players || !playersPosition || !matchState || players.length === 0 || playersPosition.length === 0) return;
+
+        const teamIds = [...new Set(playersPosition.map(p => p.teamId))].sort();
+        const teamA = players.filter(p => p.teamId === teamIds[0]);
+        const teamB = players.filter(p => p.teamId === teamIds[1]);
+
+        const newHome = teamIds[0] === matchState.score.homeTeam.teamId ? teamA : teamB;
+        const newAway = teamIds[0] === matchState.score.homeTeam.teamId ? teamB : teamA;
+
+        setHomeTeam(prev =>
+            prev.length === newHome.length ? prev : newHome
+        );
+        setAwayTeam(prev =>
+            prev.length === newAway.length ? prev : newAway
+        );
+    }, [players]);
+
+
     if (isLoading) {
         return <div>Loading match data...</div>;
     }
@@ -114,11 +179,9 @@ export const LiveMatchPage : React.FC = () => {
             <div>Pas de données pour l'instant</div>
         )
     }
-    const teamIds = players ? [...new Set(playersPosition.map(p => p.teamId))].sort() : [];
-    const teamA = players?.filter(p => p.teamId === teamIds[0]) ?? [];
-    const teamB = players?.filter(p => p.teamId === teamIds[1]) ?? [];
 
     return (
+        matchId &&
         <div className="flex w-full h-full bg-slate-400 overflow-hidden">
 
             <div className="pt-4 flex-shrink-0 overflow-hidden h-full">
@@ -128,6 +191,7 @@ export const LiveMatchPage : React.FC = () => {
                 />
             </div>
 
+
             <div className="flex flex-col flex-1 min-w-0 ml-6 overflow-hidden">
 
                 {matchState && (
@@ -135,32 +199,119 @@ export const LiveMatchPage : React.FC = () => {
                         <Scoreboard matchState={matchState}/>
                     </div>
                 )}
+                <div className="flex justify-between mr-8 ml-4">
+                    <button className="text-white rounded hover:bg-slate-700" onClick={() => {setShowTeamDetailsLive(true); setShowTeamStats(true)}}>
+                        Voir stats équipe
+                    </button>
+                    <button className="text-white rounded hover:bg-slate-700" onClick={() => {setShowTeamDetailsLive(true); setShowTeamHealth(true)}}>
+                        Voir santé des joueurs
+                    </button>
+                </div>
 
                 <div className="flex flex-1 gap-4 mt-4 overflow-hidden">
-
                     <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
-                            {matchState?.score.homeTeam.name ?? `Équipe ${teamIds[0]}`}
+                            {matchState?.score.homeTeam.name ?? `Equipe 1`}
                         </h2>
-                        {teamA.map(p => (
-                            <PlayerCardForMatch key={p.playerId} player={p} color="blue" />
+                        {homeTeam.map(p => (
+                            <div key={p.playerId} onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch player={p} color="blue" />
+                            </div>
                         ))}
                     </div>
+
 
                     <div className="w-px bg-slate-500 flex-shrink-0" />
 
                     <div className="flex flex-col flex-1 overflow-y-auto space-y-2">
                         <h2 className="text-sm font-bold uppercase text-white tracking-widest mb-1 sticky top-0 bg-slate-400 pb-1">
-                            {matchState?.score.awayTeam.name ?? `Équipe ${teamIds[1]}`}
+                            {matchState?.score.awayTeam.name ?? `Equipe 2`}
                         </h2>
-                        {teamB.map(p => (
-                            <PlayerCardForMatch key={p.playerId} player={p} color="red"/>
+                        {awayTeam.map(p => (
+                            <div key={p.playerId} onClick={() => setSelectedPlayer(p)} style={{cursor: "pointer"}}>
+                                <PlayerCardForMatch player={p} color="red" />
+                            </div>
                         ))}
                     </div>
 
                 </div>
             </div>
+            {selectedPlayer && (
+                authorizedToSeePlayer && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <div className="bg-slate-800 p-6 w-[80vw] h-[90vh]">
+                        <div className="flex gap-20">
+                            <button
+                                onClick={() => {
+                                    setSelectedPlayer(null);
+                                    setShowHeatMap(false);
+                                    setShowStats(false);
+                                    setShowHealth(false);
+                                }}>
+                                ✕
+                            </button>
+                            <button onClick={() => {
+                                setShowStats(true);
+                                setShowHeatMap(false);
+                                setShowHealth(false);
+                            }}
+                            >Stats</button>
+                            <button onClick={() => {
+                                setShowHeatMap(true);
+                                setShowStats(false);
+                                setShowHealth(false);
+                            }}
+                            >Heatmap</button>
+                            <button onClick={() => {
+                                setShowHeatMap(false);
+                                setShowStats(false);
+                                setShowHealth(true);
+                            }}
+                            >Santé</button>
+                        </div>
 
+                        <h2 className="text-white text-xl font-bold mb-4 text-center">
+                            {selectedPlayer.firstName} {selectedPlayer.name}
+                        </h2>
+
+                        <div className="w-full h-[90%]">
+                            {
+                                showHeatMap &&
+                                <PlayerHeatMap
+                                    matchId={matchId}
+                                    playerId={selectedPlayer.playerId}
+                                />
+                            }
+                            {
+                                showStats &&
+                                <PlayerStats matchId={matchId} playerId={selectedPlayer.playerId}/>
+                            }
+                            {
+                                showHealth &&
+                                <PlayerHealthStatsComponent matchId={matchId} playerId={selectedPlayer.playerId}/>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                )
+            )}
+            {showTeamDetailsLive && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <div className="bg-slate-800 p-6 w-[80vw] h-[90vh]">
+                        <button
+                            onClick={() => {
+                                setShowTeamHealth(false);
+                                setShowTeamStats(false);
+                                setShowTeamDetailsLive(false);
+                            }}>
+                            ✕
+                        </button>
+                        {showTeamStats && <TeamStats matchId={matchId}/>}
+                        {showTeamHealth && <TeamHealthStatsComponent matchId={matchId}/>}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

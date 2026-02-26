@@ -6,12 +6,15 @@ networks:
   rp-network:
     driver: overlay
 
+
 configs:
   nginx_conf:
     external: true
   nginx_snippets_oauth2:
     external: true
   mosquitto_conf:
+    external: true
+  kc_cm_realm:
     external: true
 
 secrets:
@@ -46,6 +49,28 @@ services:
       placement:
         constraints:
           - node.labels.role == front
+
+  player-performance-backend:
+    image: clubmanagersirius/player-performance-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8081:8081"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == performance-backend
+
+  team-performance-backend:
+    image: clubmanagersirius/team-performance-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8083:8083"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == performance-backend
 
   bridge-messaging:
     image: clubmanagersirius/bridge-messaging:${IMAGE_TAG:-latest}
@@ -100,6 +125,15 @@ services:
         constraints:
           - node.labels.role == reverse-proxy
 
+  redis:
+    image: redis:7-alpine
+    networks:
+      - rp-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == reverse-proxy
+
   oauth2-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
     environment:
@@ -110,10 +144,10 @@ services:
       - OAUTH2_PROXY_EMAIL_DOMAINS=*
       - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
       - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
-      - OAUTH2_PROXY_LOGIN_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/auth
-      - OAUTH2_PROXY_OIDC_ISSUER_URL=http://192.168.0.65:8180/realms/cm-realm
-      - OAUTH2_PROXY_REDEEM_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/token
-      - OAUTH2_PROXY_OIDC_JWKS_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/certs
+      - OAUTH2_PROXY_LOGIN_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/auth
+      - OAUTH2_PROXY_OIDC_ISSUER_URL=https://172.31.249.162/realms/cm-realm
+      - OAUTH2_PROXY_REDEEM_URL=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/token
+      - OAUTH2_PROXY_OIDC_JWKS_URL=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/certs
       - OAUTH2_PROXY_SKIP_OIDC_DISCOVERY=true
       - OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION=true
       - OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL=true
@@ -129,8 +163,10 @@ services:
       - OAUTH2_PROXY_CODE_CHALLENGE_METHOD=S256
       - OAUTH2_PROXY_PROXY_PREFIX=/oauth2
       - OAUTH2_PROXY_REVERSE_PROXY=true
-      - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8180/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
-      - OAUTH2_PROXY_LOGOUT_URL=http://172.31.249.162:65/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
+      - OAUTH2_PROXY_BACKEND_LOGOUT_URL=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
+      - OAUTH2_PROXY_LOGOUT_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
+      - OAUTH2_PROXY_SESSION_STORE_TYPE=redis
+      - OAUTH2_PROXY_REDIS_CONNECTION_URL=redis://redis:6379
     networks:
       - rp-network
     deploy:
@@ -139,14 +175,41 @@ services:
           - node.labels.role == reverse-proxy
 
   data-pipeline:
-    image: eclipse-temurin:17-jdk-alpine
-    environment:
-      - JAVA_OPTS=-Djava.awt.headless=true -Xmx512m
-    command: tail -f /dev/null
+    image: clubmanagersirius/data-pipeline:${IMAGE_TAG:-latest}
     deploy:
       placement:
         constraints:
           - node.labels.role == etl
+
+
+  identity-provider:
+    image: quay.io/keycloak/keycloak:latest
+    ports:
+      - "8080:8080"
+    configs:
+      - source: kc_cm_realm
+        target: /opt/keycloak/data/import/cm-realm-realm.json
+    environment:
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME=172.31.249.162
+      - KC_HOSTNAME_STRICT=false
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://192.168.0.33:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=${KEYCLOAK_PASSWORD_DB}
+    command:
+      - start-dev
+      - --import-realm
+    networks:
+      - rp-network
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == idp
+
 
 volumes:
   mqtt_data:

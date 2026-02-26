@@ -1,6 +1,6 @@
 /**
  * Generated from: MatchStateDTO.java
- * Generated on: 2026-02-01 20:53:43
+ * Generated on: 2026-02-25 16:23:21
  */
 
 import { MatchStateEnum } from '../../enums/generated/MatchStateEnum';

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -15,53 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerService {
 
     public final PositionInMatch positionInMatch;
-    public final ConcurrentHashMap<PlayerKey, PlayerLiveMatchDetailDTO> playersInMatch = new ConcurrentHashMap<>();
     public final ConcurrentHashMap<PlayerKey, StatsDTO> playersStats = new ConcurrentHashMap<>();
-   /* public PlayerLiveMatchDetailDTO mergeTopics(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
-        PlayerLiveMatchDetailDTO res = null;
-        if (p1 == null) {
-            res = merge(getPlayerInMatch(p2),p2);
-        }
-        if (p2 == null) {
-            res = merge(getPlayerInMatch(p1),p1);
-        }
-        if (p1 != null && p2 != null) {
-            res = merge(merge(getPlayerInMatch(p1),p1),p2);
-        }
-        return res;
-    }*/
-
-    /*private PlayerLiveMatchDetailDTO merge(PlayerLiveMatchDetailDTO p1, PlayerLiveMatchDetailDTO p2) {
-
-        PlayerLiveMatchDetailDTO.PlayerLiveMatchDetailDTOBuilder merge = PlayerLiveMatchDetailDTO.builder()
-                .matchId(p1.getMatchId())
-                .timestamp(p1.getTimestamp())
-                .playerId(p1.getPlayerId())
-                .playerPosition(p1.getPlayerPosition())
-                .playerHealth(p1.getPlayerHealth())
-                .matchEvent(p1.getMatchEvent())
-                .statsDTO(p1.getStatsDTO());
-
-
-        if (p2.getPlayerPosition() != null) merge.playerPosition(p2.getPlayerPosition());
-        if (p2.getPlayerHealth() != null) merge.playerHealth(p2.getPlayerHealth());
-        if (p2.getMatchEvent() != null) merge.matchEvent(p2.getMatchEvent());
-
-        return merge.build();
-    }*/
-
-    public PlayerLiveMatchDetailDTO getPlayerInMatch(PlayerLiveMatchDetailDTO p) {
-        addPlayerInMatchIfNotExist(p);
-        return playersInMatch.get(new PlayerKey(p.getMatchId(), p.getPlayerId()));
-    }
-
-    public void addPlayerInMatchIfNotExist(PlayerLiveMatchDetailDTO p) {
-        if (!playersInMatch.containsKey(new PlayerKey(p.getMatchId(), p.getPlayerId()))) {
-            p.setStatsDTO(new StatsDTO());
-            playersInMatch.put(new PlayerKey(p.getMatchId(), p.getPlayerId()), p);
-            log.debug(p.toString());
-        }
-    }
+    public final ConcurrentHashMap<PlayerKey, HealthMesures> playerHealthStats = new ConcurrentHashMap<>();
 
     public StatsDTO getPlayerStats(PlayerKey playerKey) {
         addStatsIfNotExist(playerKey);
@@ -131,4 +88,64 @@ public class PlayerService {
     public int[][] updatePositionInMatch(PlayerPositionDTO playerPositionDTO) {
         return positionInMatch.updatePosition(playerPositionDTO);
     }
+
+    public void updatePlayerHealth(PlayerHealthDTO playerHealthDTO){
+        PlayerKey playerKey = new PlayerKey(playerHealthDTO.getMatchId(), playerHealthDTO.getPlayerId());
+
+        HealthMesures healthMesures = getHealthMesures(playerKey);
+        Integer heartRate = playerHealthDTO.getHeartRate();
+        Double stamina = playerHealthDTO.getStamina();
+        Double temperature = playerHealthDTO.getTemperature();
+
+        PlayerHealthStatsDTO healthStatsDTO = healthMesures.playerHealthStatsDTO;
+
+        healthStatsDTO.setCurrentStamina(stamina);
+        healthStatsDTO.setCurrentHeartRate(heartRate);
+        healthStatsDTO.setCurrentTemperature(temperature);
+
+        healthMesures.allHeartRates.add(heartRate);
+        healthMesures.allTemperatues.add(temperature);
+
+        var heartRateStats = healthMesures.allHeartRates.stream().mapToInt(Integer::intValue).summaryStatistics();
+        var temperatureStats = healthMesures.allTemperatues.stream().mapToDouble(Double::doubleValue).summaryStatistics();
+
+        healthStatsDTO.setAvgHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getAverage() : 0.0);
+        healthStatsDTO.setMinHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getMin() : 0);
+        healthStatsDTO.setMaxHeartRate(heartRateStats.getCount() > 0 ? heartRateStats.getMax() : 0);
+
+        healthStatsDTO.setAvgTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getAverage() : 0.0);
+        healthStatsDTO.setMinTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMin() : 0.0);
+        healthStatsDTO.setMaxTemperature(temperatureStats.getCount() > 0 ? temperatureStats.getMax() : 0.0);
+
+
+    }
+
+    public PlayerHealthStatsDTO getPlayerHealthStats(PlayerKey playerKey){
+        return getHealthMesures(playerKey).playerHealthStatsDTO;
+    }
+
+    private HealthMesures getHealthMesures(PlayerKey playerKey){
+        if (!playerHealthStats.containsKey(playerKey)) {
+            PlayerHealthStatsDTO playerHealthStatsDTO = new PlayerHealthStatsDTO();
+            playerHealthStatsDTO.setPlayerId(playerKey.playerId());
+            playerHealthStatsDTO.setMatchId(playerKey.matchId());
+            playerHealthStats.put(playerKey, new HealthMesures(playerHealthStatsDTO, new ArrayList<>(), new ArrayList<>()));
+        }
+        return playerHealthStats.get(playerKey);
+    }
+
+    private void addTouch(PlayerKey playerKey){
+        StatsDTO stats = getPlayerStats(playerKey);
+        stats.setTouches(stats.getTouches() + 1);
+    }
+
+    public void addTouchesPlayers(List<PlayerPositionDTO> playerPositionDTOS){
+        for (var p : playerPositionDTOS){
+            if (p.getHasBall()){
+                addTouch(new PlayerKey(p.getMatchId(), p.getPlayerId()));
+            }
+        }
+    }
+
+    public record HealthMesures(PlayerHealthStatsDTO playerHealthStatsDTO, List<Integer> allHeartRates, List<Double> allTemperatues){}
 }

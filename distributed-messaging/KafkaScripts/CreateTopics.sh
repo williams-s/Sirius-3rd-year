@@ -1,8 +1,11 @@
-/opt/kafka/bin/kafka-topics.sh --create --topic front-data --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic players-position --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic players-health --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic match-events --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic ball-events --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic match-state --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic heat-map-player-position --bootstrap-server localhost:9092
-/opt/kafka/bin/kafka-topics.sh --create --topic match-sheet --bootstrap-server localhost:9092
+/opt/kafka/bin/kafka-topics.sh --create --topic players-position --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic players-health --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic match-events --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic ball-events --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic match-state --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic heat-map-player-live --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic match-sheet --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic stats-player-live --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic health-player-live --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic stats-team-live --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1
+/opt/kafka/bin/kafka-topics.sh --create --topic health-team-live --bootstrap-server localhost:9092 --partitions 15 --replication-factor 1

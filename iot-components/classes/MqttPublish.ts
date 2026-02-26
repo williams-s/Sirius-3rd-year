@@ -91,7 +91,7 @@ export class MqttPublish {
         const playersHealth : PlayerHealth[] = allPlayers.map((player)=>{
             return player.getPlayerHealth();
         })
-        this.client.publish("players/health", JSON.stringify({playersHealth}));
+        this.client.publish("players/health", JSON.stringify({matchId, playersHealth}));
     }
 
 
@@ -104,7 +104,7 @@ export class MqttPublish {
         const playersPosition : PlayerPosition[] = allPlayers.map((player)=>{
             return player.getPlayerPosition();
         })
-        this.client.publish("players/position", JSON.stringify({playersPosition}));
+        this.client.publish("players/position", JSON.stringify({matchId, playersPosition}));
         /*for (let player of allPlayers) {
             const data = {
                 team: player.team,

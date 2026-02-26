@@ -18,7 +18,7 @@ export const MatchCard = ({match} : {match:MatchResponse}) => {
                         <span>{match.competition} - {match.matchDay} - {match.season}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Header matchStatus={match.status}/>
+                        <MatchCardHeader matchStatus={match.status}/>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@ export const MatchCard = ({match} : {match:MatchResponse}) => {
     )
 
 };
-const Header = ({matchStatus}:{matchStatus:MatchStatusEnum}) => {
+export const MatchCardHeader = ({matchStatus}:{matchStatus:MatchStatusEnum}) => {
     switch (matchStatus){
         case MatchStatusEnum.FINISHED:
             return (

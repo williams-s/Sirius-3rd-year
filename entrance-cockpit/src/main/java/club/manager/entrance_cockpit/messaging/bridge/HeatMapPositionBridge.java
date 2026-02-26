@@ -1,6 +1,8 @@
 package club.manager.entrance_cockpit.messaging.bridge;
 
+import club.manager.common_library.dto.PlayerPositionDTO;
 import club.manager.common_library.parentDTO.PayloadDTO;
+import club.manager.entrance_cockpit.application.service.LiveMatchStateService;
 import club.manager.entrance_cockpit.messaging.websocket.WebSocketService;
 import club.manager.common_library.dto.HeatMapPlayerDTO;
 import lombok.RequiredArgsConstructor;
@@ -10,30 +12,53 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class HeatMapPositionBridge {
     private final WebSocketService webSocketService;
-    private final AtomicReference<List<HeatMapPlayerDTO>> currentHeatMapPlayerDTOs = new AtomicReference<>();
+    private final ConcurrentHashMap<Long, List<HeatMapPlayerDTO>> heatMapPlayers = new ConcurrentHashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
-    @KafkaListener(topics = "heat-map-player-position", groupId = "entrance-cockpit-heat-map-player-position")
+    private final LiveMatchStateService liveMatchStateService;
+    @KafkaListener(topics = "heat-map-player-live", groupId = "entrance-cockpit-heat-map-player-live")
     public void consumeHeatMapEvents(String message) {
         PayloadDTO payloadDTO = mapper.readValue(message, PayloadDTO.class);
         List<HeatMapPlayerDTO> heatMapPlayerDTOs = payloadDTO.getPayloadAsList(HeatMapPlayerDTO.class);
-        currentHeatMapPlayerDTOs.set(heatMapPlayerDTOs);
+        if (heatMapPlayerDTOs != null && !heatMapPlayerDTOs.isEmpty()){
+            Long matchId = heatMapPlayerDTOs.getFirst().matchId();
+            heatMapPlayers.put(matchId, heatMapPlayerDTOs);
+        }
     }
 
     @Scheduled(fixedRate = 5000)
     public void sendHeatMapPlayerDTOs() {
-        if (currentHeatMapPlayerDTOs.get() == null)
-            return;
-        log.debug("Sending heat map information");
-        currentHeatMapPlayerDTOs.get().
-                forEach(elem ->
-                        webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-position/" + elem.playerId()));
+        heatMapPlayers.forEach((matchId, heatMapPlayerDTOs) -> {
+            if (liveMatchStateService.isMatchNotRunning(matchId)) {
+                return;
+            }
+            heatMapPlayerDTOs.forEach(elem -> {
+                webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-live/" + elem.playerId());
+            });
+        });
+    }
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void cleanupFinishedMatches() {
+        List<Long> matchesToRemove = new ArrayList<>();
+        heatMapPlayers.forEach((matchId, heatMapPlayerDTOS) -> {
+            if (liveMatchStateService.isMatchFinished(matchId)){
+                matchesToRemove.add(matchId);
+            }
+        });
+        matchesToRemove.forEach(heatMapPlayers::remove);
+    }
+
+
+    public List<HeatMapPlayerDTO> getCurrentHeatMap(Long matchId){
+        return heatMapPlayers.getOrDefault(matchId, null);
     }
 }
