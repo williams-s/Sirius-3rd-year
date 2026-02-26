@@ -12,7 +12,7 @@ import {getExactAmountOfPlayers, positionLines} from "./utils/formationUtils";
 
 const matchId = Number(process.env.MATCH_ID ?? 1);
 const API_URL = process.env.API_BASE_URL ?? "http://localhost:8082";
-const deltaTimeMs = 33;
+const deltaTimeMs = 100;
 
 const mqttPublish = new MqttPublish();
 console.log("Connecting to MQTT broker...");
@@ -22,13 +22,15 @@ const teamA : TeamSimulate = {
     teamId : 0,
     players : [],
     side : "LEFT",
-    name: ""
+    name: "",
+    homeOrAway: ""
 }
 const teamB : TeamSimulate = {
     teamId : 0,
     players : [],
     side : "RIGHT",
-    name: ""
+    name: "",
+    homeOrAway: ""
 }
 
 const request = new Requests(API_URL);
@@ -49,17 +51,19 @@ const getLines = (players : PlayerTeamInfo[]) => {
 
 const addPlayer = (team: TeamSimulate, players: PlayerTeamInfo[], position : PositionEnum, amount : number) => {
     const playersToAdd = getExactAmountOfPlayers(players, position, amount);
+    let positions = team.side === "LEFT"
+        ? positions_left.map(p => ({ ...p }))
+        : positions_right.map(p => ({ ...p }));
+
     for (const player of playersToAdd){
-        let placement :  {
-            position: PositionEnum
-            x: number
-            y: number
+        const index = positions.findIndex(p => p.position === player.position);
+        if (index !== -1) {
+            const placement = positions[index];
+            positions.splice(index, 1);
+            team.players.push(new Player(matchId,player.playerId, player.teamId, player.position,placement.x,placement.y))
+        } else {
+            console.warn("No position : ", player.position);
         }
-        if (team.side === "LEFT")
-            placement = positions_left.find(p => p.position === player.position);
-        else
-            placement = positions_right.find(p => p.position === player.position);
-        team.players.push(new Player(matchId,player.playerId, player.teamId, player.position,placement.x,placement.y))
     }
 }
 
@@ -109,6 +113,12 @@ const main = async () => {
             teamB.teamId = data[1].teamId;
             teamB.name = data[1].name;
 
+            const homeOrAwayA = await request.getSideForTeam(matchId, data[0].teamId)
+            const homeOrAwayB = await request.getSideForTeam(matchId, data[1].teamId)
+
+            teamA.homeOrAway = homeOrAwayA.data;
+            teamB.homeOrAway = homeOrAwayB.data;
+
             const playersA = await request.getPlayersFromThatTeam(data[0].teamId);
             const playersB = await request.getPlayersFromThatTeam(data[1].teamId);
 
@@ -136,21 +146,31 @@ const main = async () => {
                             console.log(players);
                             mqttPublish.publishMatchSheet(players, matchId);
                             match.running = true;
-                            match.startSimulation();
+                            const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-                            updateInterval = setInterval(() => {
-                                if (!match.running) {
-                                    if (updateInterval) {
-                                        clearInterval(updateInterval);
+                            const mainSimu = async () => {
+                                const allPlayers = [...match.teamA.players, ...match.teamB.players];
+
+                                while (match.running) {
+                                    try {
+                                        if (!match.matchPause){
+                                            await match.updateBallFlight(deltaTimeMs);
+                                            match.updatePlayersPositions(allPlayers, deltaTimeMs);
+                                            mqttPublish.publishPlayersPosition(allPlayers, matchId);
+                                        }
+                                        await sleep(deltaTimeMs);
+                                    } catch (error) {
+                                        console.error("Erreur :", error);
+                                        match.running = false;
+                                        break;
                                     }
-                                    mqttPublish.disconnect();
-                                    process.exit(0);
-                                    return;
                                 }
-                                match.updatePlayersPositions([...match.teamA.players, ...match.teamB.players],deltaTimeMs);
+                                mqttPublish.disconnect();
+                                process.exit(match.running ? 0 : 1);
+                            };
 
-                                mqttPublish.publishPlayersPosition([...match.teamA.players, ...match.teamB.players], matchId);
-                            }, deltaTimeMs);
+                            match.startSimulation();
+                            mainSimu();
 
                         } catch (error) {
                             console.error("Erreur:", error);

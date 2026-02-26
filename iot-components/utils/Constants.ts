@@ -45,12 +45,15 @@ export const FIELD_HEIGHT = 68;
 export const GOAL_WIDTH = 7.32;
 export const GOAL_START_Y = (FIELD_HEIGHT - GOAL_WIDTH) / 2;
 export const GOAL_END_Y = GOAL_START_Y + GOAL_WIDTH;
+export const PENALTY_LEFT = { x: 11, y: FIELD_HEIGHT / 2, z: 0 };
+export const PENALTY_RIGHT = { x: FIELD_WIDTH - 11, y: FIELD_HEIGHT / 2, z:0};
 
 export interface TeamSimulate {
     players : Player[],
     side : string,
     teamId : number,
-    name : string
+    name : string,
+    homeOrAway : string,
 }
 
 export const getOptionsForPosition = (position: PositionEnum)=> {
@@ -59,4 +62,24 @@ export const getOptionsForPosition = (position: PositionEnum)=> {
     if (position.includes("BACK")) return OPTIONS_DEFENDER;
     if (position === "GOALKEEPER") return OPTIONS_GOALKEEPER;
     return OPTIONS_MIDFIELDER;
+}
+
+
+export const INTERCEPTION_RADIUS = 3.5;
+export const DRIBBLE_RANGE = 4;
+
+export enum BallFlightType {
+    PASS = 'PASS',
+    SHOT = 'SHOT'
+}
+
+export interface BallFlight {
+    active: boolean;
+    type: BallFlightType;
+    origin: { x: number; y: number };
+    target: { x: number; y: number };
+    speed: number;
+    pendingOwner: Player | null;
+    shooter: Player | null;
+    lastPasser: Player | null;
 }

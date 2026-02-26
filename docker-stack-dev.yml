@@ -6,6 +6,7 @@ networks:
   rp-network:
     driver: overlay
 
+
 configs:
   nginx_conf:
     external: true
@@ -48,6 +49,28 @@ services:
       placement:
         constraints:
           - node.labels.role == front
+
+  player-performance-backend:
+    image: clubmanagersirius/player-performance-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8081:8081"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == performance-backend
+
+  team-performance-backend:
+    image: clubmanagersirius/team-performance-backend:${IMAGE_TAG:-latest}
+    ports:
+      - "8083:8083"
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == performance-backend
 
   bridge-messaging:
     image: clubmanagersirius/bridge-messaging:${IMAGE_TAG:-latest}

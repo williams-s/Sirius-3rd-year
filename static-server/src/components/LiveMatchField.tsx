@@ -1,10 +1,11 @@
 import {Stage} from 'react-konva';
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import {PlayerCircle} from "./PlayerCircle.tsx";
 import {BallCircle} from "./BallCircle.tsx";
 import {FootballField, getLinesPosition} from "./FootballField.tsx";
 import type {PlayerPosition} from "../types/generated/PlayerPosition.ts";
 import type {BallEvent} from "../types/generated/BallEvent.ts";
+import {getPlayerInMatch} from "../api/playerApi.ts";
 
 export function LiveMatchField({ballEvent, playerPositions}: {
     ballEvent: BallEvent,
@@ -12,6 +13,7 @@ export function LiveMatchField({ballEvent, playerPositions}: {
 }) {
     const [firstTeamId, setFirstTeamId] = useState<number>(0);
     const [secondTeamId, setSecondTeamId] = useState<number>(0);
+    const fetchedPlayers = useRef<Set<number>>(new Set());
 
     const NAVBAR_HEIGHT = 48;
 
@@ -19,7 +21,6 @@ export function LiveMatchField({ballEvent, playerPositions}: {
         width: window.innerWidth / 2,
         height: window.innerHeight - NAVBAR_HEIGHT
     });
-
 
     const fieldInformations = {
         x: 30,
@@ -29,6 +30,22 @@ export function LiveMatchField({ballEvent, playerPositions}: {
     };
 
     const linesPosition = getLinesPosition(fieldInformations);
+    const [shirtNumbers, setShirtNumbers] = useState<Record<number, number>>({});
+
+    useEffect(() => {
+        if (!playerPositions || playerPositions.length === 0) return;
+
+        playerPositions.forEach(p => {
+            if (!fetchedPlayers.current.has(p.playerId)) {
+                fetchedPlayers.current.add(p.playerId);
+                getPlayerInMatch(p.playerId)
+                    .then(data => {
+                        setShirtNumbers(prev => ({ ...prev, [p.playerId]: data.shirtNumber }));
+                    })
+                    .catch(err => console.error(`Erreur getPlayerInMatch pour ${p.playerId}:`, err));
+            }
+        });
+    }, [playerPositions]);
 
     useEffect(() => {
         if (playerPositions.length > 0) {
@@ -46,7 +63,6 @@ export function LiveMatchField({ballEvent, playerPositions}: {
                 height: window.innerHeight - NAVBAR_HEIGHT
             });
         };
-
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -60,6 +76,7 @@ export function LiveMatchField({ballEvent, playerPositions}: {
                         player={p}
                         fieldDimensions={linesPosition}
                         teamIds={{firstTeamId, secondTeamId}}
+                        shirtNumber={shirtNumbers[p.playerId] ?? null}
                     />
                 ))}
                 <BallCircle ball={ballEvent} fieldDimensions={linesPosition}/>

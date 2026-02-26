@@ -15,7 +15,6 @@ public class MatchStateDTO {
 
     private Double matchTime;
 
-    private Score score;
+    private ScoreDTO score;
 
-    private record Score(TeamScoreDTO homeTeam, TeamScoreDTO awayTeam) {}
 }

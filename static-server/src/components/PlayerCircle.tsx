@@ -1,5 +1,5 @@
 import type {Coordinates2D} from "../types/generated/Coordinates2D.ts";
-import {Circle} from "react-konva";
+import {Circle, Text, Group} from "react-konva";
 import type {PlayerPosition} from "../types/generated/PlayerPosition.ts";
 import {FIELD_HEIGHT, FIELD_WIDTH} from "../constants/FieldConstants.ts";
 
@@ -17,15 +17,36 @@ export const PlayerCircle = (
     {
         player,
         fieldDimensions,
-        teamIds
-    } : {player : PlayerPosition, fieldDimensions : FieldDimensions, teamIds : TeamIds}
+        teamIds,
+        shirtNumber
+    } : {
+        player : PlayerPosition,
+        fieldDimensions : FieldDimensions,
+        teamIds : TeamIds,
+        shirtNumber : number | null
+    }
 ) => {
     const coords: Coordinates2D = player.playerCoordinates;
     const normalizedCoords = {
         y: coords.x * fieldDimensions.bot / FIELD_WIDTH,
-        x: coords.y * (fieldDimensions.right ) / FIELD_HEIGHT
+        x: coords.y * (fieldDimensions.right) / FIELD_HEIGHT
     }
+
     return (
-        <Circle x={normalizedCoords.x} y={normalizedCoords.y} fill={player.teamId === teamIds.firstTeamId ? "blue" : "red"} radius={20}/>
+        <Group x={normalizedCoords.x} y={normalizedCoords.y}>
+            <Circle fill={player.teamId === teamIds.firstTeamId ? "blue" : "red"} radius={20}/>
+            {shirtNumber !== null && (
+                <Text
+                    text={String(shirtNumber)}
+                    fill="white"
+                    fontSize={12}
+                    fontStyle="bold"
+                    align="center"
+                    width={40}
+                    x={-20}
+                    y={-7}
+                />
+            )}
+        </Group>
     )
 }

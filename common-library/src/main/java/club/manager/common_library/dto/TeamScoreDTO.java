@@ -5,4 +5,4 @@ import lombok.Builder;
 import lombok.Data;
 
 @Builder
-public record TeamScoreDTO(Long teamId, String name, Integer score) {}
+public record TeamScoreDTO(Long teamId, String name, Integer score, String side) {}

@@ -40,4 +40,17 @@ public class MockController {
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(teamResponseDTOs);
     }
+
+    @GetMapping("match/{matchId}/team/{teamId}/side")
+    public ResponseEntity<String> getTeamSide(@PathVariable Long matchId,
+                                              @PathVariable Long teamId) {
+
+        String side = matchService.findTeamSide(matchId, teamId);
+
+        if (side == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(side);
+    }
 }

@@ -63,7 +63,7 @@ export const PlayerHeatMap = ({
 
         client.onConnect = () => {
             client.subscribe(
-                liveMatchTopic(matchId, "heat-map-player-position/" + playerId),
+                liveMatchTopic(matchId, "heat-map-player-live/" + playerId),
                 (message) => {
                     try {
                         const data: HeatMapPlayer = JSON.parse(message.body);

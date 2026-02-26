@@ -24,7 +24,7 @@ public class HeatMapPositionBridge {
     private final ConcurrentHashMap<Long, List<HeatMapPlayerDTO>> heatMapPlayers = new ConcurrentHashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
     private final LiveMatchStateService liveMatchStateService;
-    @KafkaListener(topics = "heat-map-player-position", groupId = "entrance-cockpit-heat-map-player-position")
+    @KafkaListener(topics = "heat-map-player-live", groupId = "entrance-cockpit-heat-map-player-live")
     public void consumeHeatMapEvents(String message) {
         PayloadDTO payloadDTO = mapper.readValue(message, PayloadDTO.class);
         List<HeatMapPlayerDTO> heatMapPlayerDTOs = payloadDTO.getPayloadAsList(HeatMapPlayerDTO.class);
@@ -41,7 +41,7 @@ public class HeatMapPositionBridge {
                 return;
             }
             heatMapPlayerDTOs.forEach(elem -> {
-                webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-position/" + elem.playerId());
+                webSocketService.sendObjectToTopic(elem, "live-match/" + elem.matchId() + "/heat-map-player-live/" + elem.playerId());
             });
         });
     }
