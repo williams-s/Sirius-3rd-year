@@ -15,8 +15,9 @@ const MQTT_BROKER = process.env.MQTT_BROKER ?? "172.31.249.162:1883"
 export class MqttPublish {
     private client : any;
     constructor() {
-        this.client = mqtt.connect("mqtt://" + MQTT_BROKER, {
-            reconnectPeriod: 0
+        this.client = mqtt.connect("mqtts://" + MQTT_BROKER, {
+            reconnectPeriod: 0,
+            rejectUnauthorized: false
         });
     }
 
