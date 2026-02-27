@@ -541,7 +541,7 @@ class SimulateMatch {
             playerHealth.stamina = Math.min(100, playerHealth.stamina + (Math.random() * 0.1 + 0.05));
         }
 
-        const movementHr = dist > 0.25 ? 40 + Math.random() * 20 : Math.random() * 10;
+        const movementHr = dist > 0.25 ? 15 + Math.random() * 10 : Math.random() * 5;
         const fatigueHr = (100 - playerHealth.stamina) * 0.3;
         playerHealth.heartRate = Math.floor(65 + movementHr + fatigueHr + Math.random() * 8 - 4);
         playerHealth.temperature = 36.5 + (100 - playerHealth.stamina) * 0.015 + Math.random() * 0.4 - 0.2;
