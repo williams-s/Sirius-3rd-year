@@ -18,8 +18,8 @@ producer = kafka.Producer({
     "retries": 3
 })
 
-print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
-print(f"Connected to MQTT: {MQTT_BROKER}:{MQTT_PORT}")
+#print(f"Connected to Kafka: {KAFKA_BOOTSTRAP}")
+#print(f"Connected to MQTT: {MQTT_BROKER}:{MQTT_PORT}")
 
 mqtt_topic_to_kafka_topic = {
     "players/health": "players-health",
@@ -41,6 +41,8 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("match/sheet")
 
 
+previous_match_id = set()
+
 def on_message(client, userdata, msg):
     raw_payload = msg.payload.decode()
     kafka_topic = mqtt_topic_to_kafka_topic[msg.topic]
@@ -51,11 +53,15 @@ def on_message(client, userdata, msg):
         print("Invalid JSON from MQTT")
         return
 
+    match_id = parsed_payload["matchId"]
+
+    if match_id not in previous_match_id:
+        previous_match_id.add(match_id)
+        print(f"Le match d'id :{match_id} a commencé")
+
     message = {
         "payload": parsed_payload
     }
-
-    match_id = parsed_payload["matchId"]
 
     producer.produce(
         kafka_topic,

@@ -11,6 +11,8 @@ import {getExactAmountOfPlayers, positionLines} from "./utils/formationUtils";
 
 
 const matchId = Number(process.env.MATCH_ID ?? 1);
+const duration = Number(process.env.DURATION ?? 90);
+const actionsPerSeconds = Number(process.env.ACTIONS ?? 3);
 const API_URL = process.env.API_BASE_URL ?? "http://localhost:8082";
 const deltaTimeMs = 100;
 
@@ -169,7 +171,7 @@ const main = async () => {
                                 process.exit(match.running ? 0 : 1);
                             };
 
-                            match.startSimulation();
+                            match.startSimulation(duration, actionsPerSeconds);
                             mainSimu();
 
                         } catch (error) {
