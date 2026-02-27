@@ -17,8 +17,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Configuration
 @AllArgsConstructor
@@ -29,7 +32,7 @@ public class MatchStreams {
     private final PlayerService playerService;
     private final ConcurrentHashMap<PlayerKey, PlayerPositionDTO> currentPlayerPositions = new ConcurrentHashMap<>();
     private final ExtractPayload extractPayload = new ExtractPayload();
-
+    private final Set<Long> seenMatchIds = ConcurrentHashMap.newKeySet();
     @Bean
     public KStream<String, MatchEventDTO> matchStream(StreamsBuilder builder) {
 
@@ -38,6 +41,7 @@ public class MatchStreams {
                 builder.stream("match-events", Consumed.with(Serdes.String(), Serdes.String()))
                         .mapValues(extractPayload::extractMatchEvent)
                         .filter((k, v) -> v != null);
+
 
         KStream<String, List<PlayerPositionDTO>> playerPosition =
                 builder.stream("players-position", Consumed.with(Serdes.String(), Serdes.String()))
@@ -105,6 +109,14 @@ public class MatchStreams {
 
 
     private PayloadDTO updatePlayerPositions(List<PlayerPositionDTO> positions) {
+        Long matchId = positions.getFirst().getMatchId();
+        if (seenMatchIds.add(matchId)) {
+            log.info("The match with id : {} just started", matchId);
+            log.info("Starting the player performances calculations for match with id : {}", matchId);
+            log.info("Will now send calculations for heat-map for match with id : {} in topic heat-map-player-live", matchId);
+            log.info("Will now send calculations for players stats for match with id : {} in topic stats-player-live", matchId);
+            log.info("Will now send calculations for players health for match with id : {} in topic health-player-live", matchId);
+        }
         playerService.addTouchesPlayers(positions);
         var heatMapPlayerDTOs = positions.stream().map(this::updatePlayerPosition).toList();
         return new PayloadDTO(heatMapPlayerDTOs);
