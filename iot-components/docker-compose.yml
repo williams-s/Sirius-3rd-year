@@ -6,5 +6,5 @@ services:
       - MATCH_ID=${MATCH_ID:-1}
       - DURATION=${DURATION:-90}
       - ACTIONS=${ACTIONS:-3}
-      - MQTT_BROKER=172.31.249.162:8883
+      - MQTT_BROKER=172.31.249.162:1883
       - API_BASE_URL=http://172.31.249.162
