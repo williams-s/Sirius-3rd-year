@@ -1,0 +1,8 @@
+#!/bin/bash
+
+MATCH_ID=${MATCH_ID:-1}
+DURATION=${DURATION:-90}
+ACTIONS=${ACTIONS:-3}
+
+MATCH_ID=$MATCH_ID DURATION=$DURATION ACTIONS=$ACTIONS \
+  docker compose -p match${MATCH_ID} up -d --build

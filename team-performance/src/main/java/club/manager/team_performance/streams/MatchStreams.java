@@ -19,6 +19,8 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -29,6 +31,7 @@ public class MatchStreams {
     private final ObjectMapper objectMapper;
     private final ExtractPayload extractPayload = new ExtractPayload();
     private final TeamService teamService;
+    private final Set<Long> seenMatchIds = ConcurrentHashMap.newKeySet();
     @Bean
     public KStream<String, MatchEventDTO> matchStream(StreamsBuilder builder) {
 
@@ -99,6 +102,13 @@ public class MatchStreams {
 
 
     private PayloadDTO getStatsTeam(List<PlayerPositionDTO> positions) {
+        Long matchId = positions.getFirst().getMatchId();
+        if (seenMatchIds.add(matchId)) {
+            log.info("The match with id : {} just started", matchId);
+            log.info("Starting the team performances calculations for match with id : {}", matchId);
+            log.info("Will now send calculations for team stats for match with id : {} in topic stats-team-live", matchId);
+            log.info("Will now send calculations for team health for match with id : {} in topic health-team-live", matchId);
+        }
         teamService.addDistanceCoveredAndTouches(positions);
         var statsByTeam = positions.stream().collect(Collectors.groupingBy(p -> new TeamKey(p.getMatchId(), p.getTeamId())));
         List<StatsDTO> stats = new ArrayList<>();

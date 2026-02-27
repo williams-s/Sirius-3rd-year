@@ -533,14 +533,18 @@ class SimulateMatch {
     updatePlayerHealth(player: Player) {
         const playerPosition = player.getPlayerPosition();
         const playerHealth = player.getPlayerHealth();
-        if (playerPosition.distanceCovered > 1) {
+        const dist = playerPosition.distanceCovered;
+
+        if (dist > 0.25) {
             playerHealth.stamina = Math.max(0, playerHealth.stamina - (Math.random() * 0.2 + 0.1));
         } else {
             playerHealth.stamina = Math.min(100, playerHealth.stamina + (Math.random() * 0.1 + 0.05));
         }
-        const baseHr = 70 + (100 - playerHealth.stamina) * 1.2;
-        playerHealth.heartRate = Math.floor(baseHr + Math.random() * 10 - 5);
-        playerHealth.temperature = 36.5 + (100 - playerHealth.stamina) * 0.015 + Math.random() * 0.2 - 0.1;
+
+        const movementHr = dist > 0.25 ? 15 + Math.random() * 10 : Math.random() * 5;
+        const fatigueHr = (100 - playerHealth.stamina) * 0.3;
+        playerHealth.heartRate = Math.floor(65 + movementHr + fatigueHr + Math.random() * 8 - 4);
+        playerHealth.temperature = 36.5 + (100 - playerHealth.stamina) * 0.015 + Math.random() * 0.4 - 0.2;
     }
 
     updateBallPossession() {

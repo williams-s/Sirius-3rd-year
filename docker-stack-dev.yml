@@ -108,6 +108,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8883:8883"
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
