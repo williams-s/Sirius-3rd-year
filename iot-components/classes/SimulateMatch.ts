@@ -530,29 +530,23 @@ class SimulateMatch {
         pos.distanceCovered = Math.sqrt(moveX ** 2 + moveY ** 2);
     }
 
-    updatePlayerHealth(player: Player, duration: number) {
+    updatePlayerHealth(player: Player) {
         const playerPosition = player.getPlayerPosition();
         const playerHealth = player.getPlayerHealth();
-        const distPerTick = playerPosition.distanceCovered;
+        const dist = playerPosition.distanceCovered;
 
-        const baseDrain = 100 / duration;
-
-        if (distPerTick > 0.8) {
-            playerHealth.stamina = Math.max(0, playerHealth.stamina - (baseDrain * 3 + Math.random() * baseDrain));
-        } else if (distPerTick > 0.2) {
-            playerHealth.stamina = Math.max(0, playerHealth.stamina - (baseDrain * 1.2 + Math.random() * baseDrain * 0.5));
+        if (dist > 0.25) {
+            playerHealth.stamina = Math.max(0, playerHealth.stamina - (Math.random() * 0.2 + 0.1));
         } else {
-            playerHealth.stamina = Math.min(100, playerHealth.stamina + (baseDrain * 0.3 + Math.random() * baseDrain * 0.2));
+            playerHealth.stamina = Math.min(100, playerHealth.stamina + (Math.random() * 0.1 + 0.05));
         }
 
-        const exertion = (100 - playerHealth.stamina) * 1.5 + distPerTick * 20;
-        playerHealth.heartRate = Math.floor(60 + exertion + Math.random() * 15 - 7);
-
-        const heatBuildup = (100 - playerHealth.stamina) * 0.04 + distPerTick * 0.5;
-        playerHealth.temperature = parseFloat(
-            (36.5 + heatBuildup + Math.random() * 0.6 - 0.3).toFixed(1)
-        );
+        const movementHr = dist > 0.25 ? 40 + Math.random() * 20 : Math.random() * 10;
+        const fatigueHr = (100 - playerHealth.stamina) * 0.3;
+        playerHealth.heartRate = Math.floor(65 + movementHr + fatigueHr + Math.random() * 8 - 4);
+        playerHealth.temperature = 36.5 + (100 - playerHealth.stamina) * 0.015 + Math.random() * 0.4 - 0.2;
     }
+
     updateBallPossession() {
         if (this.flight.active) return;
 
@@ -635,10 +629,10 @@ class SimulateMatch {
         this.launchBall(BallFlightType.PASS, {x: player2.getPlayerPosition().playerCoordinates.x + Math.random() - 0.5, y: player2.getPlayerPosition().playerCoordinates.y + Math.random() - 0.5,}, 20, player2);
     }
 
-    simulateStep(duration : number) {
+    simulateStep() {
         const allPlayers = [...this.teamA.players, ...this.teamB.players];
         for (const player of allPlayers) {
-            this.updatePlayerHealth(player, duration);
+            this.updatePlayerHealth(player);
         }
         this.updateBallPossession();
         this.mqttPublish.publishPlayersHealth(allPlayers, this.matchId);
@@ -689,7 +683,7 @@ class SimulateMatch {
             }
 
             for (let i = 0; i < actionsPerSecond; i++) {
-                this.simulateStep(duration);
+                this.simulateStep();
                 await new Promise(resolve => setTimeout(resolve, 1000 / actionsPerSecond));
             }
 
