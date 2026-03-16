@@ -152,11 +152,18 @@ services:
 
   oauth2-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+    # oauth2-proxy ne supporte pas les variables _FILE nativement.
+    # Ce wrapper lit les fichiers secrets et les exporte avant de lancer le binaire.
+    entrypoint:
+      - sh
+      - -c
+      - |
+        export OAUTH2_PROXY_CLIENT_SECRET=$(cat /run/secrets/oauth2_proxy_client_secret)
+        export OAUTH2_PROXY_COOKIE_SECRET=$(cat /run/secrets/oauth2_proxy_cookie_secret)
+        exec /bin/oauth2-proxy "$@"
     environment:
       - OAUTH2_PROXY_PROVIDER=keycloak-oidc
       - OAUTH2_PROXY_CLIENT_ID=portal
-      - OAUTH2_PROXY_CLIENT_SECRET_FILE=/run/secrets/oauth2_proxy_client_secret
-      - OAUTH2_PROXY_COOKIE_SECRET_FILE=/run/secrets/oauth2_proxy_cookie_secret
       - OAUTH2_PROXY_EMAIL_DOMAINS=*
       - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
       - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
@@ -213,17 +220,21 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_PROXY_HEADERS=xforwarded
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
-      - KC_BOOTSTRAP_ADMIN_PASSWORD_FILE=/run/secrets/kc_admin_password
       - KC_DB=postgres
       - KC_DB_URL=jdbc:postgresql://192.168.0.33:5432/keycloak
       - KC_DB_USERNAME=keycloak
-      - KC_DB_PASSWORD_FILE=/run/secrets/kc_db_password
     secrets:
       - kc_admin_password
       - kc_db_password
-    command:
-      - start-dev
-      - --import-realm
+    # Keycloak ne supporte pas les variables _FILE nativement.
+    # Ce wrapper lit les fichiers secrets et les exporte avant de lancer KC.
+    entrypoint:
+      - bash
+      - -c
+      - |
+        export KC_BOOTSTRAP_ADMIN_PASSWORD=$(cat /run/secrets/kc_admin_password)
+        export KC_DB_PASSWORD=$(cat /run/secrets/kc_db_password)
+        exec /opt/keycloak/bin/kc.sh start-dev --import-realm
     networks:
       - rp-network
     deploy:
