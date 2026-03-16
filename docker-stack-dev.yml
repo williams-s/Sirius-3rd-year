@@ -5,8 +5,8 @@ networks:
     driver: overlay
   rp-network:
     driver: overlay
-
-
+ 
+ 
 configs:
   nginx_conf:
     external: true
@@ -16,7 +16,9 @@ configs:
     external: true
   kc_cm_realm:
     external: true
-
+  oauth2_proxy_cfg:
+    external: true
+ 
 secrets:
   nginx_cert:
     external: true
@@ -34,9 +36,9 @@ secrets:
     external: true
   grafana_password:
     external: true
-
+ 
 services:
-
+ 
   static-server-backend:
     image: clubmanagersirius/static-server-backend:${IMAGE_TAG:-latest}
     ports:
@@ -47,7 +49,7 @@ services:
       placement:
         constraints:
           - node.labels.role == front
-
+ 
   entrance-cockpit-backend:
     image: clubmanagersirius/entrance-cockpit-backend:${IMAGE_TAG:-latest}
     ports:
@@ -64,7 +66,7 @@ services:
       placement:
         constraints:
           - node.labels.role == front
-
+ 
   player-performance-backend:
     image: clubmanagersirius/player-performance-backend:${IMAGE_TAG:-latest}
     ports:
@@ -75,7 +77,7 @@ services:
       placement:
         constraints:
           - node.labels.role == performance-backend
-
+ 
   team-performance-backend:
     image: clubmanagersirius/team-performance-backend:${IMAGE_TAG:-latest}
     ports:
@@ -86,7 +88,7 @@ services:
       placement:
         constraints:
           - node.labels.role == performance-backend
-
+ 
   bridge-messaging:
     image: clubmanagersirius/bridge-messaging:${IMAGE_TAG:-latest}
     environment:
@@ -99,7 +101,7 @@ services:
       placement:
         constraints:
           - node.labels.role == mqtt-bridge
-
+ 
   mosquitto:
     image: eclipse-mosquitto:2
     ports:
@@ -116,7 +118,7 @@ services:
       placement:
         constraints:
           - node.labels.role == mqtt-bridge
-
+ 
   nginx:
     image: nginx:latest
     ports:
@@ -140,7 +142,7 @@ services:
       placement:
         constraints:
           - node.labels.role == reverse-proxy
-
+ 
   redis:
     image: redis:7-alpine
     networks:
@@ -149,58 +151,34 @@ services:
       placement:
         constraints:
           - node.labels.role == reverse-proxy
-
+ 
   oauth2-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
-    # Image distroless (pas de sh/bash) : flags CLI natifs pour lire les secrets depuis fichier
+    # --cookie-secret-file n'existe pas dans v7.6.0 : on passe par un fichier de config
+    # monté via Docker config. Le client_secret lui supporte --client-secret-file.
     command:
-      - --provider=keycloak-oidc
-      - --client-id=portal
+      - --config=/etc/oauth2-proxy/oauth2-proxy.cfg
       - --client-secret-file=/run/secrets/oauth2_proxy_client_secret
-      - --cookie-secret-file=/run/secrets/oauth2_proxy_cookie_secret
-      - --email-domain=*
-      - --http-address=0.0.0.0:4180
-      - --redirect-url=https://172.31.249.162/oauth2/callback
-      - --login-url=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/auth
-      - --oidc-issuer-url=https://172.31.249.162/realms/cm-realm
-      - --redeem-url=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/token
-      - --oidc-jwks-url=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/certs
-      - --skip-oidc-discovery=true
-      - --insecure-oidc-skip-issuer-verification=true
-      - --insecure-oidc-allow-unverified-email=true
-      - --oidc-extra-audience=account
-      - --set-xauthrequest=true
-      - --pass-access-token=true
-      - --set-authorization-header=true
-      - --cookie-name=_oauth2_proxy
-      - --csrf-cookie-name=_oauth2_proxy_csrf
-      - --cookie-samesite=lax
-      - --cookie-secure=true
-      - --ssl-insecure-skip-verify=true
-      - --code-challenge-method=S256
-      - --proxy-prefix=/oauth2
-      - --reverse-proxy=true
-      - --backend-logout-url=http://192.168.0.65:8080/realms/cm-realm/protocol/openid-connect/logout?id_token_hint={id_token}&post_logout_redirect_uri=https://172.31.249.162
-      - --logout-url=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
-      - --session-store-type=redis
-      - --redis-connection-url=redis://redis:6379
+    configs:
+      - source: oauth2_proxy_cfg
+        target: /etc/oauth2-proxy/oauth2-proxy.cfg
+        mode: 0444
     secrets:
       - oauth2_proxy_client_secret
-      - oauth2_proxy_cookie_secret
     networks:
       - rp-network
     deploy:
       placement:
         constraints:
           - node.labels.role == reverse-proxy
-
+ 
   data-pipeline:
     image: clubmanagersirius/data-pipeline:${IMAGE_TAG:-latest}
     deploy:
       placement:
         constraints:
           - node.labels.role == etl
-
+ 
   identity-provider:
     image: quay.io/keycloak/keycloak:latest
     ports:
@@ -233,7 +211,7 @@ services:
       placement:
         constraints:
           - node.labels.role == idp
-
+ 
   grafana:
     image: grafana/grafana-oss:latest
     ports:
@@ -251,9 +229,10 @@ services:
       placement:
         constraints:
           - node.labels.role == etl
-
-
+ 
+ 
 volumes:
   mqtt_data:
   mqtt_log:
   grafana_data:
+ 
