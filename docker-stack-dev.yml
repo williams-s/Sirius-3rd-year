@@ -152,15 +152,13 @@ services:
 
   oauth2-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
-    # oauth2-proxy ne supporte pas les variables _FILE nativement.
-    # Ce wrapper lit les fichiers secrets et les exporte avant de lancer le binaire.
     entrypoint:
       - sh
       - -c
       - |
-        export OAUTH2_PROXY_CLIENT_SECRET=$(cat /run/secrets/oauth2_proxy_client_secret)
-        export OAUTH2_PROXY_COOKIE_SECRET=$(cat /run/secrets/oauth2_proxy_cookie_secret)
-        exec /bin/oauth2-proxy "$@"
+        export OAUTH2_PROXY_CLIENT_SECRET=$$(cat /run/secrets/oauth2_proxy_client_secret)
+        export OAUTH2_PROXY_COOKIE_SECRET=$$(cat /run/secrets/oauth2_proxy_cookie_secret)
+        exec /bin/oauth2-proxy "$$@"
     environment:
       - OAUTH2_PROXY_PROVIDER=keycloak-oidc
       - OAUTH2_PROXY_CLIENT_ID=portal
@@ -226,14 +224,12 @@ services:
     secrets:
       - kc_admin_password
       - kc_db_password
-    # Keycloak ne supporte pas les variables _FILE nativement.
-    # Ce wrapper lit les fichiers secrets et les exporte avant de lancer KC.
     entrypoint:
       - bash
       - -c
       - |
-        export KC_BOOTSTRAP_ADMIN_PASSWORD=$(cat /run/secrets/kc_admin_password)
-        export KC_DB_PASSWORD=$(cat /run/secrets/kc_db_password)
+        export KC_BOOTSTRAP_ADMIN_PASSWORD=$$(cat /run/secrets/kc_admin_password)
+        export KC_DB_PASSWORD=$$(cat /run/secrets/kc_db_password)
         exec /opt/keycloak/bin/kc.sh start-dev --import-realm
     networks:
       - rp-network
