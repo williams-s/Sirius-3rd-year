@@ -22,6 +22,18 @@ secrets:
     external: true
   nginx_key:
     external: true
+  kc_admin_password:
+    external: true
+  kc_db_password:
+    external: true
+  postgres_password:
+    external: true
+  oauth2_proxy_client_secret:
+    external: true
+  oauth2_proxy_cookie_secret:
+    external: true
+  grafana_password:
+    external: true
 
 services:
 
@@ -43,7 +55,9 @@ services:
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=192.168.0.50:9092
       - POSTGRES_SERVER=192.168.0.33:5432
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_ENTRANCE}
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    secrets:
+      - postgres_password
     networks:
       - front-network
     deploy:
@@ -141,8 +155,8 @@ services:
     environment:
       - OAUTH2_PROXY_PROVIDER=keycloak-oidc
       - OAUTH2_PROXY_CLIENT_ID=portal
-      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
-      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
+      - OAUTH2_PROXY_CLIENT_SECRET_FILE=/run/secrets/oauth2_proxy_client_secret
+      - OAUTH2_PROXY_COOKIE_SECRET_FILE=/run/secrets/oauth2_proxy_cookie_secret
       - OAUTH2_PROXY_EMAIL_DOMAINS=*
       - OAUTH2_PROXY_HTTP_ADDRESS=0.0.0.0:4180
       - OAUTH2_PROXY_REDIRECT_URL=https://172.31.249.162/oauth2/callback
@@ -169,6 +183,9 @@ services:
       - OAUTH2_PROXY_LOGOUT_URL=https://172.31.249.162/realms/cm-realm/protocol/openid-connect/logout?post_logout_redirect_uri=https://172.31.249.162
       - OAUTH2_PROXY_SESSION_STORE_TYPE=redis
       - OAUTH2_PROXY_REDIS_CONNECTION_URL=redis://redis:6379
+    secrets:
+      - oauth2_proxy_client_secret
+      - oauth2_proxy_cookie_secret
     networks:
       - rp-network
     deploy:
@@ -183,7 +200,6 @@ services:
         constraints:
           - node.labels.role == etl
 
-
   identity-provider:
     image: quay.io/keycloak/keycloak:latest
     ports:
@@ -197,11 +213,14 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_PROXY_HEADERS=xforwarded
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
-      - KC_BOOTSTRAP_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KC_BOOTSTRAP_ADMIN_PASSWORD_FILE=/run/secrets/kc_admin_password
       - KC_DB=postgres
       - KC_DB_URL=jdbc:postgresql://192.168.0.33:5432/keycloak
       - KC_DB_USERNAME=keycloak
-      - KC_DB_PASSWORD=${KEYCLOAK_PASSWORD_DB}
+      - KC_DB_PASSWORD_FILE=/run/secrets/kc_db_password
+    secrets:
+      - kc_admin_password
+      - kc_db_password
     command:
       - start-dev
       - --import-realm
@@ -218,17 +237,17 @@ services:
       - "3001:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana_password
       - GF_SERVER_ROOT_URL=https://172.31.249.162/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    secrets:
+      - grafana_password
     volumes:
       - grafana_data:/var/lib/grafana
     deploy:
       placement:
         constraints:
           - node.labels.role == etl
-
-
 
 
 volumes:

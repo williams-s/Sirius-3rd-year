@@ -22,15 +22,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      #- name: Set IMAGE_TAG
-      #  run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-
       - name: Create Docker secrets
         run: |
-          echo "${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}" | docker secret create kc_admin_password - || true
-          echo "${{ secrets.KEYCLOAK_PASSWORD_DB}}" | docker secret create kc_db_password - || true
-          echo "${{ secrets.NGINX_CERT }}" | base64 -d | docker secret create nginx_cert - || true
-          echo "${{ secrets.NGINX_KEY }}" | base64 -d | docker secret create nginx_key - || true
+          echo "${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}"    | docker secret create kc_admin_password        - || true
+          echo "${{ secrets.KEYCLOAK_PASSWORD_DB }}"       | docker secret create kc_db_password           - || true
+          echo "${{ secrets.NGINX_CERT }}"                 | base64 -d | docker secret create nginx_cert   - || true
+          echo "${{ secrets.NGINX_KEY }}"                  | base64 -d | docker secret create nginx_key    - || true
+          echo "${{ secrets.POSTGRES_PASSWORD }}"          | docker secret create postgres_password        - || true
+          echo "${{ secrets.OAUTH2_PROXY_CLIENT_SECRET }}" | docker secret create oauth2_proxy_client_secret - || true
+          echo "${{ secrets.OAUTH2_PROXY_COOKIE_SECRET }}" | docker secret create oauth2_proxy_cookie_secret - || true
+          echo "${{ secrets.GRAFANA_PASSWORD }}"           | docker secret create grafana_password         - || true
 
       - name: Login Docker on all nodes
         run: |
@@ -48,16 +49,15 @@ jobs:
           push: true
           build-args: |
             VITE_ENTRANCE_COCKPIT_SERVER=https://172.31.249.162
-          #clubmanagersirius/static-server-backend:${{ env.IMAGE_TAG }}
           tags: |
             clubmanagersirius/static-server-backend:latest
+
       - name: Build & Push entrance-cockpit
         uses: docker/build-push-action@v4
         with:
           context: .
           file: entrance-cockpit/Dockerfile
           push: true
-          #clubmanagersirius/entrance-cockpit-backend:${{ env.IMAGE_TAG }}
           tags: |
             clubmanagersirius/entrance-cockpit-backend:latest
 
@@ -84,7 +84,6 @@ jobs:
         with:
           context: ./bridge-messaging
           push: true
-          #clubmanagersirius/bridge-messaging:${{ env.IMAGE_TAG }}
           tags: |
             clubmanagersirius/bridge-messaging:latest
 
@@ -93,43 +92,26 @@ jobs:
         with:
           context: ./data-pipeline
           push: true
-          #clubmanagersirius/data-pipeline:${{ env.IMAGE_TAG }}
-          tags: | 
+          tags: |
             clubmanagersirius/data-pipeline:latest
 
   deploy-dev:
     needs: build-and-push
-    #if: github.ref == 'refs/heads/dev'
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      #- name: Set IMAGE_TAG
-      #  run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Deploy Stack Dev
-        #run: IMAGE_TAG=${{ env.IMAGE_TAG }} docker stack deploy -c docker-stack-dev.yml club_manager_dev --with-registry-auth
-        env:
-            KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
-            KEYCLOAK_PASSWORD_DB: ${{ secrets.KEYCLOAK_PASSWORD_DB }}
-            POSTGRES_PASSWORD_ENTRANCE: ${{ secrets.POSTGRES_PASSWORD}}
-            OAUTH2_PROXY_CLIENT_SECRET: ${{ secrets.OAUTH2_PROXY_CLIENT_SECRET }}
-            OAUTH2_PROXY_COOKIE_SECRET: ${{ secrets.OAUTH2_PROXY_COOKIE_SECRET }}
-            GRAFANA_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}
         run: docker stack deploy -c docker-stack-dev.yml club_manager_dev --with-registry-auth
 
-  deploy-prod:
-    needs: build-and-push
-    if: github.ref == 'refs/heads/main'
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #deploy-prod:
+  #  needs: build-and-push
+  #  if: github.ref == 'refs/heads/main'
+   # runs-on: self-hosted
+   # steps:
+    #  - name: Checkout code
+    #    uses: actions/checkout@v3
 
-     # - name: Set IMAGE_TAG
-     #   run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-
-      - name: Deploy Stack Prod
-      #run: IMAGE_TAG=${{ env.IMAGE_TAG }} docker stack deploy -c docker-stack-prod.yml club_manager_prod --with-registry-auth
-        run: docker stack deploy -c docker-stack-prod.yml club_manager_prod --with-registry-auth
+     # - name: Deploy Stack Prod
+     #   run: docker stack deploy -c docker-stack-prod.yml club_manager_prod --with-registry-auth
