@@ -24,12 +24,10 @@ jobs:
 
       - name: Create Docker secrets
         run: |
-          echo "${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}"    | docker secret create kc_admin_password        - || true
-          echo "${{ secrets.KEYCLOAK_PASSWORD_DB }}"       | docker secret create kc_db_password           - || true
-          echo "${{ secrets.NGINX_CERT }}"                 | base64 -d | docker secret create nginx_cert   - || true
-          echo "${{ secrets.NGINX_KEY }}"                  | base64 -d | docker secret create nginx_key    - || true
-          echo "${{ secrets.POSTGRES_PASSWORD }}"          | docker secret create postgres_password        - || true
-          echo "${{ secrets.GRAFANA_PASSWORD }}"           | docker secret create grafana_password         - || true
+          echo "${{ secrets.NGINX_CERT }}"        | base64 -d | docker secret create nginx_cert        - || true
+          echo "${{ secrets.NGINX_KEY }}"         | base64 -d | docker secret create nginx_key         - || true
+          echo "${{ secrets.POSTGRES_PASSWORD }}" | docker secret create postgres_password             - || true
+          echo "${{ secrets.GRAFANA_PASSWORD }}"  | docker secret create grafana_password              - || true
 
       - name: Login Docker on all nodes
         run: |
@@ -102,6 +100,8 @@ jobs:
 
       - name: Deploy Stack Dev
         env:
+          KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+          KEYCLOAK_PASSWORD_DB: ${{ secrets.KEYCLOAK_PASSWORD_DB }}
           OAUTH2_PROXY_CLIENT_SECRET: ${{ secrets.OAUTH2_PROXY_CLIENT_SECRET }}
           OAUTH2_PROXY_COOKIE_SECRET: ${{ secrets.OAUTH2_PROXY_COOKIE_SECRET }}
         run: docker stack deploy -c docker-stack-dev.yml club_manager_dev --with-registry-auth

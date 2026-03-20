@@ -22,10 +22,6 @@ secrets:
     external: true
   nginx_key:
     external: true
-  kc_admin_password:
-    external: true
-  kc_db_password:
-    external: true
   postgres_password:
     external: true
   grafana_password:
@@ -206,19 +202,14 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_PROXY_HEADERS=xforwarded
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
       - KC_DB=postgres
       - KC_DB_URL=jdbc:postgresql://192.168.0.33:5432/keycloak
       - KC_DB_USERNAME=keycloak
-    secrets:
-      - kc_admin_password
-      - kc_db_password
-    entrypoint:
-      - bash
-      - -c
-      - |
-        export KC_BOOTSTRAP_ADMIN_PASSWORD=$$(cat /run/secrets/kc_admin_password)
-        export KC_DB_PASSWORD=$$(cat /run/secrets/kc_db_password)
-        exec /opt/keycloak/bin/kc.sh start-dev --import-realm
+      - KC_DB_PASSWORD=${KEYCLOAK_PASSWORD_DB}
+    command:
+      - start-dev
+      - --import-realm
     networks:
       - rp-network
     deploy:
